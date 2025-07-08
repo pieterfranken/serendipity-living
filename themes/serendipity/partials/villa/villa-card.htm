@@ -1,0 +1,56 @@
+<div class="villa-card">
+    <div class="villa-image">
+        <a href="{{ 'villa'|page({ slug: villa.slug }) }}">
+            <img src="{{ villa.featured_image|media }}" alt="{{ villa.title }}" class="img-fluid">
+        </a>
+        
+        {% if villa.status == 'sold' %}
+        <div class="villa-status sold">SOLD</div>
+        {% elseif villa.status == 'reserved' %}
+        <div class="villa-status reserved">RESERVED</div>
+        {% endif %}
+        
+        {% if villa.is_featured %}
+        <div class="villa-featured">FEATURED</div>
+        {% endif %}
+    </div>
+    
+    <div class="villa-content">
+        <div class="villa-type">{{ villa.villa_subtype ?: villa.villa_type|upper }}</div>
+        <h3 class="villa-title">
+            <a href="{{ 'villa'|page({ slug: villa.slug }) }}">{{ villa.title }}</a>
+        </h3>
+        
+        <div class="villa-details">
+            <div class="detail-item">
+                <i class="fas fa-bed"></i>
+                <span>{{ villa.bedrooms }} Bedroom{{ villa.bedrooms != 1 ? 's' : '' }}</span>
+            </div>
+            <div class="detail-item">
+                <i class="fas fa-bath"></i>
+                <span>{{ villa.bathrooms }} Bathroom{{ villa.bathrooms != 1 ? 's' : '' }}</span>
+            </div>
+            {% if villa.built_area %}
+            <div class="detail-item">
+                <i class="fas fa-ruler-combined"></i>
+                <span>{{ villa.built_area }}m²</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if villa.short_description %}
+        <p class="villa-description">{{ villa.short_description|truncate(100) }}</p>
+        {% endif %}
+        
+        <div class="villa-footer">
+            <div class="villa-price">€{{ villa.price|number_format(0, '.', ',') }}</div>
+            <div class="villa-status-text">{{ villa.status|replace('_', ' ')|title }}</div>
+        </div>
+        
+        <div class="villa-actions">
+            <a href="{{ 'villa'|page({ slug: villa.slug }) }}" class="btn btn-primary">View Details</a>
+            <a href="#contact-modal" class="btn btn-outline-primary" data-bs-toggle="modal" 
+               data-villa="{{ villa.title }}">Inquire</a>
+        </div>
+    </div>
+</div>

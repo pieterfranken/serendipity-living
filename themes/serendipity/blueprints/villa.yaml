@@ -1,0 +1,196 @@
+uuid: 12345678-1234-1234-1234-123456789abc
+handle: Villa\Villa
+type: stream
+name: Villa
+drafts: true
+paginate: 12
+defaultSort: created_at desc
+
+primaryNavigation:
+    label: Villas
+    icon: icon-home
+    order: 95
+
+navigation:
+    label: Villas
+    icon: icon-home
+    order: 100
+
+fields:
+    title:
+        label: Villa Name
+        type: text
+        required: true
+        span: left
+        comment: The name of the villa (e.g., Villa Pinal, Villa Vera)
+
+    slug:
+        label: URL Slug
+        type: text
+        preset:
+            field: title
+            type: slug
+        span: right
+        comment: Auto-generated from villa name
+
+    villa_type:
+        label: Villa Type
+        type: dropdown
+        required: true
+        span: left
+        options:
+            type_a: Type A
+            type_b: Type B
+            type_c: Type C
+        comment: Select the villa type/category
+
+    villa_subtype:
+        label: Villa Subtype
+        type: text
+        span: right
+        placeholder: "e.g., A1, A2, B1, B2, C1, C2"
+        comment: Specific subtype designation
+
+    price:
+        label: Price (EUR)
+        type: number
+        required: true
+        span: left
+        comment: Villa price in Euros
+
+    status:
+        label: Status
+        type: dropdown
+        required: true
+        span: right
+        default: available
+        options:
+            available: Available
+            under_construction: Under Construction
+            sold: Sold
+            reserved: Reserved
+
+    bedrooms:
+        label: Bedrooms
+        type: number
+        required: true
+        span: left
+        min: 1
+        max: 10
+
+    bathrooms:
+        label: Bathrooms
+        type: number
+        required: true
+        span: right
+        min: 1
+        max: 10
+
+    plot_size:
+        label: Plot Size (m²)
+        type: number
+        span: left
+        comment: Size of the plot in square meters
+
+    built_area:
+        label: Built Area (m²)
+        type: number
+        span: right
+        comment: Built area in square meters
+
+    pool:
+        label: Swimming Pool
+        type: switch
+        default: true
+        span: left
+        comment: Does the villa have a swimming pool?
+
+    garage:
+        label: Garage
+        type: switch
+        default: true
+        span: right
+        comment: Does the villa have a garage?
+
+    featured_image:
+        label: Featured Image
+        type: mediafinder
+        mode: image
+        required: true
+        comment: Main villa image for listings
+
+    gallery:
+        label: Villa Gallery
+        type: mediafinder
+        mode: image
+        isMulti: true
+        comment: Additional villa images
+
+    short_description:
+        label: Short Description
+        type: textarea
+        size: small
+        comment: Brief description for villa cards
+
+    description:
+        label: Full Description
+        type: richeditor
+        comment: Detailed villa description
+
+    features:
+        label: Villa Features
+        type: repeater
+        prompt: Add Feature
+        form:
+            fields:
+                feature:
+                    label: Feature
+                    type: text
+                    required: true
+                    placeholder: "e.g., Sea views, Private pool, Modern kitchen"
+
+    location:
+        label: Location Details
+        type: section
+
+    address:
+        label: Address
+        type: text
+        span: full
+        comment: Villa address or general location
+
+    coordinates:
+        label: GPS Coordinates
+        type: text
+        span: full
+        placeholder: "40.7128, -74.0060"
+        comment: Latitude, Longitude for map display
+
+    seo:
+        label: SEO Settings
+        type: section
+
+    meta_title:
+        label: Meta Title
+        type: text
+        span: left
+        comment: SEO title (leave empty to use villa name)
+
+    meta_description:
+        label: Meta Description
+        type: textarea
+        size: small
+        span: right
+        comment: SEO description for search engines
+
+    is_featured:
+        label: Featured Villa
+        type: switch
+        default: false
+        comment: Show this villa prominently on the homepage
+
+    sort_order:
+        label: Sort Order
+        type: number
+        default: 0
+        comment: Lower numbers appear first

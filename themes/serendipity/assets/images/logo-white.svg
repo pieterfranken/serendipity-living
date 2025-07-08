@@ -1,0 +1,15 @@
+<svg width="200" height="50" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- House icon -->
+  <path d="M15 35 L15 20 L25 10 L35 20 L35 35 Z" fill="white" stroke="none"/>
+  <rect x="20" y="25" width="10" height="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="22" y="27" width="2" height="6" fill="white"/>
+  <rect x="26" y="27" width="2" height="6" fill="white"/>
+  
+  <!-- Text -->
+  <text x="45" y="25" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600" fill="white">
+    Serendipity
+  </text>
+  <text x="45" y="40" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="400" fill="rgba(255,255,255,0.8)">
+    LIVING
+  </text>
+</svg>

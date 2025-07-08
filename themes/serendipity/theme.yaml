@@ -1,0 +1,93 @@
+name: Serendipity Living
+description: A luxury villa listing theme inspired by modern real estate websites
+author: Serendipity Living
+homepage: http://localhost
+code: serendipity
+
+form:
+    fields:
+        site_name:
+            label: Site Name
+            comment: The name of this website
+            default: Serendipity Living
+
+        site_tagline:
+            label: Site Tagline
+            comment: The tagline or subtitle
+            default: Exclusive Premium Villas
+
+        site_description:
+            label: Site Description  
+            comment: The description of this website
+            type: textarea
+            default: Discover luxury villas in the most exclusive locations
+
+        primary_color:
+            label: Primary Color
+            comment: Main brand color
+            type: colorpicker
+            default: '#2c3e50'
+
+        accent_color:
+            label: Accent Color
+            comment: Secondary accent color
+            type: colorpicker
+            default: '#3498db'
+
+        contact_phone:
+            label: Contact Phone
+            comment: Main contact phone number
+            default: '+34 621 351 302'
+
+        contact_email:
+            label: Contact Email
+            comment: Main contact email address
+            default: 'info@serendipityliving.com'
+
+        hero_image:
+            label: Hero Background Image
+            comment: Main hero section background image
+            type: mediafinder
+            mode: image
+
+        hero_title:
+            label: Hero Title
+            comment: Main hero section title
+            default: 'EXCLUSIVE PREMIUM VILLAS'
+
+        hero_subtitle:
+            label: Hero Subtitle
+            comment: Hero section subtitle
+            default: 'MEDITERRANEAN LIFESTYLE'
+
+        show_hero_video:
+            label: Show Hero Video
+            comment: Display video in hero section
+            type: switch
+            default: false
+
+        footer_text:
+            label: Footer Text
+            comment: Copyright text in footer
+            default: 'All rights reserved.'
+
+        social_facebook:
+            label: Facebook URL
+            comment: Facebook page URL
+            type: text
+
+        social_instagram:
+            label: Instagram URL
+            comment: Instagram profile URL
+            type: text
+
+        social_linkedin:
+            label: LinkedIn URL
+            comment: LinkedIn profile URL
+            type: text
+
+        google_analytics:
+            label: Google Analytics ID
+            comment: Google Analytics tracking ID
+            type: text
+            placeholder: 'GA-XXXXXXXXX'

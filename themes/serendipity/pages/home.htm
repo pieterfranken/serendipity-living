@@ -1,0 +1,203 @@
+title = "Home"
+url = "/"
+layout = "home"
+is_hidden = 0
+
+[collection featuredVillas]
+handle = "Villa\Villa"
+displayFrom = 1
+displayNum = 6
+sortBy = "sort_order"
+sortDirection = "asc"
+==
+<?php
+function onStart()
+{
+    // Get featured villas
+    $this['featuredVillas'] = $this->featuredVillas->where('is_featured', true);
+    
+    // If no featured villas, get latest available villas
+    if ($this['featuredVillas']->count() == 0) {
+        $this['featuredVillas'] = $this->featuredVillas
+            ->where('status', 'available')
+            ->take(6);
+    }
+}
+?>
+==
+<!-- Featured Villas Section -->
+<section class="featured-villas py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">Featured Villas</h2>
+                <p class="section-subtitle">Discover our most exclusive properties</p>
+            </div>
+        </div>
+        
+        {% if featuredVillas|length > 0 %}
+        <div class="row g-4">
+            {% for villa in featuredVillas %}
+            <div class="col-lg-4 col-md-6">
+                {% partial 'villa/villa-card' villa=villa %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="{{ 'villas'|page }}" class="btn btn-primary btn-lg">View All Villas</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>No featured villas available at the moment.</p>
+                <a href="{{ 'villas'|page }}" class="btn btn-primary">Browse All Villas</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2>Luxury Living Redefined</h2>
+                <p class="lead">Experience the pinnacle of Mediterranean luxury with our exclusive collection of premium villas.</p>
+                <p>Each property in our portfolio has been carefully selected for its exceptional design, prime location, and unparalleled quality. From contemporary architectural masterpieces to traditional Mediterranean estates, we offer a diverse range of luxury homes that cater to the most discerning tastes.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="stat-item">
+                            <h3 class="stat-number">50+</h3>
+                            <p class="stat-label">Luxury Villas</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-item">
+                            <h3 class="stat-number">15+</h3>
+                            <p class="stat-label">Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="{{ 'about'|page }}" class="btn btn-outline-primary mt-3">Learn More</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ 'assets/images/about-luxury.jpg'|theme }}" alt="Luxury Villa" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive real estate solutions</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h4>Villa Sales</h4>
+                    <p>Exclusive luxury villas in prime Mediterranean locations with full legal and financial support.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h4>Property Management</h4>
+                    <p>Complete property management services to maintain and enhance your investment value.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Investment Consulting</h4>
+                    <p>Expert guidance on real estate investments and market opportunities in luxury segments.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">What Our Clients Say</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Exceptional service and stunning properties. The team helped us find our dream villa with professionalism and attention to detail."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Sarah & Michael Johnson</strong>
+                        <span>Villa Owners</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The investment advice was invaluable. Our villa has not only been a wonderful home but also a great investment."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Robert Chen</strong>
+                        <span>Investor</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"From viewing to completion, the entire process was seamless. Highly recommend for luxury property purchases."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <strong>Emma Rodriguez</strong>
+                        <span>Villa Owner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2>Ready to Find Your Dream Villa?</h2>
+                <p class="lead">Contact our expert team today and let us help you discover the perfect luxury property.</p>
+                <div class="cta-actions">
+                    <a href="{{ 'villas'|page }}" class="btn btn-primary btn-lg me-3">Browse Villas</a>
+                    <a href="#contact-modal" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

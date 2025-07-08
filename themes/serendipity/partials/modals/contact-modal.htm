@@ -1,0 +1,86 @@
+<!-- Contact Modal -->
+<div class="modal fade" id="contact-modal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="contact-form" data-request="onSendContact">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_name" class="form-label">Name *</label>
+                                    <input type="text" name="name" id="contact_name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_email" class="form-label">Email *</label>
+                                    <input type="email" name="email" id="contact_email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_phone" class="form-label">Phone</label>
+                                    <input type="tel" name="phone" id="contact_phone" class="form-control">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_subject" class="form-label">Subject</label>
+                                    <select name="subject" id="contact_subject" class="form-select">
+                                        <option value="general">General Inquiry</option>
+                                        <option value="villa">Villa Information</option>
+                                        <option value="viewing">Schedule Viewing</option>
+                                        <option value="investment">Investment Opportunities</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact_message" class="form-label">Message *</label>
+                                <textarea name="message" id="contact_message" class="form-control" rows="5" required 
+                                          placeholder="Tell us about your requirements..."></textarea>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" name="privacy_consent" id="privacy_consent" class="form-check-input" required>
+                                <label for="privacy_consent" class="form-check-label">
+                                    I agree to the <a href="{{ 'privacy'|page }}" target="_blank">Privacy Policy</a> *
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="contact-info">
+                            <h6>Get in Touch</h6>
+                            <p>Ready to find your dream villa? Contact our team for personalized assistance.</p>
+                            
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Phone</strong>
+                                    <a href="tel:{{ this.theme.contact_phone }}">{{ this.theme.contact_phone }}</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email</strong>
+                                    <a href="mailto:{{ this.theme.contact_email }}">{{ this.theme.contact_email }}</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Office Hours</strong>
+                                    <span>Mon - Fri: 9:00 - 18:00<br>Sat: 10:00 - 16:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
