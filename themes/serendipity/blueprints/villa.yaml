@@ -33,24 +33,6 @@ fields:
         span: right
         comment: Auto-generated from villa name
 
-    villa_type:
-        label: Villa Type
-        type: dropdown
-        required: true
-        span: left
-        options:
-            type_a: Type A
-            type_b: Type B
-            type_c: Type C
-        comment: Select the villa type/category
-
-    villa_subtype:
-        label: Villa Subtype
-        type: text
-        span: right
-        placeholder: "e.g., A1, A2, B1, B2, C1, C2"
-        comment: Specific subtype designation
-
     price:
         label: Price (EUR)
         type: number
@@ -114,14 +96,26 @@ fields:
 
     featured_image:
         label: Featured Image
-        type: text
-        comment: Path to main villa image (e.g., assets/images/villas/villa-1.jpg)
+        type: mediafinder
+        mode: image
+        maxItems: 1
+        useCaption: false
+        thumbOptions:
+            mode: auto
+            quality: 80
+        comment: Select main villa image
 
     gallery:
         label: Villa Gallery
-        type: textarea
-        size: small
-        comment: Additional villa image paths (one per line)
+        type: mediafinder
+        mode: image
+        isMulti: true
+        maxItems: 6
+        useCaption: false
+        thumbOptions:
+            mode: auto
+            quality: 75
+        comment: Select additional villa images (max 6 for performance)
 
     short_description:
         label: Short Description
