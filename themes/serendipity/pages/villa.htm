@@ -104,7 +104,19 @@ function onStart()
                         </div>
                         <div class="villa-price-main">
                             <span class="price">€{{ villa.price|number_format(0, '.', ',') }}</span>
-                            <span class="status status-{{ villa.status }}">{{ villa.status|replace('_', ' ')|title }}</span>
+                            <span class="status status-{{ villa.status }}">
+                                {% if villa.status == 'under_construction' %}
+                                    Under Construction
+                                {% elseif villa.status == 'available' %}
+                                    Available
+                                {% elseif villa.status == 'sold' %}
+                                    Sold
+                                {% elseif villa.status == 'reserved' %}
+                                    Reserved
+                                {% else %}
+                                    {{ villa.status|title }}
+                                {% endif %}
+                            </span>
                         </div>
                     </div>
                 </div>

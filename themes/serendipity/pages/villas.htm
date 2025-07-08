@@ -119,12 +119,30 @@ function onStart()
                         </div>
                         
                         {% if villa.short_description %}
-                        <p class="villa-description">{{ villa.short_description|str_limit(100) }}</p>
+                        <p class="villa-description">
+                            {% if villa.short_description|length > 100 %}
+                                {{ villa.short_description|slice(0, 100) }}...
+                            {% else %}
+                                {{ villa.short_description }}
+                            {% endif %}
+                        </p>
                         {% endif %}
                         
                         <div class="villa-footer">
                             <div class="villa-price">€{{ villa.price|number_format(0, '.', ',') }}</div>
-                            <div class="villa-status-text">{{ villa.status|replace({'_': ' '})|title }}</div>
+                            <div class="villa-status-text">
+                                {% if villa.status == 'under_construction' %}
+                                    Under Construction
+                                {% elseif villa.status == 'available' %}
+                                    Available
+                                {% elseif villa.status == 'sold' %}
+                                    Sold
+                                {% elseif villa.status == 'reserved' %}
+                                    Reserved
+                                {% else %}
+                                    {{ villa.status|title }}
+                                {% endif %}
+                            </div>
                         </div>
                         
                         <div class="villa-actions">
