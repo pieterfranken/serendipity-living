@@ -20,7 +20,6 @@
     </div>
     
     <div class="villa-content">
-        <div class="villa-type">{{ villa.villa_subtype ?: villa.villa_type|upper }}</div>
         <h3 class="villa-title">
             <a href="{{ 'villa'|page({ slug: villa.slug }) }}">{{ villa.title }}</a>
         </h3>

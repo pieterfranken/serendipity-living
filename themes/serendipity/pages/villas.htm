@@ -35,16 +35,6 @@ function onStart()
         <form method="get" class="filter-form">
             <div class="row g-3 align-items-end">
                 <div class="col-md-3">
-                    <label for="type" class="form-label">Villa Type</label>
-                    <select name="type" id="type" class="form-select">
-                        <option value="">All Types</option>
-                        <option value="type_a" {{ selectedType == 'type_a' ? 'selected' : '' }}>Type A</option>
-                        <option value="type_b" {{ selectedType == 'type_b' ? 'selected' : '' }}>Type B</option>
-                        <option value="type_c" {{ selectedType == 'type_c' ? 'selected' : '' }}>Type C</option>
-                    </select>
-                </div>
-                
-                <div class="col-md-3">
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-select">
                         <option value="">All Status</option>
@@ -53,20 +43,20 @@ function onStart()
                         <option value="sold" {{ selectedStatus == 'sold' ? 'selected' : '' }}>Sold</option>
                     </select>
                 </div>
-                
-                <div class="col-md-2">
+
+                <div class="col-md-3">
                     <label for="min_price" class="form-label">Min Price (€)</label>
-                    <input type="number" name="min_price" id="min_price" class="form-control" 
+                    <input type="number" name="min_price" id="min_price" class="form-control"
                            value="{{ minPrice }}" placeholder="500,000">
                 </div>
-                
-                <div class="col-md-2">
+
+                <div class="col-md-3">
                     <label for="max_price" class="form-label">Max Price (€)</label>
-                    <input type="number" name="max_price" id="max_price" class="form-control" 
+                    <input type="number" name="max_price" id="max_price" class="form-control"
                            value="{{ maxPrice }}" placeholder="2,000,000">
                 </div>
-                
-                <div class="col-md-2">
+
+                <div class="col-md-3">
                     <button type="submit" class="btn btn-primary w-100">Filter</button>
                 </div>
             </div>
@@ -103,7 +93,6 @@ function onStart()
                     </div>
                     
                     <div class="villa-content">
-                        <div class="villa-type">{{ villa.villa_subtype ?: villa.villa_type|upper }}</div>
                         <h3 class="villa-title">
                             <a href="{{ 'villa'|page({ slug: villa.slug }) }}">{{ villa.title }}</a>
                         </h3>
