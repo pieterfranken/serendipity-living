@@ -44,7 +44,11 @@ function onStart()
             <div id="villaCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ villa.featured_image|media }}" class="d-block w-100" alt="{{ villa.title }}">
+                        {% if villa.featured_image starts with 'assets/' %}
+                            <img src="{{ villa.featured_image|theme }}" class="d-block w-100" alt="{{ villa.title }}">
+                        {% else %}
+                            <img src="{{ villa.featured_image|media }}" class="d-block w-100" alt="{{ villa.title }}">
+                        {% endif %}
                     </div>
                     {% for image in villa.gallery %}
                     <div class="carousel-item">
@@ -68,7 +72,15 @@ function onStart()
                 </div>
             </div>
             {% else %}
-            <img src="{{ villa.featured_image|media }}" class="img-fluid w-100" alt="{{ villa.title }}">
+                {% if villa.featured_image %}
+                    {% if villa.featured_image starts with 'assets/' %}
+                        <img src="{{ villa.featured_image|theme }}" class="img-fluid w-100" alt="{{ villa.title }}">
+                    {% else %}
+                        <img src="{{ villa.featured_image|media }}" class="img-fluid w-100" alt="{{ villa.title }}">
+                    {% endif %}
+                {% else %}
+                    <img src="{{ 'assets/images/villas/villa-1.jpg'|theme }}" class="img-fluid w-100" alt="{{ villa.title }}">
+                {% endif %}
             {% endif %}
         </div>
     </div>

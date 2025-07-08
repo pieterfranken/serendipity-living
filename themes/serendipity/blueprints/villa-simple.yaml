@@ -88,9 +88,21 @@ fields:
         span: right
 
     featured_image:
-        label: Featured Image Path
-        type: text
-        comment: e.g., assets/images/villas/villa-1.jpg
+        label: Featured Image
+        type: mediafinder
+        mode: image
+        imageWidth: 400
+        imageHeight: 300
+        comment: Main villa image for listings
+
+    gallery:
+        label: Villa Gallery
+        type: mediafinder
+        mode: image
+        isMulti: true
+        imageWidth: 400
+        imageHeight: 300
+        comment: Additional villa images for gallery
 
     short_description:
         label: Short Description

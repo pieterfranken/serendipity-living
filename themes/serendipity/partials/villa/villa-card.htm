@@ -2,7 +2,11 @@
     <div class="villa-image">
         <a href="{{ 'villa'|page({ slug: villa.slug }) }}">
             {% if villa.featured_image %}
-            <img src="{{ villa.featured_image|theme }}" alt="{{ villa.title }}" class="img-fluid">
+                {% if villa.featured_image starts with 'assets/' %}
+                    <img src="{{ villa.featured_image|theme }}" alt="{{ villa.title }}" class="img-fluid">
+                {% else %}
+                    <img src="{{ villa.featured_image|media }}" alt="{{ villa.title }}" class="img-fluid">
+                {% endif %}
             {% else %}
             <img src="{{ 'assets/images/villas/villa-1.jpg'|theme }}" alt="{{ villa.title }}" class="img-fluid">
             {% endif %}
