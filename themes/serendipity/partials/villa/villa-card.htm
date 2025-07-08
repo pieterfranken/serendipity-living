@@ -39,7 +39,7 @@
         </div>
         
         {% if villa.short_description %}
-        <p class="villa-description">{{ villa.short_description|truncate(100) }}</p>
+        <p class="villa-description">{{ villa.short_description|str_limit(100) }}</p>
         {% endif %}
         
         <div class="villa-footer">
