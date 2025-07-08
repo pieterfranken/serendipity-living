@@ -3,25 +3,30 @@ url = "/"
 layout = "home"
 is_hidden = 0
 
-[collection featuredVillas]
-handle = "Villa\Villa"
-displayFrom = 1
-displayNum = 6
-sortBy = "sort_order"
-sortDirection = "asc"
+
 ==
 <?php
 function onStart()
 {
     // Get featured villas
-    $this['featuredVillas'] = $this->featuredVillas->where('is_featured', true);
-    
+    $featuredVillas = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
+        ->where('is_enabled', true)
+        ->where('is_featured', true)
+        ->orderBy('sort_order', 'asc')
+        ->limit(6)
+        ->get();
+
     // If no featured villas, get latest available villas
-    if ($this['featuredVillas']->count() == 0) {
-        $this['featuredVillas'] = $this->featuredVillas
+    if ($featuredVillas->count() == 0) {
+        $featuredVillas = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
+            ->where('is_enabled', true)
             ->where('status', 'available')
-            ->take(6);
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
     }
+
+    $this['featuredVillas'] = $featuredVillas;
 }
 ?>
 ==

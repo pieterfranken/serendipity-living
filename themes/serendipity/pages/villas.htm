@@ -3,42 +3,46 @@ url = "/villas"
 layout = "default"
 is_hidden = 0
 
-[collection villas]
-handle = "Villa\Villa"
-displayFrom = 1
-displayNum = 12
-sortBy = "sort_order"
-sortDirection = "asc"
+
 ==
 <?php
 function onStart()
 {
+    // Get villas directly from Tailor
+    $villas = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
+        ->where('is_enabled', true)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $this['debug_villas_count'] = $villas->count();
+
     // Get filter parameters
     $this['selectedType'] = get('type');
     $this['selectedStatus'] = get('status');
     $this['minPrice'] = get('min_price');
     $this['maxPrice'] = get('max_price');
-    
-    // Apply filters to collection
-    $query = $this->villas;
-    
+
+    // Apply filters
+    $filteredVillas = $villas;
+
     if ($selectedType = get('type')) {
-        $query = $query->where('villa_type', $selectedType);
+        $filteredVillas = $filteredVillas->where('villa_type', $selectedType);
     }
-    
+
     if ($selectedStatus = get('status')) {
-        $query = $query->where('status', $selectedStatus);
+        $filteredVillas = $filteredVillas->where('status', $selectedStatus);
     }
-    
+
     if ($minPrice = get('min_price')) {
-        $query = $query->where('price', '>=', $minPrice);
+        $filteredVillas = $filteredVillas->where('price', '>=', $minPrice);
     }
-    
+
     if ($maxPrice = get('max_price')) {
-        $query = $query->where('price', '<=', $maxPrice);
+        $filteredVillas = $filteredVillas->where('price', '<=', $maxPrice);
     }
-    
-    $this['filteredVillas'] = $query;
+
+    $this['villas'] = $villas;
+    $this['filteredVillas'] = $filteredVillas;
 }
 ?>
 ==
@@ -102,9 +106,9 @@ function onStart()
 <!-- Villa Grid -->
 <section class="villa-grid py-5">
     <div class="container">
-        {% if filteredVillas|length > 0 %}
+        {% if villas|length > 0 %}
         <div class="row g-4">
-            {% for villa in filteredVillas %}
+            {% for villa in villas %}
             <div class="col-lg-4 col-md-6">
                 <div class="villa-card">
                     <div class="villa-image">
