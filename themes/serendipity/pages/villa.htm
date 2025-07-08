@@ -3,27 +3,34 @@ url = "/villa/:slug"
 layout = "default"
 is_hidden = 0
 
-[record villa]
-handle = "Villa\Villa"
-identifierValue = "{{ :slug }}"
+
 ==
 <?php
 function onStart()
 {
+    // Get villa by slug
+    $slug = $this->param('slug');
+    $villa = DB::table('xc_87654321432143214321210987654321c')
+        ->where('slug', $slug)
+        ->where('is_enabled', 1)
+        ->first();
+
     // Check if villa exists
-    if (!$this->villa) {
+    if (!$villa) {
         return Response::make(View::make('cms::404'), 404);
     }
-    
+
+    $this['villa'] = $villa;
+
     // Set page title and meta
-    $this->page->title = $this->villa->title;
-    $this->page->meta_description = $this->villa->meta_description ?: $this->villa->short_description;
-    
-    // Get related villas (same type, excluding current)
-    $this['relatedVillas'] = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
-        ->where('villa_type', $this->villa->villa_type)
-        ->where('id', '!=', $this->villa->id)
+    $this->page->title = $villa->title;
+    $this->page->meta_description = $villa->short_description ?? '';
+
+    // Get related villas (excluding current)
+    $this['relatedVillas'] = DB::table('xc_87654321432143214321210987654321c')
+        ->where('id', '!=', $villa->id)
         ->where('status', '!=', 'sold')
+        ->where('is_enabled', 1)
         ->limit(3)
         ->get();
 }

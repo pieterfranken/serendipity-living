@@ -9,7 +9,7 @@ is_hidden = 0
 function onStart()
 {
     // Get featured villas using raw database query
-    $featuredVillas = DB::table('xc_12345678123412341234123456789abcc')
+    $featuredVillas = DB::table('xc_87654321432143214321210987654321c')
         ->where('is_enabled', 1)
         ->where('is_featured', 1)
         ->orderBy('sort_order', 'asc')
@@ -18,7 +18,7 @@ function onStart()
 
     // If no featured villas, get latest available villas
     if ($featuredVillas->count() == 0) {
-        $featuredVillas = DB::table('xc_12345678123412341234123456789abcc')
+        $featuredVillas = DB::table('xc_87654321432143214321210987654321c')
             ->where('is_enabled', 1)
             ->where('status', 'available')
             ->orderBy('created_at', 'desc')

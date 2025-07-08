@@ -1,0 +1,118 @@
+uuid: 87654321-4321-4321-4321-210987654321
+handle: Villa\Simple
+type: stream
+name: Villa (Simple)
+drafts: true
+paginate: 12
+defaultSort: created_at desc
+
+primaryNavigation:
+    label: Villas
+    icon: icon-home
+    order: 95
+
+navigation:
+    label: Villas
+    icon: icon-home
+    order: 100
+
+fields:
+    title:
+        label: Villa Name
+        type: text
+        required: true
+        span: left
+
+    slug:
+        label: URL Slug
+        type: text
+        preset:
+            field: title
+            type: slug
+        span: right
+
+    price:
+        label: Price (EUR)
+        type: number
+        required: true
+        span: left
+
+    status:
+        label: Status
+        type: dropdown
+        required: true
+        span: right
+        default: available
+        options:
+            available: Available
+            under_construction: Under Construction
+            sold: Sold
+            reserved: Reserved
+
+    bedrooms:
+        label: Bedrooms
+        type: number
+        required: true
+        span: left
+        min: 1
+        max: 10
+
+    bathrooms:
+        label: Bathrooms
+        type: number
+        required: true
+        span: right
+        min: 1
+        max: 10
+
+    plot_size:
+        label: Plot Size (m²)
+        type: number
+        span: left
+
+    built_area:
+        label: Built Area (m²)
+        type: number
+        span: right
+
+    pool:
+        label: Swimming Pool
+        type: switch
+        default: true
+        span: left
+
+    garage:
+        label: Garage
+        type: switch
+        default: true
+        span: right
+
+    featured_image:
+        label: Featured Image Path
+        type: text
+        comment: e.g., assets/images/villas/villa-1.jpg
+
+    short_description:
+        label: Short Description
+        type: textarea
+        size: small
+
+    description:
+        label: Full Description
+        type: textarea
+        size: large
+
+    address:
+        label: Address
+        type: text
+        span: full
+
+    is_featured:
+        label: Featured Villa
+        type: switch
+        default: false
+
+    sort_order:
+        label: Sort Order
+        type: number
+        default: 0
