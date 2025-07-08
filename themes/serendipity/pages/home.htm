@@ -8,18 +8,18 @@ is_hidden = 0
 <?php
 function onStart()
 {
-    // Get featured villas
-    $featuredVillas = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
-        ->where('is_enabled', true)
-        ->where('is_featured', true)
+    // Get featured villas using raw database query
+    $featuredVillas = DB::table('xc_12345678123412341234123456789abcc')
+        ->where('is_enabled', 1)
+        ->where('is_featured', 1)
         ->orderBy('sort_order', 'asc')
         ->limit(6)
         ->get();
 
     // If no featured villas, get latest available villas
     if ($featuredVillas->count() == 0) {
-        $featuredVillas = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
-            ->where('is_enabled', true)
+        $featuredVillas = DB::table('xc_12345678123412341234123456789abcc')
+            ->where('is_enabled', 1)
             ->where('status', 'available')
             ->orderBy('created_at', 'desc')
             ->limit(6)

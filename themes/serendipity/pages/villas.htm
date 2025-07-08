@@ -8,41 +8,28 @@ is_hidden = 0
 <?php
 function onStart()
 {
-    // Get villas directly from Tailor
-    $villas = \Tailor\Models\EntryRecord::inSection('Villa\Villa')
-        ->where('is_enabled', true)
-        ->orderBy('created_at', 'desc')
-        ->get();
+    try {
+        // Get villas using raw database query
+        $villas = DB::table('xc_12345678123412341234123456789abcc')
+            ->where('is_enabled', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    $this['debug_villas_count'] = $villas->count();
 
-    // Get filter parameters
-    $this['selectedType'] = get('type');
-    $this['selectedStatus'] = get('status');
-    $this['minPrice'] = get('min_price');
-    $this['maxPrice'] = get('max_price');
 
-    // Apply filters
-    $filteredVillas = $villas;
+        // Get filter parameters
+        $this['selectedType'] = get('type');
+        $this['selectedStatus'] = get('status');
+        $this['minPrice'] = get('min_price');
+        $this['maxPrice'] = get('max_price');
 
-    if ($selectedType = get('type')) {
-        $filteredVillas = $filteredVillas->where('villa_type', $selectedType);
+        $this['villas'] = $villas;
+        $this['filteredVillas'] = $villas;
+
+    } catch (Exception $e) {
+        $this['debug_error'] = $e->getMessage();
+        $this['villas'] = collect();
     }
-
-    if ($selectedStatus = get('status')) {
-        $filteredVillas = $filteredVillas->where('status', $selectedStatus);
-    }
-
-    if ($minPrice = get('min_price')) {
-        $filteredVillas = $filteredVillas->where('price', '>=', $minPrice);
-    }
-
-    if ($maxPrice = get('max_price')) {
-        $filteredVillas = $filteredVillas->where('price', '<=', $maxPrice);
-    }
-
-    $this['villas'] = $villas;
-    $this['filteredVillas'] = $filteredVillas;
 }
 ?>
 ==
@@ -106,14 +93,18 @@ function onStart()
 <!-- Villa Grid -->
 <section class="villa-grid py-5">
     <div class="container">
-        {% if villas|length > 0 %}
+        {% if villas and villas|length > 0 %}
         <div class="row g-4">
             {% for villa in villas %}
             <div class="col-lg-4 col-md-6">
                 <div class="villa-card">
                     <div class="villa-image">
                         <a href="{{ 'villa'|page({ slug: villa.slug }) }}">
-                            <img src="{{ villa.featured_image|media }}" alt="{{ villa.title }}" class="img-fluid">
+                            {% if villa.featured_image %}
+                            <img src="{{ villa.featured_image|theme }}" alt="{{ villa.title }}" class="img-fluid">
+                            {% else %}
+                            <img src="{{ 'assets/images/villas/villa-1.jpg'|theme }}" alt="{{ villa.title }}" class="img-fluid">
+                            {% endif %}
                         </a>
                         
                         {% if villa.status == 'sold' %}
@@ -156,7 +147,7 @@ function onStart()
                         
                         <div class="villa-footer">
                             <div class="villa-price">€{{ villa.price|number_format(0, '.', ',') }}</div>
-                            <div class="villa-status-text">{{ villa.status|replace('_', ' ')|title }}</div>
+                            <div class="villa-status-text">{{ villa.status|replace({'_': ' '})|title }}</div>
                         </div>
                         
                         <div class="villa-actions">

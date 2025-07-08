@@ -1,7 +1,11 @@
 <div class="villa-card">
     <div class="villa-image">
         <a href="{{ 'villa'|page({ slug: villa.slug }) }}">
-            <img src="{{ villa.featured_image|media }}" alt="{{ villa.title }}" class="img-fluid">
+            {% if villa.featured_image %}
+            <img src="{{ villa.featured_image|theme }}" alt="{{ villa.title }}" class="img-fluid">
+            {% else %}
+            <img src="{{ 'assets/images/villas/villa-1.jpg'|theme }}" alt="{{ villa.title }}" class="img-fluid">
+            {% endif %}
         </a>
         
         {% if villa.status == 'sold' %}
@@ -44,7 +48,7 @@
         
         <div class="villa-footer">
             <div class="villa-price">€{{ villa.price|number_format(0, '.', ',') }}</div>
-            <div class="villa-status-text">{{ villa.status|replace('_', ' ')|title }}</div>
+            <div class="villa-status-text">{{ villa.status|replace({'_': ' '})|title }}</div>
         </div>
         
         <div class="villa-actions">
