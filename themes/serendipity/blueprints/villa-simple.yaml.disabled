@@ -1,9 +1,9 @@
 uuid: 87654321-4321-4321-4321-210987654321
 handle: Villa\Simple
 type: stream
-name: Villa (Simple)
+name: Villa (Optimized)
 drafts: true
-paginate: 12
+paginate: 20
 defaultSort: created_at desc
 
 primaryNavigation:
@@ -91,8 +91,8 @@ fields:
         label: Featured Image
         type: mediafinder
         mode: image
-        imageWidth: 400
-        imageHeight: 300
+        maxItems: 1
+        useCaption: false
         comment: Main villa image for listings
 
     gallery:
@@ -100,19 +100,21 @@ fields:
         type: mediafinder
         mode: image
         isMulti: true
-        imageWidth: 400
-        imageHeight: 300
-        comment: Additional villa images for gallery
+        maxItems: 10
+        useCaption: false
+        comment: Additional villa images (max 10)
 
     short_description:
         label: Short Description
         type: textarea
         size: small
+        comment: Brief description for villa cards
 
     description:
         label: Full Description
         type: textarea
         size: large
+        comment: Detailed villa description
 
     address:
         label: Address
@@ -123,8 +125,10 @@ fields:
         label: Featured Villa
         type: switch
         default: false
+        span: left
 
     sort_order:
         label: Sort Order
         type: number
         default: 0
+        span: right

@@ -1,11 +1,10 @@
-# Temporarily disabled due to performance issues
-# uuid: 12345678-1234-1234-1234-123456789abc
-# handle: Villa\Villa
-# type: stream
-# name: Villa
-# drafts: true
-# paginate: 12
-# defaultSort: created_at desc
+uuid: 12345678-1234-1234-1234-123456789abc
+handle: Villa\Villa
+type: stream
+name: Villa
+drafts: true
+paginate: 12
+defaultSort: created_at desc
 
 primaryNavigation:
     label: Villas

@@ -8,9 +8,9 @@ is_hidden = 0
 <?php
 function onStart()
 {
-    // Get villa by slug
+    // Get villa by slug using original table
     $slug = $this->param('slug');
-    $villa = DB::table('xc_87654321432143214321210987654321c')
+    $villa = DB::table('xc_12345678123412341234123456789abcc')
         ->where('slug', $slug)
         ->where('is_enabled', 1)
         ->first();
@@ -27,7 +27,7 @@ function onStart()
     $this->page->meta_description = $villa->short_description ?? '';
 
     // Get related villas (excluding current)
-    $this['relatedVillas'] = DB::table('xc_87654321432143214321210987654321c')
+    $this['relatedVillas'] = DB::table('xc_12345678123412341234123456789abcc')
         ->where('id', '!=', $villa->id)
         ->where('status', '!=', 'sold')
         ->where('is_enabled', 1)
