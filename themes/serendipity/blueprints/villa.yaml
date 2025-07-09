@@ -6,6 +6,9 @@ drafts: true
 paginate: 12
 defaultSort: created_at desc
 
+# Force hard deletion instead of soft deletion
+softDeletes: false
+
 primaryNavigation:
     label: Villas
     icon: icon-home
@@ -172,7 +175,15 @@ fields:
         label: Featured Villa
         type: switch
         default: false
+        span: left
         comment: Show this villa prominently on the homepage
+
+    is_enabled:
+        label: Enabled
+        type: switch
+        default: true
+        span: right
+        comment: Enable/disable this villa (disabled villas won't show on the website)
 
     sort_order:
         label: Sort Order

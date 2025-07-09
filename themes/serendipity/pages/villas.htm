@@ -8,9 +8,36 @@ is_hidden = 0
 <?php
 function onStart()
 {
-    // Simple villa query using original table
-    $this['villas'] = DB::table('xc_12345678123412341234123456789abcc')
-        ->where('is_enabled', 1)
+    // Get filter parameters
+    $status = input('status');
+    $minPrice = input('min_price');
+    $maxPrice = input('max_price');
+
+    // Store filter values for form display
+    $this['selectedStatus'] = $status;
+    $this['minPrice'] = $minPrice;
+    $this['maxPrice'] = $maxPrice;
+
+    // Build villa query using original table
+    $query = DB::table('xc_12345678123412341234123456789abcc')
+        ->where('is_enabled', 1);
+
+    // Apply status filter
+    if ($status) {
+        $query->where('status', $status);
+    }
+
+    // Apply price filters
+    if ($minPrice) {
+        $query->where('price', '>=', $minPrice);
+    }
+
+    if ($maxPrice) {
+        $query->where('price', '<=', $maxPrice);
+    }
+
+    // Get filtered results
+    $this['villas'] = $query
         ->orderBy('created_at', 'desc')
         ->limit(20)
         ->get();
@@ -57,7 +84,10 @@ function onStart()
                 </div>
 
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                        <a href="{{ 'villas'|page }}" class="btn btn-outline-secondary btn-sm">Clear Filters</a>
+                    </div>
                 </div>
             </div>
         </form>

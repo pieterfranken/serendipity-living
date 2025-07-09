@@ -45,15 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Form submissions
-    document.querySelectorAll('form').forEach(form => {
+    // Form submissions - only handle contact forms, not filter forms
+    document.querySelectorAll('form.contact-form, form.villa-inquiry-form').forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             // Basic form validation
             const requiredFields = form.querySelectorAll('[required]');
             let isValid = true;
-            
+
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
                     field.classList.add('is-invalid');
@@ -62,12 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     field.classList.remove('is-invalid');
                 }
             });
-            
+
             if (isValid) {
                 // Show success message (in a real app, this would submit to server)
                 alert('Thank you for your inquiry! We will contact you soon.');
                 form.reset();
-                
+
                 // Close modal if form is in a modal
                 const modal = form.closest('.modal');
                 if (modal) {
