@@ -49,12 +49,6 @@ description = "Homepage layout with hero section"
                         <a class="nav-link" href="{{ 'about'|page }}">ABOUT</a>
                     </li>
                 </ul>
-                
-                <div class="navbar-actions ms-3">
-                    <a href="#contact-modal" class="btn btn-outline-white" data-bs-toggle="modal">
-                        CONTACT
-                    </a>
-                </div>
             </div>
         </div>
     </nav>
@@ -68,8 +62,7 @@ description = "Homepage layout with hero section"
                     <h1 class="hero-title">{{ this.theme.hero_title }}</h1>
                     <p class="hero-subtitle">{{ this.theme.hero_subtitle }}</p>
                     <div class="hero-actions">
-                        <a href="{{ 'villas'|page }}" class="btn btn-primary btn-lg me-3">VIEW VILLAS</a>
-                        <a href="#contact-modal" class="btn btn-outline-white btn-lg" data-bs-toggle="modal">REQUEST INFORMATION</a>
+                        <a href="{{ 'villas'|page }}" class="btn btn-primary btn-lg">VIEW VILLAS</a>
                     </div>
                 </div>
             </div>
@@ -128,7 +121,6 @@ description = "Homepage layout with hero section"
                     <ul class="list-unstyled">
                         <li><a href="{{ 'villas'|page }}" class="text-white-50">Villas</a></li>
                         <li><a href="{{ 'about'|page }}" class="text-white-50">About</a></li>
-                        <li><a href="{{ 'contact'|page }}" class="text-white-50">Contact</a></li>
                         <li><a href="{{ 'privacy'|page }}" class="text-white-50">Privacy Policy</a></li>
                     </ul>
                 </div>
@@ -142,8 +134,8 @@ description = "Homepage layout with hero section"
         </div>
     </footer>
 
-    <!-- Contact Modal -->
-    {% partial 'modals/contact-modal' %}
+    <!-- October CMS AJAX Framework -->
+    {% framework %}
 
     <!-- JavaScript -->
     <script src="{{ 'assets/js/bootstrap.bundle.min.js'|theme }}"></script>

@@ -1,0 +1,58 @@
+# Villa Manager Filter Scopes
+scopes:
+    status:
+        label: Status
+        type: dropdown
+        conditions: status = :filtered
+        options:
+            available: Available
+            under_construction: Under Construction
+            sold: Sold
+            reserved: Reserved
+
+    price_range:
+        label: Price Range
+        type: group
+        conditions: price >= :min_price AND price <= :max_price
+        options:
+            under_500k: Under €500,000
+            500k_1m: €500,000 - €1,000,000
+            1m_2m: €1,000,000 - €2,000,000
+            over_2m: Over €2,000,000
+        modelScope: filterByPriceRange
+
+    bedrooms:
+        label: Bedrooms
+        type: dropdown
+        conditions: bedrooms = :filtered
+        options:
+            1: 1 Bedroom
+            2: 2 Bedrooms
+            3: 3 Bedrooms
+            4: 4 Bedrooms
+            5: 5+ Bedrooms
+
+    features:
+        label: Features
+        type: checkbox
+        conditions: 
+        options:
+            pool: Swimming Pool
+            garage: Garage
+        modelScope: filterByFeatures
+
+    enabled:
+        label: Status
+        type: dropdown
+        conditions: is_enabled = :filtered
+        options:
+            1: Enabled
+            0: Disabled
+
+    featured:
+        label: Featured
+        type: dropdown
+        conditions: is_featured = :filtered
+        options:
+            1: Featured
+            0: Not Featured

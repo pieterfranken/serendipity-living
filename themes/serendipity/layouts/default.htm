@@ -49,12 +49,6 @@ description = "Default layout"
                         <a class="nav-link" href="{{ 'about'|page }}">ABOUT</a>
                     </li>
                 </ul>
-                
-                <div class="navbar-actions ms-3">
-                    <a href="#contact-modal" class="btn btn-primary" data-bs-toggle="modal">
-                        REQUEST INFO
-                    </a>
-                </div>
             </div>
         </div>
     </nav>
@@ -120,13 +114,13 @@ description = "Default layout"
         </div>
     </footer>
 
-    <!-- Contact Modal -->
-    {% partial 'modals/contact-modal' %}
+    <!-- October CMS AJAX Framework -->
+    {% framework %}
 
     <!-- JavaScript -->
     <script src="{{ 'assets/js/bootstrap.bundle.min.js'|theme }}"></script>
     <script src="{{ 'assets/js/theme.js'|theme }}"></script>
-    
+
     {% if this.theme.google_analytics %}
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ this.theme.google_analytics }}"></script>
@@ -137,7 +131,7 @@ description = "Default layout"
         gtag('config', '{{ this.theme.google_analytics }}');
     </script>
     {% endif %}
-    
+
     {% scripts %}
 </body>
 </html>

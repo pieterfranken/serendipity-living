@@ -1,0 +1,11 @@
+# Villa Manager Form Configuration
+name: Villa Management
+modelClass: Tailor\Models\EntryRecord
+form: $/serendipity/villamanager/controllers/villamanager/fields.yaml
+defaultRedirect: serendipity/villamanager/villamanager
+create:
+    redirect: serendipity/villamanager/villamanager/update/:id
+    redirectClose: serendipity/villamanager/villamanager
+update:
+    redirect: serendipity/villamanager/villamanager
+    redirectClose: serendipity/villamanager/villamanager

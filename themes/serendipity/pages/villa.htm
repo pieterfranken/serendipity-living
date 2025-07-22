@@ -6,33 +6,47 @@ is_hidden = 0
 
 ==
 <?php
+use Tailor\Models\EntryRecord;
+
 function onStart()
 {
-    // Get villa by slug using original table
-    $slug = $this->param('slug');
-    $villa = DB::table('xc_12345678123412341234123456789abcc')
-        ->where('slug', $slug)
-        ->where('is_enabled', 1)
-        ->first();
+    try {
+        // Get villa by slug using Tailor EntryRecord
+        $slug = $this->param('slug');
 
-    // Check if villa exists
-    if (!$villa) {
+        if (!$slug) {
+            return Response::make(View::make('cms::404'), 404);
+        }
+
+        $villa = EntryRecord::inSection('Villa\\Villa')
+            ->where('slug', $slug)
+            ->where('is_enabled', 1)
+            ->first();
+
+        // Check if villa exists
+        if (!$villa) {
+            return Response::make(View::make('cms::404'), 404);
+        }
+
+        $this['villa'] = $villa;
+
+        // Set page title and meta
+        $this->page->title = $villa->title;
+        $this->page->meta_description = $villa->short_description ?? '';
+
+        // Get related villas (excluding current)
+        $this['relatedVillas'] = EntryRecord::inSection('Villa\\Villa')
+            ->where('id', '!=', $villa->id)
+            ->where('status', '!=', 'sold')
+            ->where('is_enabled', 1)
+            ->limit(3)
+            ->get();
+
+    } catch (Exception $e) {
+        // Log error and return 404
+        Log::error('Error loading villa: ' . $e->getMessage(), ['slug' => $slug ?? 'unknown']);
         return Response::make(View::make('cms::404'), 404);
     }
-
-    $this['villa'] = $villa;
-
-    // Set page title and meta
-    $this->page->title = $villa->title;
-    $this->page->meta_description = $villa->short_description ?? '';
-
-    // Get related villas (excluding current)
-    $this['relatedVillas'] = DB::table('xc_12345678123412341234123456789abcc')
-        ->where('id', '!=', $villa->id)
-        ->where('status', '!=', 'sold')
-        ->where('is_enabled', 1)
-        ->limit(3)
-        ->get();
 }
 ?>
 ==

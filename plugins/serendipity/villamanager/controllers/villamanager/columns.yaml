@@ -1,0 +1,94 @@
+# Villa Manager List Columns
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+        width: 80px
+
+    title:
+        label: Villa Name
+        type: text
+        searchable: true
+        sortable: true
+
+    slug:
+        label: Slug
+        type: text
+        searchable: true
+        sortable: true
+        invisible: true
+
+    price:
+        label: Price (EUR)
+        type: number
+        sortable: true
+        format: '€%s'
+
+    status:
+        label: Status
+        type: text
+        sortable: true
+        searchable: true
+
+    bedrooms:
+        label: Beds
+        type: number
+        sortable: true
+        width: 80px
+
+    bathrooms:
+        label: Baths
+        type: number
+        sortable: true
+        width: 80px
+
+    plot_size:
+        label: Plot (m²)
+        type: number
+        sortable: true
+        width: 100px
+
+    built_area:
+        label: Built (m²)
+        type: number
+        sortable: true
+        width: 100px
+
+    pool:
+        label: Pool
+        type: switch
+        width: 80px
+
+    garage:
+        label: Garage
+        type: switch
+        width: 80px
+
+    is_featured:
+        label: Featured
+        type: switch
+        sortable: true
+        width: 80px
+
+    is_enabled:
+        label: Enabled
+        type: switch
+        sortable: true
+        width: 80px
+
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true
+        format: 'M j, Y'
+        width: 120px
+
+    updated_at:
+        label: Updated
+        type: datetime
+        sortable: true
+        format: 'M j, Y'
+        width: 120px
+        invisible: true

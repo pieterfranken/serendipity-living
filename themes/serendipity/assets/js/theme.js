@@ -29,21 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Contact modal villa name population
-    const contactModal = document.getElementById('contact-modal');
-    if (contactModal) {
-        contactModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget;
-            const villaName = button.getAttribute('data-villa');
-            if (villaName) {
-                const messageField = contactModal.querySelector('#contact_message');
-                if (messageField && !messageField.value) {
-                    messageField.value = `I'm interested in ${villaName}. Please contact me with more information.`;
-                }
-            }
-        });
-    }
+
     
     // Form submissions - only handle contact forms, not filter forms
     document.querySelectorAll('form.contact-form, form.villa-inquiry-form').forEach(form => {

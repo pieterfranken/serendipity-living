@@ -1,0 +1,93 @@
+subject = "New Contact Form Submission"
+==
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Contact Form Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .field-value {
+            margin-top: 5px;
+            padding: 10px;
+            background: white;
+            border-radius: 3px;
+            border-left: 3px solid #3498db;
+        }
+        .footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>New Contact Form Submission</h1>
+        <p>Serendipity Living Website</p>
+    </div>
+    
+    <div class="content">
+        <div class="field">
+            <div class="field-label">Name:</div>
+            <div class="field-value">{{ name }}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">Email:</div>
+            <div class="field-value">{{ email }}</div>
+        </div>
+        
+        {% if phone %}
+        <div class="field">
+            <div class="field-label">Phone:</div>
+            <div class="field-value">{{ phone }}</div>
+        </div>
+        {% endif %}
+        
+        <div class="field">
+            <div class="field-label">Subject:</div>
+            <div class="field-value">{{ subject }}</div>
+        </div>
+        
+        <div class="field">
+            <div class="field-label">Message:</div>
+            <div class="field-value">{{ message|nl2br }}</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>This message was sent from the Serendipity Living website contact form on {{ sent_at }}.</p>
+        <p>Please respond to the customer directly at: {{ email }}</p>
+    </div>
+</body>
+</html>

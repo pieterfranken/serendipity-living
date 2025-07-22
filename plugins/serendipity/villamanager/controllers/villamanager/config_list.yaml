@@ -1,0 +1,21 @@
+# Villa Manager List Configuration
+title: Villa Management
+modelClass: Tailor\Models\EntryRecord
+list: $/serendipity/villamanager/controllers/villamanager/columns.yaml
+recordUrl: tailor/entries/villa_villa/update/:id
+recordOnClick: 
+noRecordsMessage: No villas found
+deleteMessage: Are you sure you want to permanently delete the selected villa(s)?
+recordsPerPage: 20
+showPageNumbers: true
+defaultSort:
+    column: created_at
+    direction: desc
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+filter:
+    scopes: $/serendipity/villamanager/controllers/villamanager/scopes.yaml

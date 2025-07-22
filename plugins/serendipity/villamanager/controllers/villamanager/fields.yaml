@@ -1,0 +1,165 @@
+# Villa Manager Form Fields
+fields:
+    title:
+        label: Villa Name
+        type: text
+        required: true
+        span: left
+
+    slug:
+        label: URL Slug
+        type: text
+        preset:
+            field: title
+            type: slug
+        span: right
+
+    price:
+        label: Price (EUR)
+        type: number
+        required: true
+        span: left
+
+    status:
+        label: Status
+        type: dropdown
+        required: true
+        span: right
+        default: available
+        options:
+            available: Available
+            under_construction: Under Construction
+            sold: Sold
+            reserved: Reserved
+
+    bedrooms:
+        label: Bedrooms
+        type: number
+        required: true
+        span: left
+        min: 1
+        max: 10
+
+    bathrooms:
+        label: Bathrooms
+        type: number
+        required: true
+        span: right
+        min: 1
+        max: 10
+
+    plot_size:
+        label: Plot Size (m²)
+        type: number
+        span: left
+
+    built_area:
+        label: Built Area (m²)
+        type: number
+        span: right
+
+    pool:
+        label: Swimming Pool
+        type: switch
+        default: true
+        span: left
+
+    garage:
+        label: Garage
+        type: switch
+        default: true
+        span: right
+
+    featured_image:
+        label: Featured Image
+        type: mediafinder
+        mode: image
+        maxItems: 1
+
+    gallery:
+        label: Villa Gallery
+        type: mediafinder
+        mode: image
+        isMulti: true
+        maxItems: 6
+
+    short_description:
+        label: Short Description
+        type: textarea
+        size: small
+
+    description:
+        label: Full Description
+        type: richeditor
+
+    features:
+        label: Villa Features
+        type: textarea
+        size: small
+        comment: List villa features (one per line)
+
+    address:
+        label: Address
+        type: text
+        span: full
+
+    coordinates:
+        label: GPS Coordinates
+        type: text
+        span: full
+        placeholder: "40.7128, -74.0060"
+
+    meta_title:
+        label: Meta Title
+        type: text
+        span: left
+        tab: SEO
+
+    meta_description:
+        label: Meta Description
+        type: textarea
+        size: small
+        span: right
+        tab: SEO
+
+    is_featured:
+        label: Featured Villa
+        type: switch
+        default: false
+        span: left
+        tab: Settings
+
+    is_enabled:
+        label: Enabled
+        type: switch
+        default: true
+        span: right
+        tab: Settings
+
+    sort_order:
+        label: Sort Order
+        type: number
+        default: 0
+        tab: Settings
+
+tabs:
+    fields:
+        _villa_basic:
+            type: section
+            label: Basic Information
+        _villa_details:
+            type: section
+            label: Villa Details
+        _villa_media:
+            type: section
+            label: Images & Media
+        _villa_content:
+            type: section
+            label: Content
+        _villa_location:
+            type: section
+            label: Location
+    SEO:
+        label: SEO Settings
+    Settings:
+        label: Settings

@@ -48,6 +48,28 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
+
+/* ===== UTILITY CLASSES ===== */
+.btn-outline-white {
+    color: var(--white);
+    border-color: var(--white);
+    background-color: transparent;
+}
+
+.btn-outline-white:hover {
+    color: var(--primary-color);
+    background-color: var(--white);
+    border-color: var(--white);
+}
+
+.text-white-50 {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.text-white-50:hover {
+    color: var(--white) !important;
+    text-decoration: none;
+}
 h3 { font-size: 1.75rem; }
 h4 { font-size: 1.5rem; }
 h5 { font-size: 1.25rem; }
@@ -955,4 +977,117 @@ img {
         display: block;
         margin-bottom: 1rem;
     }
+}
+
+/* ===== CONTACT PAGE STYLES ===== */
+.contact-form-wrapper {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
+}
+
+.contact-info-item {
+    padding: 1.5rem;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.contact-info-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-icon {
+    margin-bottom: 1rem;
+}
+
+/* ===== PRIVACY PAGE STYLES ===== */
+.privacy-policy-content {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.privacy-policy-content h2 {
+    color: var(--primary-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.privacy-policy-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.privacy-policy-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* ===== ERROR HANDLING STYLES ===== */
+.alert {
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* ===== PAGINATION STYLES ===== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.pagination .page-item {
+    margin: 0 0.25rem;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    background-color: var(--white);
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.pagination .page-link:hover {
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }

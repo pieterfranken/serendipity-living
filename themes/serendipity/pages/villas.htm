@@ -6,41 +6,50 @@ is_hidden = 0
 
 ==
 <?php
+use Tailor\Models\EntryRecord;
+
 function onStart()
 {
-    // Get filter parameters
-    $status = input('status');
-    $minPrice = input('min_price');
-    $maxPrice = input('max_price');
+    try {
+        // Get filter parameters with validation
+        $status = input('status');
+        $minPrice = input('min_price') ? (int)input('min_price') : null;
+        $maxPrice = input('max_price') ? (int)input('max_price') : null;
 
-    // Store filter values for form display
-    $this['selectedStatus'] = $status;
-    $this['minPrice'] = $minPrice;
-    $this['maxPrice'] = $maxPrice;
+        // Store filter values for form display
+        $this['selectedStatus'] = $status;
+        $this['minPrice'] = $minPrice;
+        $this['maxPrice'] = $maxPrice;
 
-    // Build villa query using original table
-    $query = DB::table('xc_12345678123412341234123456789abcc')
-        ->where('is_enabled', 1);
+        // Use Tailor EntryRecord to query villas properly
+        $query = EntryRecord::inSection('Villa\\Villa')
+            ->where('is_enabled', 1);
 
-    // Apply status filter
-    if ($status) {
-        $query->where('status', $status);
+        // Apply status filter
+        if ($status && in_array($status, ['available', 'under_construction', 'sold', 'reserved'])) {
+            $query->where('status', $status);
+        }
+
+        // Apply price filters with validation
+        if ($minPrice && $minPrice > 0) {
+            $query->where('price', '>=', $minPrice);
+        }
+
+        if ($maxPrice && $maxPrice > 0) {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        // Get filtered results with pagination
+        $this['villas'] = $query
+            ->orderBy('created_at', 'desc')
+            ->paginate(12); // Use pagination instead of limit
+
+    } catch (Exception $e) {
+        // Log error and provide fallback
+        Log::error('Error loading villas: ' . $e->getMessage());
+        $this['villas'] = collect(); // Empty collection as fallback
+        $this['error'] = 'Unable to load villas at this time.';
     }
-
-    // Apply price filters
-    if ($minPrice) {
-        $query->where('price', '>=', $minPrice);
-    }
-
-    if ($maxPrice) {
-        $query->where('price', '<=', $maxPrice);
-    }
-
-    // Get filtered results
-    $this['villas'] = $query
-        ->orderBy('created_at', 'desc')
-        ->limit(20)
-        ->get();
 }
 ?>
 ==
@@ -97,7 +106,17 @@ function onStart()
 <!-- Villa Grid -->
 <section class="villa-grid py-5">
     <div class="container">
-        {% if villas and villas|length > 0 %}
+        {% if error %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <h4>Unable to Load Villas</h4>
+                    <p>{{ error }}</p>
+                    <a href="{{ 'villas'|page }}" class="btn btn-primary">Try Again</a>
+                </div>
+            </div>
+        </div>
+        {% elseif villas and villas|length > 0 %}
         <div class="row g-4">
             {% for villa in villas %}
             <div class="col-lg-4 col-md-6">
@@ -150,11 +169,7 @@ function onStart()
                         
                         {% if villa.short_description %}
                         <p class="villa-description">
-                            {% if villa.short_description|length > 100 %}
-                                {{ villa.short_description|slice(0, 100) }}...
-                            {% else %}
-                                {{ villa.short_description }}
-                            {% endif %}
+                            {{ villa.short_description|str_limit(100) }}
                         </p>
                         {% endif %}
                         
@@ -187,29 +202,11 @@ function onStart()
         </div>
         
         <!-- Pagination -->
-        {% if villas.lastPage > 1 %}
+        {% if villas.hasPages %}
         <div class="row mt-5">
             <div class="col-12">
                 <nav aria-label="Villa pagination">
-                    <ul class="pagination justify-content-center">
-                        {% if villas.currentPage > 1 %}
-                        <li class="page-item">
-                            <a class="page-link" href="{{ villas.previousPageUrl }}">Previous</a>
-                        </li>
-                        {% endif %}
-                        
-                        {% for page in 1..villas.lastPage %}
-                        <li class="page-item {{ page == villas.currentPage ? 'active' : '' }}">
-                            <a class="page-link" href="{{ villas.url(page) }}">{{ page }}</a>
-                        </li>
-                        {% endfor %}
-                        
-                        {% if villas.currentPage < villas.lastPage %}
-                        <li class="page-item">
-                            <a class="page-link" href="{{ villas.nextPageUrl }}">Next</a>
-                        </li>
-                        {% endif %}
-                    </ul>
+                    {{ villas.render()|raw }}
                 </nav>
             </div>
         </div>

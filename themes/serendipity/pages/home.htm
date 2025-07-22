@@ -6,27 +6,37 @@ is_hidden = 0
 
 ==
 <?php
+use Tailor\Models\EntryRecord;
+
 function onStart()
 {
-    // Get featured villas using original table
-    $featuredVillas = DB::table('xc_12345678123412341234123456789abcc')
-        ->where('is_enabled', 1)
-        ->where('is_featured', 1)
-        ->orderBy('sort_order', 'asc')
-        ->limit(6)
-        ->get();
-
-    // If no featured villas, get latest available villas
-    if ($featuredVillas->count() == 0) {
-        $featuredVillas = DB::table('xc_12345678123412341234123456789abcc')
+    try {
+        // Get featured villas using Tailor EntryRecord
+        $featuredVillas = EntryRecord::inSection('Villa\\Villa')
             ->where('is_enabled', 1)
-            ->where('status', 'available')
-            ->orderBy('created_at', 'desc')
+            ->where('is_featured', 1)
+            ->orderBy('sort_order', 'asc')
             ->limit(6)
             ->get();
-    }
 
-    $this['featuredVillas'] = $featuredVillas;
+        // If no featured villas, get latest available villas
+        if ($featuredVillas->count() == 0) {
+            $featuredVillas = EntryRecord::inSection('Villa\\Villa')
+                ->where('is_enabled', 1)
+                ->where('status', 'available')
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
+        }
+
+        $this['featuredVillas'] = $featuredVillas;
+
+    } catch (Exception $e) {
+        // Log error and provide fallback
+        Log::error('Error loading featured villas: ' . $e->getMessage());
+        $this['featuredVillas'] = collect(); // Empty collection as fallback
+        $this['error'] = 'Unable to load featured villas at this time.';
+    }
 }
 ?>
 ==
