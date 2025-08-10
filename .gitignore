@@ -1,0 +1,43 @@
+# Common
+composer.phar
+.DS_Store
+.idea
+.env
+.env.*.php
+.env.php
+auth.json
+php_errors.log
+nginx-error.log
+nginx-access.log
+nginx-ssl.access.log
+nginx-ssl.error.log
+php-errors.log
+sftp-config.json
+.ftpconfig
+.vscode/
+selenium.php
+composer.lock
+package-lock.json
+/node_modules
+_ide_helper.php
+.phpunit.result.cache
+nbproject
+.phpstorm.meta.php
+
+# Project
+/bootstrap/compiled.php
+/vendor
+/vendor_drm
+
+
+# OctoberCMS / Laravel caches and storage
+/storage/cms/cache/
+/storage/cms/twig/
+/storage/framework/
+/storage/logs/
+/storage/temp/
+/storage/debugbar/
+
+# User uploads (keep public uploads, ignore protected/private if used)
+/storage/app/uploads/protected/
+/storage/app/private/

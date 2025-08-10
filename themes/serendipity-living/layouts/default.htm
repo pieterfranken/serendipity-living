@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% partial 'seo/meta' %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    {% styles %}
+    <link href="/themes/serendipity-living/assets/css/app.css?v={{ random() }}" rel="stylesheet">
+</head>
+<body class="sl-body">
+    {% partial 'header' %}
+
+    <main id="content">
+        {% page %}
+    </main>
+
+    {% partial 'footer' %}
+
+    {% framework extras %}
+    {% scripts %}
+</body>
+</html>
+

@@ -1,0 +1,37 @@
+url = "/"
+layout = "default"
+title = "Home"
+meta_title = "Serendipity Living — Luxury Villas"
+meta_description = "An exquisite collection of high-end villas curated for the discerning few."
+==
+function onStart()
+{
+    // Only choose villas that have real attached images (thumbnail or at least one gallery image)
+    $villa = \Serendipity\Villas\Models\Villa::query()
+        ->whereHas('thumbnail')
+        ->orWhereHas('gallery')
+        ->inRandomOrder()
+        ->first();
+
+    $url = '';
+    if ($villa) {
+        if ($villa->thumbnail) {
+            $url = $villa->thumbnail->getPath();
+        } elseif ($villa->gallery && $villa->gallery->count()) {
+            $first = $villa->gallery->first();
+            if ($first) $url = $first->getPath();
+        }
+    }
+    $this['homeHeroUrl'] = $url; // empty means: no background image, keep gradient only
+}
+==
+{% set bgUrl = homeHeroUrl %}
+<section class="sl-hero sl-hero--bg" style="{% if bgUrl %}background-image: url('{{ bgUrl }}');{% endif %}">
+  <div class="sl-hero__bg"></div>
+  <div class="sl-hero__content sl-container">
+    <h1 class="sl-display">Discover Exceptional Villas</h1>
+    <p class="sl-lead">Experience a life of understated elegance and privacy.</p>
+    <a class="sl-btn sl-btn--gold" href="/villas">Explore Villas</a>
+  </div>
+</section>
+

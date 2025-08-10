@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="SL">
+  <rect width="256" height="256" fill="#1E2B3A"/>
+  <!-- Centered uppercase text: use central baseline and a tiny dy for optical centering -->
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" dy="0.06em"
+        fill="#D1B07A" font-size="150" font-family="Georgia, serif">SL</text>
+</svg>
+

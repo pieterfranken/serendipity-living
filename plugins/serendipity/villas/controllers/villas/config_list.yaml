@@ -1,0 +1,17 @@
+# List Behavior Config
+# See modules/backend/controllers/Users/config_list.yaml for reference
+
+title: Villas
+modelClass: Serendipity\Villas\Models\Villa
+recordUrl: serendipity/villas/villas/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showSetup: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: Search villas
+
+list: ~/plugins/serendipity/villas/models/villa/columns.yaml
+

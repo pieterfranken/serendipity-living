@@ -1,0 +1,12 @@
+name: Villa
+modelClass: Serendipity\Villas\Models\Villa
+create:
+    title: Create Villa
+    redirect: serendipity/villas/villas/update/:id
+    redirectClose: serendipity/villas/villas
+update:
+    title: Edit Villa
+    redirect: serendipity/villas/villas
+    redirectClose: serendipity/villas/villas
+form: ~/plugins/serendipity/villas/models/villa/fields.yaml
+

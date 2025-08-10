@@ -1,0 +1,107 @@
+url = "/villas/:slug"
+layout = "default"
+title = "Villa Detail"
+
+[villaDetail]
+[inquiryForm]
+==
+{% set v = villa %}
+<section class="sl-hero villas-detail" style="min-height:0;">
+  <div class="sl-hero__content sl-container" style="padding:16px 0 8px; text-align:left;">
+    <h1 class="sl-display" style="margin:0 0 6px;">{{ v.title }}</h1>
+    <p class="sl-lead" style="margin:0 0 10px; color: var(--sl-navy);">{{ v.bedrooms ?: '?' }} bd • {{ v.bathrooms ?: '?' }} ba • {{ v.interior_area_m2 ?: '?' }} m²{% if v.price %} • {{ v.currency }} {{ v.price|number_format(0, '.', ',') }}{% endif %}</p>
+  </div>
+</section>
+<section class="sl-container" style="padding:16px 0 48px;">
+  {% set hero = v.thumbnail ?: (v.gallery|length ? v.gallery.first : null) %}
+  {% set heroSrc = hero ? (hero.path ?? '') : (v.thumbnail_url ?: '') %}
+
+  {# Build the images queue: thumbnail (if present) + all gallery images; include URL fallback only if not already present #}
+  {% set galleryUrls = [] %}
+  {% if v.thumbnail %}
+    {% set galleryUrls = galleryUrls|merge([v.thumbnail.path]) %}
+  {% endif %}
+  {% for img in v.gallery %}
+    {% if img.path not in galleryUrls %}
+      {% set galleryUrls = galleryUrls|merge([img.path]) %}
+    {% endif %}
+  {% endfor %}
+  {% if v.thumbnail_url and (v.thumbnail_url not in galleryUrls) %}
+    {% set galleryUrls = galleryUrls|merge([v.thumbnail_url]) %}
+  {% endif %}
+
+  <div class="sl-hero-media" data-gallery data-images='{{ galleryUrls|json_encode|raw }}' data-fallback='{{ heroSrc }}'>
+    <img class="sl-hero-image" src="{{ heroSrc }}" alt="{{ v.title }}" loading="lazy" />
+    {% if galleryUrls|length > 1 %}
+      <button class="sl-gallery-nav left" type="button" aria-label="Previous" data-action="prev">&#10094;</button>
+      <button class="sl-gallery-nav right" type="button" aria-label="Next" data-action="next">&#10095;</button>
+    {% endif %}
+  </div>
+
+  {% if galleryUrls|length > 1 %}
+  <div class="sl-thumbs" data-thumbs>
+    {% for url in galleryUrls %}
+      <button class="sl-thumb" type="button" data-index="{{ loop.index0 }}">
+        <img src="{{ url }}" alt="{{ v.title }} thumbnail {{ loop.index }}">
+      </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="sl-copy">
+    <p>{{ v.description ?: 'A meticulously crafted sanctuary of modern luxury and privacy.' }}</p>
+  </div>
+
+  {% if v.gallery|length > 1 %}
+  <script>
+    (function(){
+      const wrap = document.querySelector('[data-gallery]');
+      if (!wrap) return;
+      const imgEl = wrap.querySelector('.sl-hero-image');
+      const images = JSON.parse(wrap.getAttribute('data-images') || '[]');
+      const fallback = wrap.getAttribute('data-fallback') || '';
+      // Thumbnails
+      const thumbsWrap = document.querySelector('[data-thumbs]');
+      const thumbButtons = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('.sl-thumb')) : [];
+      const setActiveThumb = () => thumbButtons.forEach((b,i)=> b.toggleAttribute('aria-current', i===index));
+      // Initialize index to current src, or 0 if not found
+      let index = images.indexOf(imgEl.getAttribute('src'));
+      if (index < 0) index = 0;
+      const show = (i) => {
+        if (!images.length) return;
+        index = (i + images.length) % images.length;
+        imgEl.src = images[index] || fallback;
+        setActiveThumb();
+      };
+      wrap.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        e.preventDefault();
+        show(index + (btn.getAttribute('data-action') === 'next' ? 1 : -1));
+      });
+      // Click thumb -> set hero image
+      if (thumbButtons.length) {
+        thumbButtons.forEach(btn => btn.addEventListener('click', () => show(parseInt(btn.getAttribute('data-index'), 10) || 0)));
+        setActiveThumb();
+      }
+    })();
+  </script>
+  {% endif %}
+
+  <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
+  <div id="inquire" class="sl-inquire">
+    <h2 class="sl-display" style="font-size:1.75rem;">Inquire</h2>
+    <form data-request="onSend" class="sl-form-card">
+      <div class="sl-field-grid">
+        <input class="sl-input" type="text" name="name" placeholder="Your name" required>
+        <input class="sl-input" type="email" name="email" placeholder="Email address" required>
+      </div>
+      <textarea class="sl-input sl-textarea" name="message" placeholder="Your message" rows="5"></textarea>
+      <div class="sl-form-actions">
+        <button class="sl-btn sl-btn--gold">Send Inquiry</button>
+      </div>
+      <div id="inquiryResult" class="sl-form-result"></div>
+    </form>
+  </div>
+</section>
+

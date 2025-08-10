@@ -1,0 +1,21 @@
+{% set items = __SELF__.villas %}
+{% if items|length %}
+<div class="sl-container">
+  <div class="sl-villas-grid">
+    {% for v in items %}
+      {% set img = v.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme) %}
+      <article class="sl-villa-card">
+        <a class="sl-villa-thumb" href="/villas/{{ v.slug }}" aria-label="{{ v.title }}">
+          <img src="{{ img }}" alt="{{ v.title }}" loading="lazy" decoding="async" width="1200" height="800">
+        </a>
+        <h3 class="sl-villa-title"><a href="/villas/{{ v.slug }}">{{ v.title }}</a></h3>
+        <div class="sl-villa-meta">{{ v.bedrooms ?: '?' }} bd • {{ v.bathrooms ?: '?' }} ba • {{ v.interior_area_m2 ?: '?' }} m²</div>
+        {% if v.price %}<div class="sl-villa-price">{{ v.currency }} {{ v.price|number_format(0, '.', ',') }}</div>{% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+  <div class="sl-container"><p class="sl-lead">New villas are being curated. Please check back shortly.</p></div>
+{% endif %}
+

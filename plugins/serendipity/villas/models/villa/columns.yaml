@@ -1,0 +1,20 @@
+columns:
+    thumbnail:
+        label: Thumbnail
+        type: partial
+        path: $/serendipity/villas/controllers/villas/_thumb.htm
+        sortable: false
+    title:
+        label: Title
+        searchable: true
+    slug:
+        label: Slug
+    price:
+        label: Price
+        type: number
+    bedrooms:
+        label: Beds
+        type: number
+    bathrooms:
+        label: Baths
+        type: number

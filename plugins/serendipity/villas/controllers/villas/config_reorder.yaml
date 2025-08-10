@@ -1,0 +1,4 @@
+title: Reorder Villas
+nameFrom: title
+modelClass: Serendipity\Villas\Models\Villa
+

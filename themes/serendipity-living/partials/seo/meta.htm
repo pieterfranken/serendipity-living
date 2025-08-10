@@ -1,0 +1,17 @@
+{% set title = this.page.meta_title ?: this.page.title ?: 'Serendipity Living' %}
+{% set description = this.page.meta_description ?: 'Curated portfolio of luxury villas.' %}
+{% set image = this.page.og_image ?: '' %}
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}" />
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:description" content="{{ description }}" />
+{% if image %}<meta property="og:image" content="{{ image }}" />{% endif %}
+<link rel="canonical" href="{{ this.url() }}" />
+
+<!-- Favicons with cache-busting to ensure browsers pick up the new icon -->
+<!-- Favicons with cache-busting to ensure browsers pick up the new icon -->
+<link rel="icon" type="image/svg+xml" href="{{ ('assets/images/logo-mark.svg')|theme }}?v={{ random() }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ ('assets/images/logo-32.png')|theme }}?v={{ random() }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ ('assets/images/logo-180.png')|theme }}?v={{ random() }}">
+<link rel="shortcut icon" href="{{ ('assets/images/favicon.ico')|theme }}?v={{ random() }}">
+

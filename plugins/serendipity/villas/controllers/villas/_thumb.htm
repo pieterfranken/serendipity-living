@@ -1,0 +1,17 @@
+<?php
+$thumb = null;
+if ($record->thumbnail) {
+    $thumb = $record->thumbnail->getThumb(120, 80, ['mode' => 'crop']);
+} elseif ($record->gallery && $record->gallery->count()) {
+    $first = $record->gallery->first();
+    if ($first) $thumb = $first->getThumb(120, 80, ['mode' => 'crop']);
+} elseif (!empty($record->thumbnail_url)) {
+    $thumb = $record->thumbnail_url;
+}
+?>
+<?php if ($thumb): ?>
+  <img src="<?= e($thumb) ?>" alt="" style="height:40px;width:60px;object-fit:cover;border-radius:4px;" />
+<?php else: ?>
+  <span class="text-muted">—</span>
+<?php endif ?>
+

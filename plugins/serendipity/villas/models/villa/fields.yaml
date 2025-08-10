@@ -1,0 +1,73 @@
+fields:
+    title:
+        label: Title
+        span: left
+        placeholder: Enter the villa name
+        required: true
+    slug:
+        label: Slug
+        span: right
+        preset:
+            field: title
+            type: slug
+        commentAbove: Auto-generated from Title; you can override it if needed
+        required: true
+        # Keep slug editable across contexts to avoid posting a non-column field
+        context: [create, update, preview]
+    price:
+        label: Price
+        span: left
+        type: number
+        required: true
+    currency:
+        label: Currency
+        span: right
+        default: EUR
+    bedrooms:
+        label: Bedrooms
+        span: left
+        type: number
+        required: true
+    bathrooms:
+        label: Bathrooms
+        span: right
+        type: number
+        required: true
+    interior_area_m2:
+        label: Interior m²
+        span: left
+        type: number
+    plot_area_m2:
+        label: Plot m²
+        span: right
+        type: number
+    thumbnail:
+        label: Thumbnail Image
+        type: fileupload
+        mode: image
+        imageHeight: 260
+        imageWidth: 400
+        useCaption: false
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+    gallery:
+        label: Gallery Images
+        type: fileupload
+        mode: image
+        multiple: true
+        useCaption: true
+        sortable: true
+        imageHeight: 260
+        imageWidth: 400
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+    description:
+        label: Description
+        type: textarea
+        size: large
+        span: full
+
