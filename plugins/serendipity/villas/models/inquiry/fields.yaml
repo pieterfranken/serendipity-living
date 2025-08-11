@@ -1,0 +1,31 @@
+fields:
+    villa_title:
+        label: Villa
+        span: left
+        type: text
+        readOnly: true
+    name:
+        label: Name
+        span: left
+        type: text
+        readOnly: true
+    email:
+        label: Email
+        span: right
+        type: text
+        readOnly: true
+    message:
+        label: Message
+        type: textarea
+        size: large
+        readOnly: true
+    source_url:
+        label: Source URL
+        type: text
+        readOnly: true
+    created_at:
+        label: Received at
+        type: datepicker
+        mode: datetime
+        readOnly: true
+

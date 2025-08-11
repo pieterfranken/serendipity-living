@@ -1,0 +1,16 @@
+columns:
+    created_at:
+        label: Received
+        type: datetime
+        searchable: false
+        sortable: true
+    villa_title:
+        label: Villa
+        searchable: true
+    name:
+        label: Name
+        searchable: true
+    email:
+        label: Email
+        searchable: true
+

@@ -1,0 +1,10 @@
+name: Inquiry
+modelClass: Serendipity\Villas\Models\Inquiry
+form: $/serendipity/villas/models/inquiry/fields.yaml
+create:
+    redirect: serendipity/villas/inquiries/update/:id
+    redirectClose: serendipity/villas/inquiries
+update:
+    redirect: serendipity/villas/inquiries
+    redirectClose: serendipity/villas/inquiries
+

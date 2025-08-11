@@ -1,0 +1,12 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('serendipity/villas/inquiries') ?>">Inquiries</a></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!isset($this->fatalError)) : ?>
+    <?= $this->listRender() ?>
+<?php else: ?>
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<?php endif ?>
+

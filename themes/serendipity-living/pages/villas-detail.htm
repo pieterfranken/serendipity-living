@@ -91,7 +91,10 @@ title = "Villa Detail"
   <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
   <div id="inquire" class="sl-inquire">
     <h2 class="sl-display" style="font-size:1.75rem;">Inquire</h2>
-    <form data-request="onSend" class="sl-form-card">
+    <form data-request="inquiryForm::onSend" data-request-validate data-request-flash class="sl-form-card">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none;">
+      <input type="hidden" name="villa_id" value="{{ v.id }}">
+      <input type="hidden" name="villa_title" value="{{ v.title }}">
       <div class="sl-field-grid">
         <input class="sl-input" type="text" name="name" placeholder="Your name" required>
         <input class="sl-input" type="email" name="email" placeholder="Email address" required>

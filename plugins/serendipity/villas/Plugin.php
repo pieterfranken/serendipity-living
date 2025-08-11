@@ -42,7 +42,20 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-home',
                 'permissions' => ['serendipity.villas.manage'],
                 'order'       => 500,
-                // side menu can be extended later
+                'sideMenu'    => [
+                    'villas' => [
+                        'label' => 'Villas',
+                        'icon' => 'icon-home',
+                        'url'  => \Backend::url('serendipity/villas/villas'),
+                        'permissions' => ['serendipity.villas.manage'],
+                    ],
+                    'inquiries' => [
+                        'label' => 'Inquiries',
+                        'icon' => 'icon-envelope',
+                        'url'  => \Backend::url('serendipity/villas/inquiries'),
+                        'permissions' => ['serendipity.villas.manage'],
+                    ],
+                ],
             ],
         ];
     }

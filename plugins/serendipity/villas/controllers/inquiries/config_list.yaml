@@ -1,0 +1,12 @@
+title: Inquiries
+modelClass: Serendipity\Villas\Models\Inquiry
+list: $/serendipity/villas/models/inquiry/columns.yaml
+recordUrl: serendipity/villas/inquiries/update/:id
+noRecordsMessage: 'No inquiries yet'
+recordsPerPage: 20
+showSetup: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: Search inquiries

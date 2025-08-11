@@ -1,0 +1,14 @@
+<?php if (!$this->fatalError): ?>
+<?= Form::open(['class' => 'layout']) ?>
+    <?= $this->formRender() ?>
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <a href="<?= Backend::url('serendipity/villas/inquiries') ?>" class="btn btn-default">Back to list</a>
+        </div>
+    </div>
+<?= Form::close() ?>
+<?php else: ?>
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url('serendipity/villas/inquiries') ?>" class="btn btn-default">Return to list</a></p>
+<?php endif ?>
+
