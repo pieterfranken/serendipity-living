@@ -1,0 +1,15 @@
+{% set title = title ?: 'Project' %}
+{% set byline = byline ?: '' %}
+{% set image = image ?: 'assets/images/placeholder-villa.jpg'|theme %}
+{% set href = href ?: null %}
+<article class="sl-project-card">
+  <div class="sl-project-card__media">
+    <img src="{{ image }}" alt="{{ title }}" loading="lazy">
+  </div>
+  <div class="sl-project-card__meta">
+    <h3 class="sl-project-card__title">{{ title }}</h3>
+    {% if byline %}<div class="sl-project-card__by">{{ byline }}</div>{% endif %}
+  </div>
+  {% if href %}<a class="sl-card-overlay-link" href="{{ href }}" aria-label="View {{ title }}"></a>{% endif %}
+</article>
+

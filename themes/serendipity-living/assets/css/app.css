@@ -119,3 +119,62 @@ body.sl-body {
   .sl-hero__content { padding: 64px 0; }
 }
 
+
+
+/* Project spec icons and cards */
+.sl-icon { width: 18px; height: 18px; display: inline-block; line-height: 1; vertical-align: middle; color: var(--sl-navy); }
+/* Specs list: consistent left/right margin on listing cards and tidy alignment */
+.sl-specs { list-style: none; padding: 0; margin: 8px 0 12px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+/* Only on villa listing cards, align with title/price margins */
+.sl-villa-card > .sl-specs { margin-left: 16px; margin-right: 16px; }
+/* Per-item alignment and icon/text gap */
+.sl-spec { display: inline-flex; align-items: center; gap: 8px; color: var(--sl-navy); font-size: .98rem; }
+.sl-spec__icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; min-width: 20px; }
+.sl-spec__label { white-space: nowrap; }
+
+.sl-villa-card--project { padding: 16px; position: relative; }
+.sl-villa-card--project .sl-villa-title { margin: 4px 0 8px; font-size: 1.3rem; }
+.sl-card-overlay-link { position: absolute; inset: 0; text-indent: -9999px; overflow: hidden; }
+
+/* Projects grids */
+.sl-project-cards, .sl-projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 900px) { .sl-project-cards, .sl-projects-grid { grid-template-columns: 1fr; } }
+
+.sl-project-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.06); position: relative; transition: transform .2s ease, box-shadow .2s ease; }
+.sl-project-card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.10); }
+.sl-project-card__media img { width: 100%; height: 320px; object-fit: cover; display: block; }
+.sl-project-card__meta { padding: 14px 16px 16px; }
+.sl-project-card__title { font-family: "Cormorant Garamond", Georgia, serif; color: var(--sl-navy); font-size: 1.35rem; margin: 0 0 4px; }
+.sl-project-card__by { color: #6a6a6a; font-size: .95rem; }
+
+/* Lightbox */
+.sl-lightbox { position: fixed; inset: 0; display: grid; place-items: center; z-index: 9999; }
+.sl-lightbox[hidden] { display: none !important; }
+.sl-lightbox__backdrop { position: absolute; inset: 0; background: rgba(10,26,47,.78); backdrop-filter: blur(2px); }
+.sl-lightbox__inner { position: relative; max-width: 92vw; max-height: 92vh; display: grid; place-items: center; }
+.sl-lightbox__img { max-width: 92vw; max-height: 88vh; box-shadow: 0 20px 60px rgba(0,0,0,.35); border-radius: 10px; }
+.sl-lightbox__close { position: absolute; top: -8px; right: -8px; width: 40px; height: 40px; border-radius: 999px; border: none; background: var(--sl-gold); color: var(--sl-ivory); font-size: 22px; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+.sl-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; border: none; background: rgba(10,26,47,.7); color: #fff; cursor: pointer; }
+.sl-lightbox__nav--prev { left: -56px; }
+.sl-lightbox__nav--next { right: -56px; }
+@media (max-width: 780px) { .sl-lightbox__nav--prev { left: 10px; } .sl-lightbox__nav--next { right: 10px; } .sl-lightbox__close { top: 8px; right: 8px; } }
+
+/* Header dropdown for Projects */
+.sl-nav { position: relative; }
+.sl-nav__item { position: relative; }
+.sl-dropdown { position: absolute; display: none; min-width: 220px; background: #0b1b31; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; box-shadow: 0 18px 48px rgba(0,0,0,.3); padding: 8px; top: 100%; left: 0; }
+.sl-dropdown a { display: block; color: #f3efe7; padding: 10px 12px; border-radius: 8px; text-decoration: none; opacity: .92; }
+.sl-dropdown a:hover { background: rgba(255,255,255,.06); opacity: 1; }
+.sl-nav__item:hover > .sl-dropdown, .sl-nav__item:focus-within > .sl-dropdown { display: block; }
+
+/* Material Symbols alignment for icons used as text */
+.material-symbols-outlined, .material-symbols-outlined.sl-icon {
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 18px;
+  line-height: 1;
+  vertical-align: middle;
+  color: var(--sl-navy);
+  display: inline-block;
+}
+

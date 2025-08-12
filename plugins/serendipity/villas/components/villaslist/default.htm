@@ -9,7 +9,12 @@
           <img src="{{ img }}" alt="{{ v.title }}" loading="lazy" decoding="async" width="1200" height="800">
         </a>
         <h3 class="sl-villa-title"><a href="/villas/{{ v.slug }}">{{ v.title }}</a></h3>
-        <div class="sl-villa-meta">{{ v.bedrooms ?: '?' }} bd • {{ v.bathrooms ?: '?' }} ba • {{ v.interior_area_m2 ?: '?' }} m²</div>
+        <ul class="sl-specs" aria-label="Specifications">
+          <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/area' %}</span><span class="sl-spec__label">{{ v.interior_area_m2 ?: '?' }} m²</span></li>
+          <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/plot' %}</span><span class="sl-spec__label">{{ v.plot_area_m2 ?: '?' }} m²</span></li>
+          <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bed' %}</span><span class="sl-spec__label">{{ v.bedrooms ?: '?' }}</span></li>
+          <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bath' %}</span><span class="sl-spec__label">{{ v.bathrooms ?: '?' }}</span></li>
+        </ul>
         {% if v.price %}<div class="sl-villa-price">{{ v.currency }} {{ v.price|number_format(0, '.', ',') }}</div>{% endif %}
       </article>
     {% endfor %}

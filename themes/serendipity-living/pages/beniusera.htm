@@ -1,0 +1,69 @@
+url = "/projects/beniusera"
+layout = "default"
+title = "Beniusera — Serendipity Living"
+meta_title = "Beniusera — Serendipity Living"
+meta_description = "Discover Beniusera: four refined villas with elegant proportions and thoughtful layouts."
+==
+<?php
+function onStart() {
+    $this['villas'] = [
+        [
+            'title' => 'Villa Franco',
+            'build' => 370,
+            'plot'  => 1138,
+            'rooms' => 4,
+            'baths' => 4,
+            'price' => 'On request',
+            'href'  => null,
+        ],
+        [
+            'title' => 'Villa Nessura',
+            'build' => 298,
+            'plot'  => 1149,
+            'rooms' => 4,
+            'baths' => 4,
+            'price' => 'On request',
+            'href'  => null,
+        ],
+        [
+            'title' => 'Villa Colea',
+            'build' => 300,
+            'plot'  => 1147,
+            'rooms' => 4,
+            'baths' => 4,
+            'price' => 'On request',
+            'href'  => null,
+        ],
+        [
+            'title' => 'Villa Decorto',
+            'build' => 234,
+            'plot'  => 413,
+            'rooms' => 4,
+            'baths' => 4,
+            'price' => '€1,495,000',
+            'href'  => null,
+        ],
+    ];
+}
+?>
+==
+<section class="sl-container" style="padding:56px 0 72px;">
+  <header style="margin-bottom:22px;">
+    <h1 class="sl-display" style="margin:0 0 8px;">Beniusera</h1>
+    <p class="sl-lead" style="margin:0; color: var(--sl-navy);">An intimate collection of four villas in an elegantly planned enclave.</p>
+  </header>
+
+  <div class="sl-project-cards">
+    {% for v in villas %}
+      {% partial 'projects/villa-card' 
+        title=v.title 
+        build=v.build 
+        plot=v.plot 
+        rooms=v.rooms 
+        baths=v.baths 
+        price=v.price 
+        href=v.href %}
+    {% endfor %}
+  </div>
+</section>
+

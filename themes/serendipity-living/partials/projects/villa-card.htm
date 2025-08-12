@@ -1,0 +1,22 @@
+{% set title = title ?: 'Villa' %}
+{% set build = build ?: '?' %}
+{% set plot = plot ?: '?' %}
+{% set rooms = rooms ?: '?' %}
+{% set baths = baths ?: '?' %}
+{% set price = price ?: '' %}
+{% set href = href ?: null %}
+
+<article class="sl-villa-card sl-villa-card--project">
+  <div class="sl-villa-card__body">
+    <h3 class="sl-villa-title">{{ title }}</h3>
+    <ul class="sl-specs" aria-label="Specifications">
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/area' %}</span><span class="sl-spec__label">{{ build }} m²</span></li>
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/plot' %}</span><span class="sl-spec__label">{{ plot }} m²</span></li>
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bed' %}</span><span class="sl-spec__label">{{ rooms }} rooms</span></li>
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bath' %}</span><span class="sl-spec__label">{{ baths }} baths</span></li>
+    </ul>
+    {% if price %}<div class="sl-villa-price">{{ price }}</div>{% endif %}
+  </div>
+  {% if href %}<a class="sl-card-overlay-link" href="{{ href }}" aria-label="View {{ title }}"></a>{% endif %}
+</article>
+

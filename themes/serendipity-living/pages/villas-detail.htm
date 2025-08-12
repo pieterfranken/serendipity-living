@@ -52,6 +52,28 @@ title = "Villa Detail"
     <p>{{ v.description ?: 'A meticulously crafted sanctuary of modern luxury and privacy.' }}</p>
   </div>
 
+  {# Villa Decorto renders (placeholders until final images) #}
+  {% set slug = v.slug|lower %}
+  {% if slug and ('decorto' in slug) %}
+  <div class="sl-renders" style="margin: 24px 0 8px;">
+    <h2 class="sl-display" style="font-size: 1.5rem; margin: 0 0 12px;">Renders</h2>
+    {% set renders = [
+      'assets/images/placeholder-villa.jpg'|theme,
+      'assets/images/placeholder-villa.svg'|theme,
+      'assets/images/placeholder-villa.jpg'|theme
+    ] %}
+    <div class="sl-thumbs">
+      {% for url in renders %}
+      <button class="sl-thumb" type="button" onclick="initSLLightbox({{ renders|json_encode|raw }}, {{ loop.index0 }});">
+        <img src="{{ url }}" alt="Villa Decorto render {{ loop.index }}">
+      </button>
+      {% endfor %}
+    </div>
+    {% partial 'components/lightbox' images=renders %}
+  </div>
+  {% endif %}
+
+
   {% if v.gallery|length > 1 %}
   <script>
     (function(){
