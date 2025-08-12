@@ -26,7 +26,10 @@ class SeedVillas extends Seeder
             $villa->price = $i['price'];
             $villa->currency = $i['currency'];
             $villa->description = 'A meticulously crafted sanctuary of modern luxury and privacy.';
-            $villa->thumbnail_url = '/themes/serendipity-living/assets/images/placeholder-villa.svg';
+            // Only set thumbnail_url if the column exists (fresh installs run this after migrations, but be safe)
+            if (\Schema::hasColumn('ser_villas', 'thumbnail_url')) {
+                $villa->thumbnail_url = '/themes/serendipity-living/assets/images/placeholder-villa.svg';
+            }
             $villa->save();
         }
     }

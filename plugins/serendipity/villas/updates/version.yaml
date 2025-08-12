@@ -2,15 +2,14 @@
     - "Create villas table"
     - create_ser_villas_table.php
 1.0.2:
-    - "Seed sample villas"
-    - seed_villas.php
-1.0.3:
     - "Add thumbnail URL to villas"
     - add_thumbnail_url_to_villas.php
-1.0.4:
+1.0.3:
     - Ensure thumbnail_url column exists
     - add_thumbnail_column_migration.php
+1.0.4:
+    - "Seed sample villas"
+    - seed_villas.php
 1.1.0:
     - "Create inquiries table"
     - create_ser_inquiries_table.php
-
