@@ -1,0 +1,52 @@
+fields:
+    name:
+        label: Villa Name
+        span: left
+        required: true
+    slug:
+        label: Slug
+        span: right
+        preset:
+            field: name
+            type: slug
+        required: true
+        context: [create, update, preview]
+    build_size:
+        label: Build size (m²)
+        type: number
+        span: left
+    plot_size:
+        label: Plot size (m²)
+        type: number
+        span: right
+    rooms:
+        label: Rooms
+        type: number
+        span: left
+    bathrooms:
+        label: Bathrooms
+        type: number
+        span: right
+    price:
+        label: Price
+        type: number
+        span: left
+    currency:
+        label: Currency
+        span: right
+        default: EUR
+    on_request:
+        label: Price on request
+        type: switch
+        span: left
+    images:
+        label: Images / Renders
+        type: fileupload
+        mode: image
+        span: full
+    project:
+        label: Project
+        type: relation
+        span: full
+        nameFrom: title
+

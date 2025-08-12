@@ -17,9 +17,12 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            \Serendipity\Villas\Components\VillasList::class  => 'villasList',
-            \Serendipity\Villas\Components\VillaDetail::class => 'villaDetail',
-            \Serendipity\Villas\Components\InquiryForm::class => 'inquiryForm',
+            \Serendipity\Villas\Components\VillasList::class   => 'villasList',
+            \Serendipity\Villas\Components\VillaDetail::class  => 'villaDetail',
+            \Serendipity\Villas\Components\InquiryForm::class  => 'inquiryForm',
+            \Serendipity\Villas\Components\ProjectsList::class => 'projectsList',
+            \Serendipity\Villas\Components\ProjectDetail::class => 'projectDetail',
+            \Serendipity\Villas\Components\ProjectsMenu::class => 'projectsMenu',
         ];
     }
 
@@ -47,6 +50,18 @@ class Plugin extends PluginBase
                         'label' => 'Villas',
                         'icon' => 'icon-home',
                         'url'  => \Backend::url('serendipity/villas/villas'),
+                        'permissions' => ['serendipity.villas.manage'],
+                    ],
+                    'currentprojects' => [
+                        'label' => 'Current Projects',
+                        'icon' => 'icon-sitemap',
+                        'url'  => \Backend::url('serendipity/villas/currentprojects'),
+                        'permissions' => ['serendipity.villas.manage'],
+                    ],
+                    'previousprojects' => [
+                        'label' => 'Previous Projects',
+                        'icon' => 'icon-archive',
+                        'url'  => \Backend::url('serendipity/villas/previousprojects'),
                         'permissions' => ['serendipity.villas.manage'],
                     ],
                     'inquiries' => [

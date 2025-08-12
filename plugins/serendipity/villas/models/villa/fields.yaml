@@ -12,13 +12,28 @@ fields:
             type: slug
         commentAbove: Auto-generated from Title; you can override it if needed
         required: true
-        # Keep slug editable across contexts to avoid posting a non-column field
         context: [create, update, preview]
+    project:
+        label: Project
+        type: relation
+        nameFrom: title
+        span: left
+        emptyOption: '— None —'
+        comment: Assign this villa to a project to show it under that project.
+    visible_in_catalog:
+        label: Show on Villas page
+        type: switch
+        default: true
+        span: right
+    featured_in_catalog:
+        label: Feature on Villas page (prioritize in preview)
+        type: switch
+        default: false
+        span: left
     price:
         label: Price
         span: left
         type: number
-        required: true
     currency:
         label: Currency
         span: right
@@ -27,12 +42,10 @@ fields:
         label: Bedrooms
         span: left
         type: number
-        required: true
     bathrooms:
         label: Bathrooms
         span: right
         type: number
-        required: true
     interior_area_m2:
         label: Interior m²
         span: left
@@ -45,17 +58,15 @@ fields:
         label: Thumbnail Image
         type: fileupload
         mode: image
-        imageHeight: 260
-        imageWidth: 400
-        useCaption: false
-        thumbOptions:
-            mode: crop
-            extension: auto
-        span: full
+    price_on_request:
+        label: Price on request
+        type: switch
+        span: left
     gallery:
         label: Gallery Images
         type: fileupload
         mode: image
+        span: full
         multiple: true
         useCaption: true
         sortable: true
@@ -64,7 +75,6 @@ fields:
         thumbOptions:
             mode: crop
             extension: auto
-        span: full
     description:
         label: Description
         type: textarea

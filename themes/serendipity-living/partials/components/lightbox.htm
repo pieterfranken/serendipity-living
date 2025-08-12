@@ -1,0 +1,49 @@
+{% set images = images ?: [] %}
+<div class="sl-lightbox" data-sl-lightbox hidden>
+  <div class="sl-lightbox__backdrop" data-sl-close></div>
+  <div class="sl-lightbox__inner" role="dialog" aria-modal="true" aria-label="Image gallery">
+    <button class="sl-lightbox__close" type="button" aria-label="Close" data-sl-close>&times;</button>
+    <button class="sl-lightbox__nav sl-lightbox__nav--prev" type="button" aria-label="Previous" data-sl-prev>&#10094;</button>
+    <img class="sl-lightbox__img" alt="" />
+    <button class="sl-lightbox__nav sl-lightbox__nav--next" type="button" aria-label="Next" data-sl-next>&#10095;</button>
+  </div>
+</div>
+<script>
+(function(){
+  const lb = document.querySelector('[data-sl-lightbox]');
+  if (!lb) return;
+  const imgEl = lb.querySelector('.sl-lightbox__img');
+  const open = (srcs, startIndex=0) => {
+    lb.hidden = false; lb.dataset.open = '1';
+    let index = startIndex;
+    const show = (i) => { index = (i + srcs.length) % srcs.length; imgEl.src = srcs[index]; };
+    show(index);
+    const onKey = (e) => {
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') show(index+1);
+      if (e.key === 'ArrowLeft') show(index-1);
+    };
+    const close = () => {
+      lb.hidden = true; lb.dataset.open='';
+      document.removeEventListener('keydown', onKey);
+      lb.querySelector('[data-sl-prev]').removeEventListener('click', prev);
+      lb.querySelector('[data-sl-next]').removeEventListener('click', next);
+      Array.from(lb.querySelectorAll('[data-sl-close]')).forEach(b=>b.removeEventListener('click', close));
+    };
+    const prev = () => show(index-1);
+    const next = () => show(index+1);
+    document.addEventListener('keydown', onKey);
+    lb.querySelector('[data-sl-prev]').addEventListener('click', prev);
+    lb.querySelector('[data-sl-next]').addEventListener('click', next);
+    Array.from(lb.querySelectorAll('[data-sl-close]')).forEach(b=>b.addEventListener('click', close));
+    // Expose open on window for triggers
+    window.SLLightboxOpen = show;
+    window.SLLightboxClose = close;
+    window.SLLightboxShow = show;
+    window.SLLightboxSet = (arr)=>{ srcs = arr; show(0); };
+  };
+  // Attach a global init to open with given array
+  window.initSLLightbox = (arr, idx=0) => open(arr, idx);
+})();
+</script>
+

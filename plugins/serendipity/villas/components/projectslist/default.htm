@@ -1,0 +1,52 @@
+{% set current = __SELF__.projectsCurrent %}
+{% set previous = __SELF__.projectsPrevious %}
+
+<div class="sl-container">
+  {% if current and current|length %}
+  <section class="sl-projects current">
+    <h2 class="sl-display" style="margin:0 0 16px;">Current Projects</h2>
+    {% for p in current %}
+      <div class="sl-project">
+        <header class="sl-project__header">
+          <h3 class="sl-project__title"><a href="/projects/{{ p.slug }}" style="text-decoration:none; color:inherit;">{{ p.title }}</a></h3>
+          {% if p.description %}<p class="sl-project__desc">{{ p.description }}</p>{% endif %}
+        </header>
+        {% if p.villas|length %}
+        <div class="sl-villas-grid">
+          {% for v in p.villas %}
+            {% partial 'villas/card' villa=v %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if previous and previous|length %}
+  <section id="previous" class="sl-projects previous" style="margin-top:40px;">
+    <h2 class="sl-display" style="margin:0 0 16px;">Previous Projects</h2>
+    {% for p in previous %}
+      {% set hero = p.hero ? p.hero.path : ('assets/images/placeholder-villa.jpg'|theme) %}
+      <div class="sl-project sl-project--previous">
+        <header class="sl-project__header">
+          <h3 class="sl-project__title">{{ p.title }} <span class="sl-badge sl-badge--muted">Completed</span></h3>
+          {% if p.description %}<p class="sl-project__desc">{{ p.description }}</p>{% endif %}
+          {% if hero %}
+          <div class="sl-project__hero"><img src="{{ hero }}" alt="{{ p.title }}" loading="lazy"></div>
+          {% endif %}
+        </header>
+        {% if p.villas|length %}
+        <div class="sl-villas-grid">
+          {% for v in p.villas %}
+            {% set priceText = v.on_request ? 'On request' : (v.price ? (v.currency ~ ' ' ~ (v.price|number_format(0, '.', ','))) : '') %}
+            {% partial 'projects/villa-card' title=v.name build=v.build_size plot=v.plot_size rooms=v.rooms baths=v.bathrooms price=priceText %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+</div>
+

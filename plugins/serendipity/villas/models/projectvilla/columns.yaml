@@ -1,0 +1,25 @@
+columns:
+    name:
+        label: Name
+        searchable: true
+    slug:
+        label: Slug
+    build_size:
+        label: Build m²
+        type: number
+    plot_size:
+        label: Plot m²
+        type: number
+    rooms:
+        label: Rooms
+        type: number
+    bathrooms:
+        label: Baths
+        type: number
+    price:
+        label: Price
+        type: number
+    on_request:
+        label: On request
+        type: switch
+

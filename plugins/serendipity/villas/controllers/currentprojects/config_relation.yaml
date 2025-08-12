@@ -1,0 +1,9 @@
+villas:
+    label: Villas
+    view:
+        list: $/serendipity/villas/models/villa/columns.yaml
+        toolbarButtons: add|create|remove|update
+    manage:
+        form: $/serendipity/villas/models/villa/fields.yaml
+        list: $/serendipity/villas/models/villa/columns.yaml
+

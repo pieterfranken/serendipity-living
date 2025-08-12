@@ -25,8 +25,12 @@ class Villa extends Model
         'gallery' => 'System\\Models\\File',
     ];
 
+    public $belongsTo = [
+        'project' => [\Serendipity\Villas\Models\Project::class],
+    ];
+
     protected $fillable = [
-        'title','slug','price','currency','bedrooms','bathrooms','interior_area_m2','plot_area_m2','description'
+        'title','slug','price','currency','bedrooms','bathrooms','interior_area_m2','plot_area_m2','description','project_id','visible_in_catalog','featured_in_catalog','price_on_request'
     ];
 
     public $rules = [

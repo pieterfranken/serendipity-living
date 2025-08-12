@@ -32,6 +32,13 @@ body.sl-body {
   margin-inline: auto;
 }
 
+/* Unified page spacing and headers */
+.sl-section { padding: 56px 0 72px; }
+.sl-page-header { margin-bottom: 22px; }
+.sl-page-header .sl-display { margin: 0 0 8px; }
+.sl-page-header .sl-lead { margin: 0; color: var(--sl-navy); }
+
+
 /* Header */
 .sl-header { position: sticky; top: 0; z-index: 100; background: var(--sl-navy); }
 .sl-header .sl-container { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }

@@ -1,0 +1,39 @@
+fields:
+    title:
+        label: Title
+        span: left
+        placeholder: Enter the project name
+        required: true
+    slug:
+        label: Slug
+        span: right
+        preset:
+            field: title
+            type: slug
+        commentAbove: Auto-generated from Title; you can override it if needed
+        required: true
+        context: [create, update, preview]
+    is_previous:
+        label: Previous Project (Completed)
+        type: switch
+        default: false
+        span: left
+    description:
+        label: Description
+        type: textarea
+        size: large
+        span: full
+        cssClass: sl-textarea
+        comment: Shown on the project page above the villas list.
+    villas:
+        label: Villas in this Project
+        type: relation
+        span: full
+        tab: Villas
+        view:
+            list: $/serendipity/villas/models/villa/columns.yaml
+            toolbarButtons: add|create|remove|update
+        manage:
+            form: $/serendipity/villas/models/villa/fields.yaml
+            list: $/serendipity/villas/models/villa/columns.yaml
+

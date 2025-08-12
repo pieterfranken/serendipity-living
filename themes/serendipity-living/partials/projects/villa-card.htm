@@ -5,8 +5,21 @@
 {% set baths = baths ?: '?' %}
 {% set price = price ?: '' %}
 {% set href = href ?: null %}
+{% set image = image ?: null %}
+{% set img = image ?: ('assets/images/placeholder-villa.svg'|theme) %}
 
 <article class="sl-villa-card sl-villa-card--project">
+  {% if image %}
+    {% if href %}
+      <a class="sl-villa-thumb" href="{{ href }}" aria-label="{{ title }}">
+        <img src="{{ img }}" alt="{{ title }}" loading="lazy" decoding="async">
+      </a>
+    {% else %}
+      <div class="sl-villa-thumb">
+        <img src="{{ img }}" alt="{{ title }}" loading="lazy" decoding="async">
+      </div>
+    {% endif %}
+  {% endif %}
   <div class="sl-villa-card__body">
     <h3 class="sl-villa-title">{{ title }}</h3>
     <ul class="sl-specs" aria-label="Specifications">

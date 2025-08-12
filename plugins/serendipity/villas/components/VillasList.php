@@ -17,7 +17,14 @@ class VillasList extends ComponentBase
 
     public function onRun()
     {
-        $this->villas = Villa::query()->orderByDesc('id')->take(12)->get();
+        $this->villas = Villa::query()
+            ->where(function($q){
+                $q->whereNull('project_id')->orWhere('visible_in_catalog', true);
+            })
+            ->orderByDesc('featured_in_catalog')
+            ->orderByDesc('id')
+            ->take(12)
+            ->get();
     }
 }
 

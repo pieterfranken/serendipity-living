@@ -1,0 +1,16 @@
+{% set item = villa ?: v %}
+{% set img = (item.thumbnail ? item.thumbnail.path : null) ?: (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme)) %}
+<article class="sl-villa-card">
+  <a class="sl-villa-thumb" href="/villas/{{ item.slug }}" aria-label="{{ item.title }}">
+    <img src="{{ img }}" alt="{{ item.title }}" loading="lazy" decoding="async" width="1200" height="800">
+  </a>
+  <h3 class="sl-villa-title"><a href="/villas/{{ item.slug }}">{{ item.title }}</a></h3>
+  <ul class="sl-specs" aria-label="Specifications">
+    <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/area' %}</span><span class="sl-spec__label">{{ item.interior_area_m2 ?: '?' }} m²</span></li>
+    <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/plot' %}</span><span class="sl-spec__label">{{ item.plot_area_m2 ?: '?' }} m²</span></li>
+    <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bed' %}</span><span class="sl-spec__label">{{ item.bedrooms ?: '?' }}</span></li>
+    <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bath' %}</span><span class="sl-spec__label">{{ item.bathrooms ?: '?' }}</span></li>
+  </ul>
+  {% if item.price %}<div class="sl-villa-price">{{ item.currency }} {{ item.price|number_format(0, '.', ',') }}</div>{% endif %}
+</article>
+

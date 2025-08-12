@@ -1,0 +1,10 @@
+columns:
+    title:
+        label: Title
+        searchable: true
+    slug:
+        label: Slug
+    is_previous:
+        label: Previous
+        type: switch
+

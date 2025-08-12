@@ -1,0 +1,13 @@
+name: Project
+modelClass: Serendipity\Villas\Models\Project
+create:
+    title: Create Project
+    redirect: serendipity/villas/previousprojects/update/:id
+    redirectClose: serendipity/villas/previousprojects
+update:
+    title: Edit Project
+    redirect: serendipity/villas/previousprojects
+    redirectClose: serendipity/villas/previousprojects
+form: $/serendipity/villas/models/project/fields.yaml
+relation: config_relation.yaml
+

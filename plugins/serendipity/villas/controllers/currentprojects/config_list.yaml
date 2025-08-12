@@ -1,0 +1,15 @@
+title: Current Projects
+modelClass: Serendipity\Villas\Models\Project
+recordUrl: serendipity/villas/currentprojects/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showSetup: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: Search projects
+
+list: $/serendipity/villas/models/project/columns.yaml
+toolbarPartial: _list_toolbar.htm
+

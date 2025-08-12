@@ -13,3 +13,28 @@
 1.1.0:
     - "Create inquiries table"
     - create_ser_inquiries_table.php
+
+1.2.0:
+    - "Create projects and project villas tables"
+    - create_ser_projects_table.php
+    - create_ser_project_villas_table.php
+
+1.3.0:
+    - "Add project and visibility fields to villas"
+    - add_project_and_visibility_to_villas.php
+
+1.3.1:
+    - "Add price_on_request to villas"
+    - add_price_on_request_to_villas.php
+
+1.3.2:
+    - "Seed default Beniusera project"
+    - seed_default_projects.php
+
+1.3.3:
+    - "Seed Beniusera project villas"
+    - seed_beniusera_villas.php
+
+1.3.4:
+    - "Add featured_in_catalog to villas"
+    - add_featured_to_villas.php
