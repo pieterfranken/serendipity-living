@@ -47,8 +47,6 @@ body.sl-body {
 .sl-nav { display: flex; gap: 20px; align-items: center; }
 .sl-nav__link { color: var(--sl-ivory); text-decoration: none; transition: color .2s ease; opacity: .9; }
 .sl-nav__link:hover { color: var(--sl-ivory); opacity: 1; }
-.sl-nav__cta { color: var(--sl-navy); background: var(--sl-gold); padding: 10px 16px; border-radius: 999px; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
-.sl-nav__cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.18); }
 
 /* Hero */
 .sl-hero { position: relative; min-height: 70vh; display: grid; place-items: center; overflow: clip; }
