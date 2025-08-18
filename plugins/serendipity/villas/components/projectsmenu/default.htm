@@ -1,15 +1,25 @@
 {% set current = projectsMenuCurrent %}
 {% set previous = projectsMenuPrevious %}
+
+{# Current Projects dropdown #}
 <div class="sl-nav__item">
   <button type="button" class="sl-nav__link sl-nav__toggle" aria-expanded="false">Projects</button>
   <div class="sl-dropdown" role="menu" aria-label="Projects">
     {% for p in current %}
       <a href="/projects/{{ p.slug }}" role="menuitem">{{ p.title }}</a>
     {% endfor %}
-    {% if previous|length %}
-      <div class="sl-dropdown__divider" aria-hidden="true"></div>
-      <a href="/projects#previous" role="menuitem">Previous Projects</a>
-    {% endif %}
   </div>
 </div>
+
+{# Previous Projects dropdown #}
+{% if previous|length %}
+<div class="sl-nav__item">
+  <button type="button" class="sl-nav__link sl-nav__toggle" aria-expanded="false">Previous Projects</button>
+  <div class="sl-dropdown" role="menu" aria-label="Previous Projects">
+    {% for p in previous %}
+      <a href="/projects/{{ p.slug }}" role="menuitem">{{ p.title }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
 

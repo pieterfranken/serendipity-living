@@ -1,8 +1,12 @@
-url = "/projects/previous"
+url = "/previous-projects"
 layout = "default"
 title = "Previous Projects — Serendipity Living"
 meta_title = "Previous Projects — Serendipity Living"
-meta_description = "A curated selection of previous work from Maarten and Patrick."
+meta_description = "A curated selection of previous projects."
+
+[projectsList]
+showPrevious = 1
+showCurrent = 0
 ==
 <section class="sl-container" style="padding:56px 0 72px;">
   <header style="margin-bottom:22px;">
@@ -10,11 +14,6 @@ meta_description = "A curated selection of previous work from Maarten and Patric
     <p class="sl-lead" style="margin:0; color: var(--sl-navy);">Elegantly crafted residences — a testament to thoughtful design.</p>
   </header>
 
-  <div class="sl-projects-grid">
-    {% partial 'projects/project-card' title='Hillside Sanctuary' byline='by Maarten' %}
-    {% partial 'projects/project-card' title='Coastal Horizon' byline='by Patrick' %}
-    {% partial 'projects/project-card' title='Courtyard Haven' byline='by Maarten' %}
-    {% partial 'projects/project-card' title='Vista Mar' byline='by Patrick' %}
-  </div>
+  {% component 'projectsList' %}
 </section>
 
