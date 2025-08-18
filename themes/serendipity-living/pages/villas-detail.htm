@@ -9,7 +9,13 @@ title = "Villa Detail"
 <section class="sl-hero villas-detail" style="min-height:0;">
   <div class="sl-hero__content sl-container" style="padding:16px 0 8px; text-align:left;">
     <h1 class="sl-display" style="margin:0 0 6px;">{{ v.title }}</h1>
-    <p class="sl-lead" style="margin:0 0 10px; color: var(--sl-navy);">{{ v.bedrooms ?: '?' }} bd • {{ v.bathrooms ?: '?' }} ba • {{ v.interior_area_m2 ?: '?' }} m²{% if v.price %} • {{ v.currency }} {{ v.price|number_format(0, '.', ',') }}{% endif %}</p>
+    <ul class="sl-specs" aria-label="Specifications" style="margin:0;">
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/area' %}</span><span class="sl-spec__label">{{ v.interior_area_m2 ?: '?' }} m²</span></li>
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/plot' %}</span><span class="sl-spec__label">{{ v.plot_area_m2 ?: '?' }} m²</span></li>
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bed' %}</span><span class="sl-spec__label">{{ v.bedrooms ?: '?' }}</span></li>
+      <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bath' %}</span><span class="sl-spec__label">{{ v.bathrooms ?: '?' }}</span></li>
+      {% if v.price %}<li class="sl-spec"><span class="sl-spec__label" style="color:var(--sl-copper); font-weight:600;">{{ v.currency }} {{ v.price|number_format(0, '.', ',') }}</span></li>{% endif %}
+    </ul>
   </div>
 </section>
 <section class="sl-container" style="padding:16px 0 48px;">

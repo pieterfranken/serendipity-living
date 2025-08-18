@@ -3,21 +3,19 @@
     <a href="/" class="sl-logo" aria-label="Serendipity Living">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 160" role="img" aria-label="Serendipity Living">
         <style>
-          .gold { fill: #D1B07A; }
-          .word { fill: #FFFFFF; }
+          .gold { fill: #C8A06A; }
+          .word { fill: #2A2A2A; }
           .monogram { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 120px; }
           .wordmark { font-family: Inter, system-ui, Arial, sans-serif; font-size: 26px; letter-spacing: 6px; }
         </style>
-        <!-- Monogram as text -->
         <text x="0" y="120" class="gold monogram">SL</text>
-        <!-- Wordmark aligned so its baseline matches the monogram's baseline -->
         <text x="184" y="120" class="word wordmark">SERENDIPITY LIVING</text>
       </svg>
     </a>
-    <nav class="sl-nav">
-      <a href="/villas" class="sl-nav__link">Villas</a>
-      {% component 'projectsMenu' %}
-    </nav>
+    <button class="sl-burger" data-burger aria-label="Open menu" type="button">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+
 </header>
 

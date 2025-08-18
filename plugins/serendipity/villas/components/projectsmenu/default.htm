@@ -1,7 +1,7 @@
 {% set current = projectsMenuCurrent %}
 {% set previous = projectsMenuPrevious %}
 <div class="sl-nav__item">
-  <a href="/projects" class="sl-nav__link">Projects</a>
+  <button type="button" class="sl-nav__link sl-nav__toggle" aria-expanded="false">Projects</button>
   <div class="sl-dropdown" role="menu" aria-label="Projects">
     {% for p in current %}
       <a href="/projects/{{ p.slug }}" role="menuitem">{{ p.title }}</a>
