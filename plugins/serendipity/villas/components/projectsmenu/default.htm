@@ -3,8 +3,8 @@
 
 {# Current Projects dropdown #}
 <div class="sl-nav__item">
-  <button type="button" class="sl-nav__link sl-nav__toggle" aria-expanded="false">Projects</button>
-  <div class="sl-dropdown" role="menu" aria-label="Projects">
+  <button type="button" class="sl-nav__link sl-nav__toggle" aria-expanded="false">Current Projects</button>
+  <div class="sl-dropdown" role="menu" aria-label="Current Projects">
     {% for p in current %}
       <a href="/projects/{{ p.slug }}" role="menuitem">{{ p.title }}</a>
     {% endfor %}
