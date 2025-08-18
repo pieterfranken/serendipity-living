@@ -18,6 +18,14 @@
 </head>
 <body class="sl-body">
     {% partial 'header' %}
+    <aside class="sl-nav-panel" aria-hidden="true">
+        <nav class="sl-nav" aria-label="Primary">
+            <a href="/villas" class="sl-nav__link">Villas</a>
+            {% component 'projectsMenu' %}
+        </nav>
+    </aside>
+    <div class="sl-nav-overlay" data-nav-close aria-hidden="true"></div>
+
 
     <main id="content">
         {% page %}
@@ -27,6 +35,53 @@
 
     {% framework extras %}
     {% scripts %}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const body = document.body;
+        const panel = document.querySelector('.sl-nav-panel');
+        const overlay = document.querySelector('.sl-nav-overlay');
+        const toggles = [ ...document.querySelectorAll('[data-burger]') ];
+        const open = () => body.classList.add('sl-nav-open');
+        const close = () => body.classList.remove('sl-nav-open');
+        const toggle = () => body.classList.toggle('sl-nav-open');
+        toggles.forEach(el => el.addEventListener('click', toggle));
+        overlay && overlay.addEventListener('click', () => { close(); document.dispatchEvent(new CustomEvent('sl:nav:close')); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { close(); document.dispatchEvent(new CustomEvent('sl:nav:close')); } });
+      });
+    </script>
+
 </body>
 </html>
+
+      <script>
+        // Make Projects act as a toggle (no navigation) in both header and slide-in panel.
+        (function(){
+          const delegate = (root, selector, type, handler) => {
+            root.addEventListener(type, e => {
+              const el = e.target.closest(selector);
+              if (el && root.contains(el)) handler(e, el);
+            });
+          };
+          const body = document.body;
+          const toggleItem = (item, expand) => {
+            const btn = item.querySelector('.sl-nav__toggle');
+            const dd = item.querySelector('.sl-dropdown');
+            const isOpen = expand ?? item.classList.contains('open');
+            item.classList.toggle('open', !isOpen);
+            if (btn) btn.setAttribute('aria-expanded', String(!isOpen));
+            // Dropdown visibility handled via CSS in panel context; this helps keyboard users in header context.
+            if (dd) dd.style.display = (!isOpen ? 'block' : '');
+          };
+          // Click toggles
+          delegate(document, '.sl-nav__item .sl-nav__toggle', 'click', (e, btn) => {
+            e.preventDefault();
+            const item = btn.closest('.sl-nav__item');
+            if (item) toggleItem(item);
+          });
+          // Close dropdown when nav closes
+          document.addEventListener('sl:nav:close', () => {
+            document.querySelectorAll('.sl-nav__item.open').forEach(i => toggleItem(i, true));
+          });
+        })();
+      </script>
 
