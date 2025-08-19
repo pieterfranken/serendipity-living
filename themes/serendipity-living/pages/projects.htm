@@ -1,18 +1,60 @@
 url = "/projects"
 layout = "default"
-title = "Projects — Serendipity Living"
-meta_title = "Projects — Serendipity Living"
-meta_description = "Discover our current developments."
-
-[projectsList]
-showPrevious = 0
-showCurrent = 1
+title = "Projects – Serendipity Living"
+meta_title = "Projects – Serendipity Living"
+meta_description = "Choose between our current and previous projects."
 ==
-<section class="sl-container sl-section">
-  <header class="sl-page-header sl-page-header--gold">
-    <h1 class="sl-display">Projects</h1>
-    <p class="sl-lead">Ongoing developments.</p>
-  </header>
-  {% component 'projectsList' %}
+function onStart()
+{
+    // Helper to pick an image URL from a villa (thumbnail preferred, else first gallery image)
+    $pickImage = function($villa){
+        if (!$villa) return '';
+        if ($villa->thumbnail) {
+            return $villa->thumbnail->getPath();
+        }
+        if ($villa->gallery && $villa->gallery->count()) {
+            $first = $villa->gallery->first();
+            if ($first) return $first->getPath();
+        }
+        return '';
+    };
+
+    $currentVilla = \Serendipity\Villas\Models\Villa::query()
+        ->whereHas('project', function($q){ $q->current(); })
+        ->where(function($q){
+            $q->whereHas('thumbnail')->orWhereHas('gallery');
+        })
+        ->inRandomOrder()
+        ->first();
+
+    $previousVilla = \Serendipity\Villas\Models\Villa::query()
+        ->whereHas('project', function($q){ $q->previous(); })
+        ->where(function($q){
+            $q->whereHas('thumbnail')->orWhereHas('gallery');
+        })
+        ->inRandomOrder()
+        ->first();
+
+    $this['currentPanelUrl'] = $pickImage($currentVilla);
+    $this['currentPanelAlt'] = $currentVilla ? $currentVilla->title : 'Current projects preview';
+
+    $this['previousPanelUrl'] = $pickImage($previousVilla);
+    $this['previousPanelAlt'] = $previousVilla ? $previousVilla->title : 'Previous projects preview';
+}
+==
+<section class="sl-projects-split" aria-label="Projects selector">
+  <div class="split-container">
+    <a class="split-panel split-left" href="/projects/current" aria-label="View Current Projects">
+      {% set curUrl = currentPanelUrl ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+      <img class="split-image" src="{{ curUrl }}" alt="{{ currentPanelAlt }}" loading="lazy" decoding="async">
+      <h2 class="split-title sl-display">Current Projects</h2>
+    </a>
+
+    <a class="split-panel split-right" href="/projects/previous" aria-label="View Previous Projects">
+      {% set prevUrl = previousPanelUrl ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+      <img class="split-image" src="{{ prevUrl }}" alt="{{ previousPanelAlt }}" loading="lazy" decoding="async">
+      <h2 class="split-title sl-display">Previous Projects</h2>
+    </a>
+  </div>
 </section>
 

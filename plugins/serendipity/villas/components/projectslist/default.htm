@@ -14,7 +14,7 @@
         {% if p.villas|length %}
         <div class="sl-villas-grid">
           {% for v in p.villas %}
-            {% partial 'villas/card' villa=v %}
+            {% partial 'villas/card' villa=v sold=false %}
           {% endfor %}
         </div>
         {% endif %}
@@ -39,8 +39,7 @@
         {% if p.villas|length %}
         <div class="sl-villas-grid">
           {% for v in p.villas %}
-            {% set priceText = v.on_request ? 'On request' : (v.price ? (v.currency ~ ' ' ~ (v.price|number_format(0, '.', ','))) : '') %}
-            {% partial 'projects/villa-card' title=v.name build=v.build_size plot=v.plot_size rooms=v.rooms baths=v.bathrooms price=priceText %}
+            {% partial 'villas/card' villa=v sold=true %}
           {% endfor %}
         </div>
         {% endif %}

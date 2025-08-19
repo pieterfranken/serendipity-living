@@ -1,0 +1,59 @@
+url = "/projects/current"
+layout = "default"
+title = "Current Projects — Serendipity Living"
+meta_title = "Current Projects — Serendipity Living"
+meta_description = "Explore our current developments and villas."
+==
+function onStart()
+{
+    $tiles = [];
+    $projects = \Serendipity\Villas\Models\Project::current()
+        ->with(['villas.thumbnail', 'villas.gallery', 'hero'])
+        ->orderBy('title')
+        ->get();
+
+    $pickImage = function($project){
+        if (!$project) return '';
+        // Prefer a random villa image with thumbnail or gallery
+        $villa = $project->villas
+            ->filter(function($v){ return $v->thumbnail || ($v->gallery && $v->gallery->count()); })
+            ->shuffle()
+            ->first();
+        if ($villa) {
+            if ($villa->thumbnail) return $villa->thumbnail->getPath();
+            if ($villa->gallery && $villa->gallery->count()) {
+                $first = $villa->gallery->first();
+                if ($first) return $first->getPath();
+            }
+        }
+        // Fallback to project hero if present
+        if ($project->hero) return $project->hero->getPath();
+        return '';
+    };
+
+    foreach ($projects as $p) {
+        $tiles[] = [
+            'title' => $p->title,
+            'slug'  => $p->slug,
+            'image' => $pickImage($p)
+        ];
+    }
+
+    $this['projectTiles'] = $tiles;
+}
+==
+<section class="sl-container sl-section">
+  <header class="sl-page-header sl-page-header--gold">
+    <h1 class="sl-display">Current Projects</h1>
+  </header>
+  {% if projectTiles|length %}
+  <div class="sl-villas-grid">
+    {% for t in projectTiles %}
+      {% set url = t.image ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+      {% partial 'projects/card-villa-style' title=t.title href='/projects/' ~ t.slug image=url %}
+    {% endfor %}
+  </div>
+  {% else %}
+    <p>No current projects available at this time.</p>
+  {% endif %}
+</section>

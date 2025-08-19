@@ -1,0 +1,16 @@
+{% set title = title ?: 'Project' %}
+{% set href = href ?: null %}
+{% set image = image ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+<article class="sl-villa-card">
+  {% if href %}
+  <a class="sl-villa-thumb" href="{{ href }}" aria-label="{{ title }}">
+    <img src="{{ image }}" alt="{{ title }}" loading="lazy" decoding="async">
+  </a>
+  {% else %}
+  <div class="sl-villa-thumb">
+    <img src="{{ image }}" alt="{{ title }}" loading="lazy" decoding="async">
+  </div>
+  {% endif %}
+  <h3 class="sl-villa-title"><a href="{{ href }}">{{ title }}</a></h3>
+</article>
+

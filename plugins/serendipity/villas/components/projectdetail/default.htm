@@ -10,7 +10,7 @@
   {% if p.villas|length %}
   <div class="sl-villas-grid">
     {% for v in p.villas %}
-      {% partial 'villas/card' villa=v %}
+      {% partial 'villas/card' villa=v sold=p.is_previous %}
     {% endfor %}
   </div>
   {% endif %}
