@@ -38,3 +38,7 @@
 1.3.4:
     - "Add featured_in_catalog to villas"
     - add_featured_to_villas.php
+
+1.4.0:
+    - "Add enable_renders_download to villas"
+    - add_enable_renders_download_to_villas.php

@@ -75,6 +75,20 @@ fields:
         thumbOptions:
             mode: crop
             extension: auto
+    enable_renders_download:
+        label: Enable public renders download
+        type: switch
+        span: right
+        default: false
+        comment: When enabled and at least one render is uploaded, the website will show a "Download Renders" button that serves a ZIP.
+    renders:
+        label: Renders
+        type: fileupload
+        mode: file
+        span: full
+        multiple: true
+        comment: Upload high-res renders; they will be zipped for visitors.
+        fileTypes: jpg,jpeg,png,webp,tif,tiff,pdf,zip
     description:
         label: Description
         type: textarea

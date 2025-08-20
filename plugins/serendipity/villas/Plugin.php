@@ -26,6 +26,14 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function boot()
+    {
+        // Load plugin routes
+        if (file_exists(__DIR__.'/routes.php')) {
+            require_once __DIR__.'/routes.php';
+        }
+    }
+
     public function registerPermissions()
     {
         return [
