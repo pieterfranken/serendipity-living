@@ -6,7 +6,7 @@ use Log;
 
 class BuildVillaRendersZip implements \Illuminate\Contracts\Queue\ShouldQueue
 {
-    use \Illuminate\Bus\Queueable, \Illuminate\Queue\SerializesModels, \Illuminate\Queue\InteractsWithQueue, \Illuminate\Bus\Dispatchable;
+    use \Illuminate\Bus\Queueable, \Illuminate\Queue\SerializesModels, \Illuminate\Queue\InteractsWithQueue;
 
     public $villaId;
     public $force;
@@ -15,6 +15,33 @@ class BuildVillaRendersZip implements \Illuminate\Contracts\Queue\ShouldQueue
     {
         $this->villaId = $villaId;
         $this->force = $force;
+    }
+
+    public static function dispatch(int $villaId, bool $force = false)
+    {
+        // Try Laravel Bus first if available
+        try {
+            if (class_exists(\Illuminate\Support\Facades\Bus::class)) {
+                return \Illuminate\Support\Facades\Bus::dispatch(new static($villaId, $force));
+            }
+        } catch (\Throwable $e) {
+            // ignore and try Queue facade
+        }
+        try {
+            if (class_exists(\Illuminate\Support\Facades\Queue::class)) {
+                return \Illuminate\Support\Facades\Queue::push(new static($villaId, $force));
+            }
+        } catch (\Throwable $e) {
+            // ignore and fall back
+        }
+        // Fallback: run synchronously
+        try {
+            $job = new static($villaId, $force);
+            $job->handle(new RenderZipService());
+        } catch (\Throwable $e) {
+            // swallow
+        }
+        return null;
     }
 
     public function handle(RenderZipService $service)
