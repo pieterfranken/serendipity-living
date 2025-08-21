@@ -30,9 +30,17 @@ class ProjectDetail extends ComponentBase
     public function onRun()
     {
         $slug = $this->property('slug');
-        $project = Project::with(['villas', 'villas.gallery'])->where('slug', $slug)->first();
+        $project = Project::with(['villas', 'villas.gallery', 'villas.thumbnail'])->where('slug', $slug)->first();
         if (!$project) {
             return \Response::make('Project not found', 404);
+        }
+        // Sort villas: with real thumbnails first
+        if ($project->villas) {
+            $project->villas = $project->villas->sortByDesc(function($v){
+                try { if ($v->thumbnail) return 1; } catch (\Throwable $e) {}
+                $url = (string) ($v->thumbnail_url ?? '');
+                return ($url && stripos($url, 'placeholder-villa.svg') === false) ? 1 : 0;
+            })->values();
         }
         $this->page['project'] = $project;
     }
