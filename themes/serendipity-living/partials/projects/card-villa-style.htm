@@ -1,6 +1,6 @@
 {% set title = title ?: 'Project' %}
 {% set href = href ?: null %}
-{% set image = image ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+{% set image = image ?: ('assets/images/placeholder-villa.svg'|theme|bust) %}
 <article class="sl-villa-card">
   {% if href %}
   <a class="sl-villa-thumb" href="{{ href }}" aria-label="{{ title }}">

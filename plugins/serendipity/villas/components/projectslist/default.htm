@@ -27,7 +27,7 @@
   <section id="previous" class="sl-projects previous" style="margin-top:40px;">
     <h2 class="sl-display" style="margin:0 0 16px;">Previous Projects</h2>
     {% for p in previous %}
-      {% set hero = p.hero ? p.hero.path : ('assets/images/placeholder-villa.jpg'|theme) %}
+      {% set hero = p.hero ? p.hero.path : ('assets/images/placeholder-villa.svg'|theme|bust) %}
       <div class="sl-project sl-project--previous">
         <header class="sl-project__header">
           <h3 class="sl-project__title">{{ p.title }} <span class="sl-badge sl-badge--muted">Completed</span></h3>

@@ -2,7 +2,7 @@
 {% if items|length %}
 <div class="sl-villas-grid">
   {% for v in items %}
-    {% set img = v.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme) %}
+    {% set img = v.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust) %}
     <article class="sl-villa-card">
       <a class="sl-villa-thumb" href="/villas/{{ v.slug }}" aria-label="{{ v.title }}">
         <img src="{{ img }}" alt="{{ v.title }}" loading="lazy" decoding="async" width="1200" height="800">

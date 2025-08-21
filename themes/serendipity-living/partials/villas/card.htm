@@ -1,6 +1,6 @@
 {% set item = villa ?: v %}
 {% set sold = sold is defined ? sold : false %}
-{% set img = (item.thumbnail ? item.thumbnail.path : null) ?: (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme)) %}
+{% set img = (item.thumbnail ? item.thumbnail.path : null) ?: (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust)) %}
 <article class="sl-villa-card">
   {% if sold %}<div class="sl-ribbon sl-ribbon--sold">Sold</div>{% endif %}
   <a class="sl-villa-thumb" href="/villas/{{ item.slug }}" aria-label="{{ item.title }}">

@@ -1,6 +1,7 @@
 <?php namespace Serendipity\Villas;
 
 use System\Classes\PluginBase;
+use Cms\Classes\Theme;
 
 class Plugin extends PluginBase
 {
@@ -79,6 +80,50 @@ class Plugin extends PluginBase
                         'permissions' => ['serendipity.villas.manage'],
                     ],
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * Register Twig markup tags (filters/functions)
+     * Adds a `|bust` filter that appends a file modification timestamp to URLs
+     * to force cache refresh when assets change.
+     */
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'bust' => function ($url) {
+                    if (!$url) return $url;
+
+                    // Skip external or data URLs
+                    if (preg_match('#^(?:https?:)?//#i', $url) || str_starts_with((string)$url, 'data:')) {
+                        return $url;
+                    }
+
+                    // Resolve a filesystem path for the URL
+                    $path = parse_url($url, PHP_URL_PATH);
+                    $fsPath = base_path(ltrim((string)$path, '/'));
+
+                    // If not found, attempt theme-relative resolution
+                    if (!is_file($fsPath)) {
+                        $theme = Theme::getActiveTheme();
+                        if ($theme) {
+                            $candidate = $theme->getPath().DIRECTORY_SEPARATOR.ltrim((string)$url, '/');
+                            if (is_file($candidate)) {
+                                $fsPath = $candidate;
+                            }
+                        }
+                    }
+
+                    if (is_file($fsPath)) {
+                        $ver = (int) @filemtime($fsPath);
+                        $sep = (strpos($url, '?') !== false) ? '&' : '?';
+                        return $url.$sep.'v='.$ver;
+                    }
+
+                    return $url; // Fallback unchanged
+                },
             ],
         ];
     }

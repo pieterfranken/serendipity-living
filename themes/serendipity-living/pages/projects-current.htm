@@ -49,7 +49,7 @@ function onStart()
   {% if projectTiles|length %}
   <div class="sl-villas-grid">
     {% for t in projectTiles %}
-      {% set url = t.image ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+      {% set url = t.image ?: ('assets/images/placeholder-villa.svg'|theme|bust) %}
       {% partial 'projects/card-villa-style' title=t.title href='/projects/' ~ t.slug image=url %}
     {% endfor %}
   </div>

@@ -6,7 +6,7 @@
 {% set price = price ?: '' %}
 {% set href = href ?: null %}
 {% set image = image ?: null %}
-{% set img = image ?: ('assets/images/placeholder-villa.svg'|theme) %}
+{% set img = image ?: ('assets/images/placeholder-villa.svg'|theme|bust) %}
 
 <article class="sl-villa-card sl-villa-card--project">
   {% if image %}

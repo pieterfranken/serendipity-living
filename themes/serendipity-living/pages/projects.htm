@@ -51,7 +51,7 @@ function onStart()
     </a>
 
     <a class="split-panel split-right" href="/projects/previous" aria-label="View Previous Projects">
-      {% set prevUrl = previousPanelUrl ?: ('assets/images/placeholder-villa.jpg'|theme) %}
+      {% set prevUrl = previousPanelUrl ?: ('assets/images/placeholder-villa.svg'|theme|bust) %}
       <img class="split-image" src="{{ prevUrl }}" alt="{{ previousPanelAlt }}" loading="lazy" decoding="async">
       <h2 class="split-title sl-display">Previous Projects</h2>
     </a>
