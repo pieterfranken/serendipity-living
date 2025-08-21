@@ -54,15 +54,23 @@ title = "Villa Detail"
   </div>
   {% endif %}
 
-  <div class="sl-copy">
-    <p>{{ v.description ?: 'A meticulously crafted sanctuary of modern luxury and privacy.' }}</p>
-  </div>
 
-  {% if v.enable_renders_download and v.renders|length %}
-  <div class="sl-renders" style="margin: 24px 0 8px;">
-    <a class="sl-btn sl-btn--gold" href="{{ villaDetail.renderDownloadUrl(v) }}" aria-label="Download all renders for {{ v.title }} as a ZIP">Download Renders</a>
+  {% set showRenders = v.enable_renders_download and v.renders|length %}
+  {% set showLayouts = v.enable_layouts_download and v.layouts|length %}
+  {% if showRenders or showLayouts %}
+  <div class="sl-downloads" style="display:flex; gap:12px; flex-wrap:wrap; margin:24px 0 8px;">
+    {% if showRenders %}
+      <a class="sl-btn sl-btn--gold" href="{{ villaDetail.renderDownloadUrl(v) }}" aria-label="Download all renders for {{ v.title }} as a ZIP">Download Renders</a>
+    {% endif %}
+    {% if showLayouts %}
+      <a class="sl-btn sl-btn--gold" href="{{ villaDetail.layoutsDownloadUrl(v) }}" aria-label="Download all layouts for {{ v.title }} as a ZIP">Download Layouts</a>
+    {% endif %}
   </div>
   {% endif %}
+
+	  <div class="sl-copy">
+	    <p style="color: var(--sl-navy);">{{ v.description ?: 'A meticulously crafted sanctuary of modern luxury and privacy.' }}</p>
+	  </div>
 
 
   {% if galleryUrls|length > 1 %}

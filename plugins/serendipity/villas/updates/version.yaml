@@ -42,3 +42,8 @@
 1.4.0:
     - "Add enable_renders_download to villas"
     - add_enable_renders_download_to_villas.php
+
+
+1.5.0:
+    - "Add layouts download support to villas"
+    - add_layouts_to_villas.php

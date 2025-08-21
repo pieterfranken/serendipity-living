@@ -20,10 +20,11 @@ class Villa extends Model
         'thumbnail' => 'System\\Models\\File',
     ];
 
-    // Multiple gallery images and optional renders
+    // Multiple gallery images and optional renders/layouts
     public $attachMany = [
         'gallery' => 'System\\Models\\File',
         'renders' => 'System\\Models\\File',
+        'layouts' => 'System\\Models\\File',
     ];
 
     public $belongsTo = [
@@ -48,11 +49,12 @@ class Villa extends Model
     }
 
     protected $fillable = [
-        'title','slug','price','currency','bedrooms','bathrooms','interior_area_m2','plot_area_m2','description','project_id','visible_in_catalog','featured_in_catalog','price_on_request','enable_renders_download'
+        'title','slug','price','currency','bedrooms','bathrooms','interior_area_m2','plot_area_m2','description','project_id','visible_in_catalog','featured_in_catalog','price_on_request','enable_renders_download','enable_layouts_download'
     ];
 
     protected $casts = [
         'enable_renders_download' => 'boolean',
+        'enable_layouts_download' => 'boolean',
     ];
 
     public $rules = [
@@ -95,11 +97,14 @@ class Villa extends Model
             if ($this->enable_renders_download && $this->renders && $this->renders->count()) {
                 \Serendipity\Villas\Jobs\BuildVillaRendersZip::dispatch($this->id);
             }
+            if ($this->enable_layouts_download && $this->layouts && $this->layouts->count()) {
+                \Serendipity\Villas\Jobs\BuildVillaLayoutsZip::dispatch($this->id);
+            }
         } catch (\Throwable $e) {
             // Fallback to synchronous build if queues not configured
             try {
-                $service = new \Serendipity\Villas\Classes\RenderZipService();
-                $service->ensureZip($this);
+                (new \Serendipity\Villas\Classes\RenderZipService())->ensureZip($this);
+                (new \Serendipity\Villas\Classes\LayoutZipService())->ensureZip($this);
             } catch (\Throwable $inner) {
                 // swallow
             }

@@ -95,3 +95,18 @@ fields:
         size: large
         span: full
 
+    enable_layouts_download:
+        label: Enable public layouts download
+        type: switch
+        span: right
+        default: false
+        comment: When enabled and at least one layout file is uploaded, the website will show a "Download Layouts" button that serves a ZIP.
+    layouts:
+        label: Layouts
+        type: fileupload
+        mode: file
+        span: full
+        multiple: true
+        comment: Upload layout PDFs/images; they will be zipped for visitors.
+        fileTypes: pdf,jpg,jpeg,png,webp,tif,tiff,zip
+

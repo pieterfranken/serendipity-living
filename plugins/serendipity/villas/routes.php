@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Http\Request;
 use Serendipity\Villas\Models\Villa;
 use Serendipity\Villas\Classes\RenderZipService;
+use Serendipity\Villas\Classes\LayoutZipService;
 
 Route::group(['middleware' => []], function() {
     Route::get('/download/villa-renders/{villaId}/{signature}', function(Request $request, $villaId, $signature) {
@@ -53,6 +54,45 @@ Route::group(['middleware' => []], function() {
         return response()->download($path, $downloadName, [
             'Content-Type' => 'application/zip'
         ]);
+    });
+
+    Route::get('/download/villa-layouts/{villaId}/{signature}', function(Request $request, $villaId, $signature) {
+        $key = sprintf('villa-layouts:%s:%s', $villaId, $request->ip());
+        $max = (int) config('serendipity.villas::layouts.rate_limit.max', 10);
+        $decay = (int) config('serendipity.villas::layouts.rate_limit.decay_minutes', 1);
+
+        try {
+            if (class_exists(RateLimiter::class) && !RateLimiter::tooManyAttempts($key, $max)) {
+                RateLimiter::hit($key, $decay * 60);
+            }
+        } catch (\Throwable $e) {}
+
+        $villa = Villa::find($villaId);
+        if (!$villa || !$villa->enable_layouts_download) {
+            return Response::make('Not found', 404);
+        }
+
+        $expires = $request->query('expires');
+        if (!$expires || time() > (int)$expires) {
+            return Response::make('Link expired', 403);
+        }
+        $expected = hash_hmac('sha256', $villaId.'|'.$expires.'|'.$villa->id, app('encrypter')->getKey());
+        if (!hash_equals($expected, $signature)) {
+            return Response::make('Invalid signature', 403);
+        }
+
+        $service = new LayoutZipService();
+        $meta = $service->ensureZip($villa);
+        if (!$meta) {
+            return Response::make('No layouts available', 404);
+        }
+        $path = $service->getZipAbsolutePath($meta);
+        if (!$path) {
+            return Response::make('File missing', 404);
+        }
+
+        $downloadName = $meta['filename'] ?? ('villa-'.$villa->id.'-layouts.zip');
+        return response()->download($path, $downloadName, [ 'Content-Type' => 'application/zip' ]);
     });
 });
 
