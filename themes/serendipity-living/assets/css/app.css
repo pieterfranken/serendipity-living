@@ -6,13 +6,13 @@
   /* Agaron-inspired */
   --sl-bg: #F8F6F2;
   --sl-text: #2A2A2A;
-  --sl-copper: #C8A06A;
+  --sl-copper: #C8A06A; /* gold */
   --sl-copper-600: #B38C58;
   --sl-bg-warm: #F2ECE3; /* prior page background, now used for header */
 
 }
-:root { --sl-header-h: 56px; }
-@media (min-width: 720px){ :root { --sl-header-h: 60px; } }
+:root { --sl-header-h: 92px; }
+@media (min-width: 720px){ :root { --sl-header-h: 104px; } }
 
 
 * { box-sizing: border-box; }
@@ -57,10 +57,11 @@ body.sl-body {
 
 /* Header - Agaron style */
 .sl-header { position: sticky; top: 0; z-index: 100; background: var(--sl-bg-warm); border-bottom: 1px solid rgba(42,42,42,.06); }
-.sl-header .sl-container { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
-.sl-logo { display: inline-flex; align-items: center; text-decoration: none; }
-.sl-logo img, .sl-logo svg { height: 44px; width: auto; display: block; }
-.sl-logo svg .gold { fill: var(--sl-copper); }
+.sl-header .sl-container { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+.sl-logo { display: inline-flex; align-items: center; text-decoration: none; gap: 10px; }
+.sl-logo__mark { height: 72px; width: auto; display: block; }
+.sl-logo__wordmark { height: 48px; width: auto; display: block; }
+@media (min-width: 720px){ .sl-logo__mark { height: 84px; } .sl-logo__wordmark { height: 56px; } }
 .sl-nav { display: flex; gap: 20px; align-items: center; }
 /* Burger */
 .sl-burger { width: 28px; height: 22px; display: inline-grid; gap: 5px; cursor: pointer; background: transparent; border: none; padding: 0; }
