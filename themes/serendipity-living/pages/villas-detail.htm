@@ -14,7 +14,7 @@ title = "Villa Detail"
       <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/plot' %}</span><span class="sl-spec__label">{{ v.plot_area_m2 ?: '?' }} m²</span></li>
       <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bed' %}</span><span class="sl-spec__label">{{ v.bedrooms ?: '?' }}</span></li>
       <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bath' %}</span><span class="sl-spec__label">{{ v.bathrooms ?: '?' }}</span></li>
-      {% if v.price %}<li class="sl-spec"><span class="sl-spec__label" style="color:var(--sl-copper); font-weight:600;">{{ v.currency }} {{ v.price|number_format(0, '.', ',') }}</span></li>{% endif %}
+      <li class="sl-spec"><span class="sl-spec__label" style="color:var(--sl-copper); font-weight:600;">{% if v.price is not empty %}{{ v.currency }} {{ v.price|number_format(0, '.', ',') }}{% else %}To be decided.{% endif %}</span></li>
     </ul>
   </div>
 </section>

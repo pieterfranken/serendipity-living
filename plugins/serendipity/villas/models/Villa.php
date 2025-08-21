@@ -58,7 +58,6 @@ class Villa extends Model
     public $rules = [
         'title' => 'required',
         'slug' => 'required|unique:ser_villas',
-        'price' => 'required|numeric',
         'bedrooms' => 'required|integer|min:0',
         'bathrooms' => 'required|integer|min:0',
     ];

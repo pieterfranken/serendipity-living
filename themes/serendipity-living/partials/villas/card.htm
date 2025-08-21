@@ -13,6 +13,6 @@
     <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bed' %}</span><span class="sl-spec__label">{{ item.bedrooms ?: '?' }}</span></li>
     <li class="sl-spec"><span class="sl-spec__icon">{% partial 'icons/bath' %}</span><span class="sl-spec__label">{{ item.bathrooms ?: '?' }}</span></li>
   </ul>
-  {% if item.price %}<div class="sl-villa-price">{{ item.currency }} {{ item.price|number_format(0, '.', ',') }}</div>{% endif %}
+  <div class="sl-villa-price">{% if item.price is not empty %}{{ item.currency }} {{ item.price|number_format(0, '.', ',') }}{% else %}To be decided.{% endif %}</div>
 </article>
 
