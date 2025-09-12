@@ -91,7 +91,7 @@ fields:
         fileTypes: jpg,jpeg,png,webp,tif,tiff,pdf,zip
     description:
         label: Description
-        type: textarea
+        type: richeditor
         size: large
         span: full
 

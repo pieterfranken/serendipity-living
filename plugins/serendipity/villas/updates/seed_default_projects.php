@@ -14,7 +14,7 @@ class SeedDefaultProjects extends Seeder
             $p = new Project();
             $p->title = 'Beniusera';
             $p->slug = $slug;
-            $p->description = 'An intimate collection of four villas in an elegantly planned enclave.';
+            $p->description = "An intimate collection with <strong>bold statements</strong> and _refined italics_.\n\nFeatures:\n- Thoughtful masterplan\n- Private amenities";
             $p->is_previous = false;
             $p->save(); // afterSave will generate a CMS page at /projects/beniusera
         }
