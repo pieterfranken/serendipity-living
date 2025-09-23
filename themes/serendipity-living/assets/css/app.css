@@ -1,4 +1,6 @@
 :root {
+/* Cache-bust marker: 2025-09-23a */
+
   --sl-navy: #0A1A2F;
   --sl-gold: #C7A86F;
   --sl-ivory: #F8F6F2;
@@ -55,6 +57,8 @@ body.sl-body {
 .sl-page-header--gold .sl-display{ color: var(--sl-gold); }
 
 .sl-projects .sl-display{ color: var(--sl-gold); }
+
+.sl-display--gold { color: var(--sl-gold); }
 
 
 /* Header - Agaron style */
@@ -116,6 +120,16 @@ body.sl-body {
 .sl-hero--bg .sl-display { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
 .sl-hero--bg .sl-lead { color: rgba(255,255,255,.95); text-shadow: 0 1px 8px rgba(0,0,0,.35); }
 .sl-hero__content { position: relative; color: var(--sl-ivory); text-align: center; padding: 80px 0; }
+/* About grid with contact card */
+.sl-about-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
+@media (max-width: 900px){ .sl-about-grid { grid-template-columns: 1fr; } }
+.sl-contact-card { padding: 12px 0 16px; }
+.sl-contact-body { margin: 0 16px; display: flex; flex-direction: column; gap: 10px; }
+.sl-contact-item { display: flex; align-items: flex-start; gap: 10px; color: var(--sl-navy); }
+.sl-contact-item .material-symbols-outlined { font-size: 20px; color: var(--sl-copper); line-height: 1; }
+.sl-contact-card a { color: var(--sl-navy); text-decoration: none; }
+.sl-contact-card a:hover { text-decoration: underline; }
+
 /* Tighter spacing on detail header */
 .villas-detail .sl-hero__content { padding: 16px 0 8px; }
 
