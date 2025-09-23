@@ -140,7 +140,7 @@ body.sl-body {
 .sl-villa-title { margin: 14px 16px 6px; font-family: "Cormorant Garamond", Georgia, serif; color: var(--sl-navy); font-size: 1.35rem; font-weight: 600; letter-spacing: .3px; }
 .sl-villa-title a { color: inherit; text-decoration: none; }
 /* Diagonal ribbon for sold cards */
-.sl-ribbon { position: absolute; top: 14px; left: -42px; width: 180px; text-align: center; transform: rotate(-45deg); background: var(--sl-copper); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; padding: 7px 0; box-shadow: 0 6px 14px rgba(0,0,0,.18); pointer-events: none; }
+.sl-ribbon { position: absolute; top: 14px; left: -42px; width: 180px; text-align: center; transform: rotate(-45deg); background: var(--sl-copper); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; padding: 7px 0; box-shadow: 0 6px 14px rgba(0,0,0,.18); pointer-events: none; z-index: 3; }
 .sl-ribbon--sold { background: var(--sl-copper); }
   .sl-ribbon--delivery { background: var(--sl-navy); text-indent: -3px; }
 

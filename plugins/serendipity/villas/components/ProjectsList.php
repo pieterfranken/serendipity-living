@@ -115,21 +115,23 @@ class ProjectsList extends ComponentBase
      */
     protected function parseDeliverySortKey(string $text): ?int
     {
-        $t = trim($text);
+        // Normalize non-breaking spaces to regular spaces, then trim
+        $t = trim(str_replace("\xC2\xA0", ' ', $text));
         if ($t === '') return null;
 
-        if (preg_match('/Q([1-4])\s*(\d{4})/i', $t, $m)) {
+        // Use Unicode-aware patterns (u) and accept both regular and NBSP-like spaces via \s after normalization
+        if (preg_match('/Q([1-4])\s*(\d{4})/iu', $t, $m)) {
             $q = (int)$m[1]; $y = (int)$m[2];
             $month = [1=>1,2=>4,3=>7,4=>10][$q] ?? 1;
             return $y*10000 + $month*100 + 1;
         }
-        if (preg_match('/\b(Spring|Summer|Autumn|Fall|Winter)\b\s*(\d{4})/i', $t, $m)) {
+        if (preg_match('/\b(Spring|Summer|Autumn|Fall|Winter)\b\s*(\d{4})/iu', $t, $m)) {
             $season = strtolower($m[1]); $y = (int)$m[2];
             $map = [ 'winter'=>1, 'spring'=>4, 'summer'=>7, 'autumn'=>10, 'fall'=>10 ];
             $month = $map[$season] ?? 6;
             return $y*10000 + $month*100 + 1;
         }
-        if (preg_match('/\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t|tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b\s*(\d{4})/i', $t, $m)) {
+        if (preg_match('/\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t|tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b\s*(\d{4})/iu', $t, $m)) {
             $monName = strtolower($m[1]); $y = (int)$m[2];
             $monMap = [
                 'jan'=>1,'january'=>1,
@@ -148,7 +150,7 @@ class ProjectsList extends ComponentBase
             $month = $monMap[$monName] ?? 6;
             return $y*10000 + $month*100 + 1;
         }
-        if (preg_match('/\b(\d{4})\b/', $t, $m)) {
+        if (preg_match('/\b(\d{4})\b/u', $t, $m)) {
             $y = (int)$m[1];
             return $y*10000 + 6*100 + 1;
         }
