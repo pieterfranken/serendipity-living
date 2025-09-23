@@ -137,10 +137,13 @@ body.sl-body {
 .sl-villa-card:hover { transform: translateY(-3px); box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 4px 14px rgba(0,0,0,.14); }
 .sl-villa-thumb { display: block; aspect-ratio: 3/2; background: var(--sl-bg-warm); overflow: hidden; }
 .sl-villa-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Ensure ribbons always overlay progressive images across browsers */
+.sl-villa-thumb, .sl-villa-thumb .sl-prog-img { position: relative; z-index: 1; }
+
 .sl-villa-title { margin: 14px 16px 6px; font-family: "Cormorant Garamond", Georgia, serif; color: var(--sl-navy); font-size: 1.35rem; font-weight: 600; letter-spacing: .3px; }
 .sl-villa-title a { color: inherit; text-decoration: none; }
 /* Diagonal ribbon for sold cards */
-.sl-ribbon { position: absolute; top: 14px; left: -42px; width: 180px; text-align: center; transform: rotate(-45deg); background: var(--sl-copper); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; padding: 7px 0; box-shadow: 0 6px 14px rgba(0,0,0,.18); pointer-events: none; z-index: 3; }
+.sl-ribbon { position: absolute; top: 14px; left: -42px; width: 180px; text-align: center; transform: rotate(-45deg); background: var(--sl-copper); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; padding: 7px 0; box-shadow: 0 6px 14px rgba(0,0,0,.18); pointer-events: none; z-index: 10; }
 .sl-ribbon--sold { background: var(--sl-copper); }
   .sl-ribbon--delivery { background: var(--sl-navy); text-indent: -3px; }
 
