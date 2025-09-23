@@ -9,6 +9,7 @@ return [
         'decay_minutes' => env('VILLA_RENDERS_RATE_DECAY', 1),
     ],
     'max_zip_size_mb' => env('VILLA_RENDERS_MAX_MB', 1024),
+    'memory_limit' => env('VILLA_RENDERS_MEMORY', '1024M'),
     'remove_zip_when_disabled' => env('VILLA_RENDERS_REMOVE_ON_DISABLE', false),
 ];
 

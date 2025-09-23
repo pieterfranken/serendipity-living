@@ -18,6 +18,9 @@ class RenderZipService
         $this->disk = Config::get('serendipity.villas::renders.disk', 'local');
         $this->zipDir = trim(Config::get('serendipity.villas::renders.zip_dir', 'media/renders/zips'), '/');
         $this->maxZipSizeMb = (int) Config::get('serendipity.villas::renders.max_zip_size_mb', 1024);
+        // Optionally bump PHP memory limit just for this process
+        $mem = Config::get('serendipity.villas::renders.memory_limit');
+        if ($mem) { @ini_set('memory_limit', $mem); }
     }
 
     public function ensureZip(Villa $villa, bool $force = false): ?array

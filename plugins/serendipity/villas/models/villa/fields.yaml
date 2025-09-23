@@ -38,6 +38,11 @@ fields:
         label: Currency
         span: right
         default: EUR
+    delivery_date:
+        label: Delivery (e.g., "Q4 2026" or "Spring 2025")
+        type: text
+        span: left
+        comment: Optional short label shown as a ribbon on listings when the villa is not sold.
     bedrooms:
         label: Bedrooms
         span: left

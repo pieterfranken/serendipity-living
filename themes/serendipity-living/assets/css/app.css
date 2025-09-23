@@ -42,6 +42,8 @@ body.sl-body {
 .sl-container {
   width: min(1180px, 92%);
   margin-inline: auto;
+  margin-left: auto; /* fallback for older browsers */
+  margin-right: auto; /* fallback for older browsers */
 }
 
 /* Unified page spacing and headers */
@@ -140,6 +142,8 @@ body.sl-body {
 /* Diagonal ribbon for sold cards */
 .sl-ribbon { position: absolute; top: 14px; left: -42px; width: 180px; text-align: center; transform: rotate(-45deg); background: var(--sl-copper); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; padding: 7px 0; box-shadow: 0 6px 14px rgba(0,0,0,.18); pointer-events: none; }
 .sl-ribbon--sold { background: var(--sl-copper); }
+  .sl-ribbon--delivery { background: var(--sl-navy); text-indent: -3px; }
+
 
 .sl-villa-meta { color: #6a6a6a; font-size: 0.95rem; margin: 0 16px 8px; }
 .sl-villa-price { color: var(--sl-copper); font-weight: 600; margin: 0 16px; }
@@ -156,7 +160,7 @@ body.sl-body {
 .sl-thumbs { display:flex; gap:10px; margin: 10px 0 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
 .sl-thumb { border: 2px solid transparent; border-radius: 10px; padding: 0; background: transparent; cursor: pointer; overflow: hidden; }
 /* Themed copy */
-.sl-copy { max-width: 860px; color: #5a5a5a; font-size: 1.05rem; line-height: 1.7; }
+.sl-copy { max-width: 1180px; margin-inline: auto; margin-left: auto; margin-right: auto; color: #5a5a5a; font-size: 1.05rem; line-height: 1.7; }
 .sl-copy p { margin: 0 0 1em; }
 .sl-copy strong { color: var(--sl-navy); }
 

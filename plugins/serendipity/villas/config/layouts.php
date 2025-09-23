@@ -9,6 +9,7 @@ return [
         'decay_minutes' => env('VILLA_LAYOUTS_RATE_DECAY', 1),
     ],
     'max_zip_size_mb' => env('VILLA_LAYOUTS_MAX_MB', 1024),
+    'memory_limit' => env('VILLA_LAYOUTS_MEMORY', '1024M'),
     'remove_zip_when_disabled' => env('VILLA_LAYOUTS_REMOVE_ON_DISABLE', false),
 ];
 

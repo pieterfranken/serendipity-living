@@ -14,7 +14,7 @@
         {% if p.villas|length %}
         <div class="sl-villas-grid">
           {% for v in p.villas %}
-            {% partial 'villas/card' villa=v sold=false %}
+            {% partial 'villas/card' villa=v sold=false delivery=v.delivery_date %}
           {% endfor %}
         </div>
         {% endif %}
@@ -39,7 +39,7 @@
         {% if p.villas|length %}
         <div class="sl-villas-grid">
           {% for v in p.villas %}
-            {% partial 'villas/card' villa=v sold=true %}
+            {% partial 'villas/card' villa=v sold=true delivery=v.delivery_date %}
           {% endfor %}
         </div>
         {% endif %}
