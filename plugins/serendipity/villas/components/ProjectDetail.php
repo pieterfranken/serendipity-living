@@ -34,7 +34,7 @@ class ProjectDetail extends ComponentBase
         if (!$project) {
             return \Response::make('Project not found', 404);
         }
-        // Sort villas by delivery_date chronology (earliest first). Villas without delivery_date go after, preserving original order.
+        // Two-tier sort: by delivery_date (earliest first, undated last) and, within dated/undated groups, real images before placeholders.
         if ($project->villas) {
             $project->villas = $this->sortVillasByDelivery($project->villas);
         }
@@ -42,35 +42,54 @@ class ProjectDetail extends ComponentBase
     }
 
     /**
-     * Sort a collection of villas by parsed delivery_date (earliest first).
-     * Villas with no parsable delivery_date are placed after, keeping original order.
+     * Two-tier sorting for villas:
+     * 1) Primary: delivery_date ascending (undated placed after dated)
+     * 2) Secondary within both dated/undated groups: villas with real images first, then placeholders
+     * Within each of the four resulting groups, keep chronological order for dated, and original order for undated.
      */
     protected function sortVillasByDelivery($villas)
     {
-        // Snapshot original order index for stable sort
         $indexed = [];
         foreach ($villas as $i => $v) {
             $key = $this->parseDeliverySortKey((string)($v->delivery_date ?? ''));
-            $indexed[] = ['i' => $i, 'key' => $key, 'villa' => $v];
+            $hasImg = $this->villaHasRealImage($v);
+            $hasDate = $key !== null;
+            // Group rank: 0=(dated+img), 1=(dated+placeholder), 2=(undated+img), 3=(undated+placeholder)
+            $group = ($hasDate ? 0 : 2) + ($hasImg ? 0 : 1);
+            $indexed[] = ['i' => $i, 'key' => $key, 'villa' => $v, 'group' => $group];
         }
         usort($indexed, function($a, $b) {
-            $ka = $a['key']; $kb = $b['key'];
-            $aHas = $ka !== null; $bHas = $kb !== null;
-            if ($aHas && $bHas) {
-                // Earlier first
-                if ($ka === $kb) return $a['i'] <=> $b['i'];
-                return ($ka < $kb) ? -1 : 1;
+            if ($a['group'] !== $b['group']) return $a['group'] <=> $b['group'];
+            // Same group: if dated groups (0 or 1), sort by key asc; else keep original order
+            $datedGroup = ($a['group'] === 0 || $a['group'] === 1);
+            if ($datedGroup) {
+                if ($a['key'] === $b['key']) return $a['i'] <=> $b['i'];
+                return ($a['key'] < $b['key']) ? -1 : 1;
             }
-            if ($aHas && !$bHas) return -1;
-            if (!$aHas && $bHas) return 1;
             return $a['i'] <=> $b['i'];
         });
         $models = array_map(function($row){ return $row['villa']; }, $indexed);
-        // Preserve Eloquent collection type when possible
         if ($villas instanceof \Illuminate\Database\Eloquent\Collection) {
             return new \Illuminate\Database\Eloquent\Collection($models);
         }
         return collect($models);
+    }
+
+    /**
+     * Determines if a villa has a real image (thumbnail attachment, any gallery image,
+     * or a thumbnail_url that is not the placeholder-villa.svg)
+     */
+    protected function villaHasRealImage($villa): bool
+    {
+        try {
+            if (!empty($villa->thumbnail)) return true; // attachment present
+            if (!empty($villa->gallery) && count($villa->gallery) > 0) return true; // has gallery
+            $url = (string)($villa->thumbnail_url ?? '');
+            if ($url !== '' && stripos($url, 'placeholder-villa.svg') === false) return true;
+        } catch (\Throwable $e) {
+            // Be tolerant of missing relations/attributes
+        }
+        return false;
     }
 
     /**

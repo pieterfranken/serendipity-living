@@ -61,25 +61,28 @@ class ProjectsList extends ComponentBase
     }
 
     /**
-     * Sort a collection of villas by parsed delivery_date (earliest first).
-     * Villas with no parsable delivery_date are placed after, keeping original order.
+     * Two-tier sorting for villas:
+     * 1) Primary: delivery_date ascending (undated after dated)
+     * 2) Secondary within dated/undated groups: real images first, placeholders last
+     * Keep chronological order for dated items within their groups, and original order for undated.
      */
     protected function sortVillasByDelivery($villas)
     {
         $indexed = [];
         foreach ($villas as $i => $v) {
             $key = $this->parseDeliverySortKey((string)($v->delivery_date ?? ''));
-            $indexed[] = ['i' => $i, 'key' => $key, 'villa' => $v];
+            $hasImg = $this->villaHasRealImage($v);
+            $hasDate = $key !== null;
+            $group = ($hasDate ? 0 : 2) + ($hasImg ? 0 : 1); // 0..3 as per priority
+            $indexed[] = ['i' => $i, 'key' => $key, 'villa' => $v, 'group' => $group];
         }
         usort($indexed, function($a, $b) {
-            $ka = $a['key']; $kb = $b['key'];
-            $aHas = $ka !== null; $bHas = $kb !== null;
-            if ($aHas && $bHas) {
-                if ($ka === $kb) return $a['i'] <=> $b['i'];
-                return ($ka < $kb) ? -1 : 1;
+            if ($a['group'] !== $b['group']) return $a['group'] <=> $b['group'];
+            $datedGroup = ($a['group'] === 0 || $a['group'] === 1);
+            if ($datedGroup) {
+                if ($a['key'] === $b['key']) return $a['i'] <=> $b['i'];
+                return ($a['key'] < $b['key']) ? -1 : 1;
             }
-            if ($aHas && !$bHas) return -1;
-            if (!$aHas && $bHas) return 1;
             return $a['i'] <=> $b['i'];
         });
         $models = array_map(function($row){ return $row['villa']; }, $indexed);
@@ -87,6 +90,23 @@ class ProjectsList extends ComponentBase
             return new \Illuminate\Database\Eloquent\Collection($models);
         }
         return collect($models);
+    }
+
+    /**
+     * Determines if a villa has a real image (thumbnail attachment, any gallery image,
+     * or a thumbnail_url that is not the placeholder-villa.svg)
+     */
+    protected function villaHasRealImage($villa): bool
+    {
+        try {
+            if (!empty($villa->thumbnail)) return true;
+            if (!empty($villa->gallery) && count($villa->gallery) > 0) return true;
+            $url = (string)($villa->thumbnail_url ?? '');
+            if ($url !== '' && stripos($url, 'placeholder-villa.svg') === false) return true;
+        } catch (\Throwable $e) {
+            // tolerate missing relations
+        }
+        return false;
     }
 
     /**
