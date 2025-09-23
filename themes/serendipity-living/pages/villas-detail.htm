@@ -19,36 +19,44 @@ title = "Villa Detail"
   </div>
 </section>
 <section class="sl-container" style="padding:16px 0 48px;">
-  {% set hero = v.thumbnail ?: (v.gallery|length ? v.gallery.first : null) %}
-  {% set heroSrc = hero ? (hero.path ?? '') : (v.thumbnail_url ?: '') %}
+  {% set heroFile = v.thumbnail ?: (v.gallery|length ? v.gallery.first : null) %}
+  {% set heroSrc = heroFile ? (heroFile.path ?? '') : (v.thumbnail_url ?: '') %}
 
-  {# Build the images queue: thumbnail (if present) + all gallery images; include URL fallback only if not already present #}
-  {% set galleryUrls = [] %}
+  {# Build gallery objects with LQIP + full + thumb sizes #}
+  {% set gallery = [] %}
   {% if v.thumbnail %}
-    {% set galleryUrls = galleryUrls|merge([v.thumbnail.path]) %}
+    {% set gallery = gallery|merge([{
+      lqip: v.thumbnail.getThumb(40, 25, { mode:'crop', quality: 15, extension:'webp' }),
+      full: v.thumbnail.getThumb(1600, 900, { mode:'crop', quality: 75 }),
+      thumb: v.thumbnail.getThumb(320, 180, { mode:'crop', quality: 70 })
+    }]) %}
   {% endif %}
   {% for img in v.gallery %}
-    {% if img.path not in galleryUrls %}
-      {% set galleryUrls = galleryUrls|merge([img.path]) %}
-    {% endif %}
+    {% set gallery = gallery|merge([{
+      lqip: img.getThumb(40, 25, { mode:'crop', quality: 15, extension:'webp' }),
+      full: img.getThumb(1600, 900, { mode:'crop', quality: 75 }),
+      thumb: img.getThumb(320, 180, { mode:'crop', quality: 70 })
+    }]) %}
   {% endfor %}
-  {% if v.thumbnail_url and (v.thumbnail_url not in galleryUrls) %}
-    {% set galleryUrls = galleryUrls|merge([v.thumbnail_url]) %}
+  {% if v.thumbnail_url %}
+    {% set gallery = gallery|merge([{ lqip: v.thumbnail_url, full: v.thumbnail_url, thumb: v.thumbnail_url }]) %}
   {% endif %}
 
-  <div class="sl-hero-media" data-gallery data-images='{{ galleryUrls|json_encode|raw }}' data-fallback='{{ heroSrc }}'>
-    <img class="sl-hero-image" src="{{ heroSrc }}" alt="{{ v.title }}" loading="lazy" />
-    {% if galleryUrls|length > 1 %}
+  {% set first = gallery|length ? gallery[0] : { lqip: heroSrc, full: heroSrc, thumb: heroSrc } %}
+
+  <div class="sl-hero-media" data-gallery data-images='{{ gallery|json_encode|raw }}'>
+    <img class="sl-hero-image sl-prog-img" src="{{ first.lqip }}" data-full="{{ first.full }}" alt="{{ v.title }}" width="1600" height="900" />
+    {% if gallery|length > 1 %}
       <button class="sl-gallery-nav left" type="button" aria-label="Previous" data-action="prev">&#10094;</button>
       <button class="sl-gallery-nav right" type="button" aria-label="Next" data-action="next">&#10095;</button>
     {% endif %}
   </div>
 
-  {% if galleryUrls|length > 1 %}
+  {% if gallery|length > 1 %}
   <div class="sl-thumbs" data-thumbs>
-    {% for url in galleryUrls %}
+    {% for im in gallery %}
       <button class="sl-thumb" type="button" data-index="{{ loop.index0 }}">
-        <img src="{{ url }}" alt="{{ v.title }} thumbnail {{ loop.index }}">
+        <img class="sl-prog-img" src="{{ im.lqip }}" data-full="{{ im.thumb }}" alt="{{ v.title }} thumbnail {{ loop.index }}" width="320" height="180">
       </button>
     {% endfor %}
   </div>
@@ -81,26 +89,28 @@ title = "Villa Detail"
 	  </div>
 
 
-  {% if galleryUrls|length > 1 %}
+  {% if gallery|length > 1 %}
   <script>
     (function(){
       const wrap = document.querySelector('[data-gallery]');
       if (!wrap) return;
       const imgEl = wrap.querySelector('.sl-hero-image');
       const images = JSON.parse(wrap.getAttribute('data-images') || '[]');
-      const fallback = wrap.getAttribute('data-fallback') || '';
-      // Thumbnails
+      const resolve = (e) => (typeof e === 'string' ? { lqip: e, full: e, thumb: e } : (e || {}));
       const thumbsWrap = document.querySelector('[data-thumbs]');
       const thumbButtons = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('.sl-thumb')) : [];
+      let index = 0;
       const setActiveThumb = () => thumbButtons.forEach((b,i)=> b.toggleAttribute('aria-current', i===index));
-      // Initialize index to current src, or 0 if not found
-      let index = images.indexOf(imgEl.getAttribute('src'));
-      if (index < 0) index = 0;
       const show = (i) => {
         if (!images.length) return;
         index = (i + images.length) % images.length;
-        imgEl.src = images[index] || fallback;
+        const ent = resolve(images[index]);
+        imgEl.classList.remove('is-loaded');
+        imgEl.removeAttribute('data-fullloaded');
+        imgEl.src = ent.lqip || ent.full || '';
+        imgEl.setAttribute('data-full', ent.full || '');
         setActiveThumb();
+        if (window.SLProgressive) window.SLProgressive.upgrade(imgEl);
       };
       wrap.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-action]');
@@ -108,7 +118,6 @@ title = "Villa Detail"
         e.preventDefault();
         show(index + (btn.getAttribute('data-action') === 'next' ? 1 : -1));
       });
-      // Click thumb -> set hero image
       if (thumbButtons.length) {
         thumbButtons.forEach(btn => btn.addEventListener('click', () => show(parseInt(btn.getAttribute('data-index'), 10) || 0)));
         setActiveThumb();

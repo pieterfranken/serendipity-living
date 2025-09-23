@@ -28,12 +28,13 @@
     <h2 class="sl-display" style="margin:0 0 16px;">Previous Projects</h2>
     {% for p in previous %}
       {% set hero = p.hero ? p.hero.path : ('assets/images/placeholder-villa.svg'|theme|bust) %}
+      {% set heroLq = p.hero ? p.hero.getThumb(40, 25, { mode:'crop', quality: 15, extension: 'webp' }) : hero %}
       <div class="sl-project sl-project--previous">
         <header class="sl-project__header">
           <h3 class="sl-project__title">{{ p.title }} <span class="sl-badge sl-badge--muted">Completed</span></h3>
           {% if p.description %}<p class="sl-project__desc">{{ p.description }}</p>{% endif %}
           {% if hero %}
-          <div class="sl-project__hero"><img src="{{ hero }}" alt="{{ p.title }}" loading="lazy"></div>
+          <div class="sl-project__hero"><img class="sl-prog-img" src="{{ heroLq }}" data-full="{{ hero }}" alt="{{ p.title }}" loading="lazy" width="1200" height="800"></div>
           {% endif %}
         </header>
         {% if p.villas|length %}

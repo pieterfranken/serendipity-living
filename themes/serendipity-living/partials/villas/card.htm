@@ -1,12 +1,13 @@
 {% set item = villa ?: v %}
 {% set sold = sold is defined ? sold : false %}
 {% set delivery = delivery is defined ? delivery : (item.delivery_date ?: null) %}
-{% set img = (item.thumbnail ? item.thumbnail.path : null) ?: (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust)) %}
+{% set lqip = item.thumbnail ? item.thumbnail.getThumb(40, 27, { mode:'crop', quality: 15, extension: 'webp' }) : (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust)) %}
+{% set full = item.thumbnail ? item.thumbnail.getThumb(800, 533, { mode:'crop', quality: 75 }) : (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust)) %}
 <article class="sl-villa-card">
   {% if sold %}<div class="sl-ribbon sl-ribbon--sold">Sold</div>{% endif %}
   {% if delivery and (not sold) %}<div class="sl-ribbon sl-ribbon--delivery">{{ delivery }}</div>{% endif %}
   <a class="sl-villa-thumb" href="/villas/{{ item.slug }}" aria-label="{{ item.title }}">
-    <img src="{{ img }}" alt="{{ item.title }}" loading="lazy" decoding="async" width="1200" height="800">
+    <img class="sl-prog-img" src="{{ lqip }}" data-full="{{ full }}" alt="{{ item.title }}" loading="lazy" decoding="async" width="800" height="533">
   </a>
   <h3 class="sl-villa-title"><a href="/villas/{{ item.slug }}">{{ item.title }}</a></h3>
   <ul class="sl-specs" aria-label="Specifications">
