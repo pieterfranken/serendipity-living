@@ -1,0 +1,65 @@
+fields:
+  page_title:
+    label: Page Title
+    span: auto
+    type: text
+  content:
+    label: Main Content
+    type: richeditor
+    size: giant
+    span: full
+
+  mission_section:
+    label: Mission
+    type: section
+  mission_title:
+    label: Mission Title
+    span: auto
+    type: text
+  mission_content:
+    label: Mission Content
+    type: richeditor
+    size: large
+    span: full
+
+  history_section:
+    label: Company History
+    type: section
+  history_title:
+    label: History Title
+    span: auto
+    type: text
+  history_content:
+    label: History Content
+    type: richeditor
+    size: large
+    span: full
+
+  team_section:
+    label: Team Members
+    type: section
+  team_members:
+    label: Team Members
+    type: repeater
+    prompt: Add team member
+    form:
+      fields:
+        name:
+          label: Name
+          span: left
+          type: text
+        role:
+          label: Role
+          span: right
+          type: text
+        photo:
+          label: Photo
+          type: mediafinder
+          mode: image
+          span: left
+        bio:
+          label: Bio
+          type: richeditor
+          size: large
+          span: full
+

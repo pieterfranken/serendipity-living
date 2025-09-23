@@ -1,0 +1,55 @@
+{% set a = about %}
+
+<section class="sl-hero" style="min-height:0;">
+  <div class="sl-hero__content sl-container" style="padding:16px 0 8px; text-align:left;">
+    <h1 class="sl-display" style="margin:0 0 6px;">{{ a.page_title ?: 'About Us' }}</h1>
+  </div>
+</section>
+
+<section class="sl-container" style="padding:16px 0 48px;">
+  <div class="sl-copy" style="color: var(--sl-navy);">
+    {% if a.content %}
+      {{ a.content|raw }}
+    {% endif %}
+  </div>
+
+  {% if a.mission_title or a.mission_content %}
+    <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
+    <h2 class="sl-display" style="font-size:1.75rem;">{{ a.mission_title ?: 'Our Mission' }}</h2>
+    <div class="sl-copy" style="color: var(--sl-navy);">
+      {{ a.mission_content|raw }}
+    </div>
+  {% endif %}
+
+  {% if a.history_title or a.history_content %}
+    <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
+    <h2 class="sl-display" style="font-size:1.75rem;">{{ a.history_title ?: 'Our History' }}</h2>
+    <div class="sl-copy" style="color: var(--sl-navy);">
+      {{ a.history_content|raw }}
+    </div>
+  {% endif %}
+
+  {% if a.team_members and a.team_members|length %}
+    <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
+    <h2 class="sl-display" style="font-size:1.75rem;">Our Team</h2>
+    <div class="sl-team" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:20px; margin-top:12px;">
+      {% for m in a.team_members %}
+        <article class="sl-villa-card sl-villa-card--team">
+          {% if m.photo %}
+            <div class="sl-villa-thumb">
+              <img src="{{ m.photo|media|bust }}" alt="{{ m.name }}" loading="lazy" decoding="async">
+            </div>
+          {% endif %}
+          <h3 class="sl-villa-title">{{ m.name }}</h3>
+          {% if m.role %}<p class="sl-team-role" style="margin:0 16px 8px; color:var(--sl-copper); font-weight:600;">{{ m.role }}</p>{% endif %}
+          {% if m.bio %}
+            <div class="sl-copy" style="color: var(--sl-navy); margin:0 16px;">
+              {{ m.bio|raw }}
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+
