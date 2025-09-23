@@ -2,15 +2,34 @@
 
 <section class="sl-hero" style="min-height:0;">
   <div class="sl-hero__content sl-container" style="padding:16px 0 8px; text-align:left;">
-    <h1 class="sl-display" style="margin:0 0 6px;">{{ a.page_title ?: 'About Us' }}</h1>
+    <h1 class="sl-display sl-display--gold" style="margin:0 0 6px;">{{ a.page_title ?: 'About Us' }}</h1>
   </div>
 </section>
 
 <section class="sl-container" style="padding:16px 0 48px;">
-  <div class="sl-copy" style="color: var(--sl-navy);">
-    {% if a.content %}
-      {{ a.content|raw }}
-    {% endif %}
+  <div class="sl-about-grid">
+    <div class="sl-copy" style="color: var(--sl-navy);">
+      {% if a.content %}
+        {{ a.content|raw }}
+      {% endif %}
+    </div>
+    <aside class="sl-contact-card sl-villa-card" aria-label="Contact information">
+      <h2 class="sl-villa-title" style="margin:14px 16px 8px;">Contact</h2>
+      <div class="sl-contact-body">
+        <div class="sl-contact-item">
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+          <a href="mailto:info@serendipityliving.com">info@serendipityliving.com</a>
+        </div>
+        <div class="sl-contact-item">
+          <span class="material-symbols-outlined" aria-hidden="true">call</span>
+          <a href="tel:+31621177930">+31 6 21177930</a>
+        </div>
+        <div class="sl-contact-item">
+          <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+          <div>Costa Blanca, Spain</div>
+        </div>
+      </div>
+    </aside>
   </div>
 
   {% if a.mission_title or a.mission_content %}
