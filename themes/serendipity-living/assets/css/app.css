@@ -135,7 +135,7 @@ body.sl-body {
 @media (max-width: 680px) { .sl-villas-grid { grid-template-columns: 1fr; } }
 .sl-villa-card { position: relative; background: var(--sl-bg-warm); border-radius: 16px; padding: 0 0 20px; box-shadow: 0 12px 28px rgba(0,0,0,.18), 0 2px 10px rgba(0,0,0,.10); transition: transform .2s ease, box-shadow .2s ease; overflow: hidden; }
 .sl-villa-card:hover { transform: translateY(-3px); box-shadow: 0 20px 60px rgba(0,0,0,.28), 0 4px 14px rgba(0,0,0,.14); }
-.sl-villa-thumb { display: block; aspect-ratio: 3/2; background: #ddd; overflow: hidden; }
+.sl-villa-thumb { display: block; aspect-ratio: 3/2; background: var(--sl-bg-warm); overflow: hidden; }
 .sl-villa-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sl-villa-title { margin: 14px 16px 6px; font-family: "Cormorant Garamond", Georgia, serif; color: var(--sl-navy); font-size: 1.35rem; font-weight: 600; letter-spacing: .3px; }
 .sl-villa-title a { color: inherit; text-decoration: none; }
@@ -159,14 +159,24 @@ body.sl-body {
 /* Thumbnails row */
 .sl-thumbs { display:flex; gap:10px; margin: 10px 0 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
 .sl-thumb { border: 2px solid transparent; border-radius: 10px; padding: 0; background: transparent; cursor: pointer; overflow: hidden; }
+/* Ensure gallery backgrounds match page background and thumbs fill nicely */
+.sl-hero-media { background: var(--sl-bg); }
+.sl-hero-media .sl-hero-image { background: var(--sl-bg); }
+
+.sl-thumbs { background: var(--sl-bg); }
+.sl-thumb { background: var(--sl-bg); width: min(160px, 28vw); aspect-ratio: 16/9; }
+.sl-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--sl-bg); }
+
+/* Project hero container background to avoid mismatch during progressive load */
+.sl-project__hero { background: var(--sl-bg); }
+.sl-project__hero img { display: block; width: 100%; height: auto; background: var(--sl-bg); }
+
 /* Themed copy */
 .sl-copy { max-width: 1180px; margin-inline: auto; margin-left: auto; margin-right: auto; color: #5a5a5a; font-size: 1.05rem; line-height: 1.7; }
 .sl-copy p { margin: 0 0 1em; }
 .sl-copy strong { color: var(--sl-navy); }
 
-.sl-thumb img { width: 120px; height: 80px; object-fit: cover; display:block; }
 .sl-thumb[aria-current="true"], .sl-thumb.active { border-color: var(--sl-copper); }
-@media (max-width: 680px) { .sl-thumb img { width: 90px; height: 60px; } }
 
 
 /* Inquire form (villa details) */

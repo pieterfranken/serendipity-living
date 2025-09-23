@@ -22,24 +22,43 @@ title = "Villa Detail"
   {% set heroFile = v.thumbnail ?: (v.gallery|length ? v.gallery.first : null) %}
   {% set heroSrc = heroFile ? (heroFile.path ?? '') : (v.thumbnail_url ?: '') %}
 
-  {# Build gallery objects with LQIP + full + thumb sizes #}
+  {# Build gallery objects with LQIP + full + thumb sizes, avoid duplicates #}
   {% set gallery = [] %}
+  {% set seen = [] %}
+
+  {# 1) Primary thumbnail attachment #}
   {% if v.thumbnail %}
-    {% set gallery = gallery|merge([{
-      lqip: v.thumbnail.getThumb(40, 25, { mode:'crop', quality: 15, extension:'webp' }),
-      full: v.thumbnail.getThumb(1600, 900, { mode:'crop', quality: 75 }),
-      thumb: v.thumbnail.getThumb(320, 180, { mode:'crop', quality: 70 })
-    }]) %}
+    {% set key = v.thumbnail.path %}
+    {% if key not in seen %}
+      {% set gallery = gallery|merge([{
+        lqip: v.thumbnail.getThumb(40, 25, { mode:'crop', quality: 15, extension:'webp' }),
+        full: v.thumbnail.getThumb(1600, 900, { mode:'crop', quality: 75 }),
+        thumb: v.thumbnail.getThumb(320, 180, { mode:'crop', quality: 70 })
+      }]) %}
+      {% set seen = seen|merge([key]) %}
+    {% endif %}
   {% endif %}
+
+  {# 2) Gallery attachments #}
   {% for img in v.gallery %}
-    {% set gallery = gallery|merge([{
-      lqip: img.getThumb(40, 25, { mode:'crop', quality: 15, extension:'webp' }),
-      full: img.getThumb(1600, 900, { mode:'crop', quality: 75 }),
-      thumb: img.getThumb(320, 180, { mode:'crop', quality: 70 })
-    }]) %}
+    {% set key = img.path %}
+    {% if key not in seen %}
+      {% set gallery = gallery|merge([{
+        lqip: img.getThumb(40, 25, { mode:'crop', quality: 15, extension:'webp' }),
+        full: img.getThumb(1600, 900, { mode:'crop', quality: 75 }),
+        thumb: img.getThumb(320, 180, { mode:'crop', quality: 70 })
+      }]) %}
+      {% set seen = seen|merge([key]) %}
+    {% endif %}
   {% endfor %}
-  {% if v.thumbnail_url %}
-    {% set gallery = gallery|merge([{ lqip: v.thumbnail_url, full: v.thumbnail_url, thumb: v.thumbnail_url }]) %}
+
+  {# 3) External thumbnail URL ONLY if no attachments present #}
+  {% if (not v.thumbnail) and (v.gallery|length == 0) and v.thumbnail_url %}
+    {% set key = v.thumbnail_url %}
+    {% if key not in seen %}
+      {% set gallery = gallery|merge([{ lqip: v.thumbnail_url, full: v.thumbnail_url, thumb: v.thumbnail_url }]) %}
+      {% set seen = seen|merge([key]) %}
+    {% endif %}
   {% endif %}
 
   {% set first = gallery|length ? gallery[0] : { lqip: heroSrc, full: heroSrc, thumb: heroSrc } %}
@@ -101,16 +120,26 @@ title = "Villa Detail"
       const thumbButtons = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('.sl-thumb')) : [];
       let index = 0;
       const setActiveThumb = () => thumbButtons.forEach((b,i)=> b.toggleAttribute('aria-current', i===index));
+      // Preload all hero full images so navigation swaps are immediate
+      try {
+        images.forEach((e, i) => {
+          const u = resolve(e).full;
+          if (u && i !== index) { const pre = new Image(); pre.src = u; }
+        });
+      } catch(err) {}
+
       const show = (i) => {
         if (!images.length) return;
         index = (i + images.length) % images.length;
         const ent = resolve(images[index]);
-        imgEl.classList.remove('is-loaded');
-        imgEl.removeAttribute('data-fullloaded');
-        imgEl.src = ent.lqip || ent.full || '';
-        imgEl.setAttribute('data-full', ent.full || '');
+        const full = ent.full || ent.lqip || '';
+        if (!full) return;
+        // Show full-resolution immediately (no LQIP/blur on navigation)
+        imgEl.setAttribute('data-full', full);
+        imgEl.dataset.fullLoaded = '1';
+        imgEl.src = full;
+        imgEl.classList.add('is-loaded');
         setActiveThumb();
-        if (window.SLProgressive) window.SLProgressive.upgrade(imgEl);
       };
       wrap.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-action]');
