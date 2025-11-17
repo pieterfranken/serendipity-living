@@ -249,17 +249,19 @@ body.sl-body {
 .sl-project-card__title { font-family: "Cormorant Garamond", Georgia, serif; color: var(--sl-navy); font-size: 1.35rem; margin: 0 0 4px; }
 .sl-project-card__by { color: #6a6a6a; font-size: .95rem; }
 
-/* Lightbox */
-.sl-lightbox { position: fixed; inset: 0; display: grid; place-items: center; z-index: 9999; }
+/* Lightbox (used for mobile villa gallery and other overlays) */
+.sl-lightbox { position: fixed; inset: 0; display: grid; place-items: center; z-index: 9999; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s ease; }
+.sl-lightbox.is-active { opacity: 1; visibility: visible; pointer-events: auto; }
 .sl-lightbox[hidden] { display: none !important; }
 .sl-lightbox__backdrop { position: absolute; inset: 0; background: rgba(10,26,47,.78); backdrop-filter: blur(2px); }
-.sl-lightbox__inner { position: relative; max-width: 92vw; max-height: 92vh; display: grid; place-items: center; }
-.sl-lightbox__img { max-width: 92vw; max-height: 88vh; box-shadow: 0 20px 60px rgba(0,0,0,.35); border-radius: 10px; }
-.sl-lightbox__close { position: absolute; top: -8px; right: -8px; width: 40px; height: 40px; border-radius: 999px; border: none; background: var(--sl-gold); color: var(--sl-ivory); font-size: 22px; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
-.sl-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; border: none; background: rgba(10,26,47,.7); color: #fff; cursor: pointer; }
+.sl-lightbox__inner { position: relative; max-width: 92vw; max-height: 92vh; display: grid; place-items: center; padding: 8px; }
+.sl-lightbox__img { width: 100%; height: auto; max-width: 92vw; max-height: 88vh; box-shadow: 0 20px 60px rgba(0,0,0,.35); border-radius: 10px; background: var(--sl-bg); object-fit: contain; }
+.sl-lightbox__close { position: absolute; top: -8px; right: -8px; width: 40px; height: 40px; border-radius: 999px; border: none; background: var(--sl-gold); color: var(--sl-ivory); font-size: 22px; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.25); display: grid; place-items: center; }
+.sl-lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; border: none; background: rgba(10,26,47,.7); color: #fff; cursor: pointer; display: grid; place-items: center; }
 .sl-lightbox__nav--prev { left: -56px; }
 .sl-lightbox__nav--next { right: -56px; }
 @media (max-width: 780px) { .sl-lightbox__nav--prev { left: 10px; } .sl-lightbox__nav--next { right: 10px; } .sl-lightbox__close { top: 8px; right: 8px; } }
+body.sl-lightbox-open { overflow: hidden; }
 
 /* Header dropdown for Projects */
 .sl-nav { position: relative; }

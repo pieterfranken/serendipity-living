@@ -71,6 +71,14 @@ title = "Villa Detail"
     {% endif %}
   </div>
 
+  {# Mobile lightbox overlay for villa gallery (activated on hero tap) #}
+  <div class="sl-lightbox" data-villa-lightbox hidden aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="sl-lightbox__backdrop" data-lightbox-close></div>
+    <div class="sl-lightbox__inner">
+      <img class="sl-lightbox__img sl-prog-img" src="" alt="{{ v.title }}" width="1600" height="900">
+    </div>
+  </div>
+
   {% if gallery|length > 1 %}
   <div class="sl-thumbs" data-thumbs>
     {% for im in gallery %}
@@ -154,6 +162,167 @@ title = "Villa Detail"
     })();
   </script>
   {% endif %}
+
+  <script>
+    // Mobile lightbox for villa gallery (hero tap on small screens)
+    (function(){
+      const wrap = document.querySelector('[data-gallery]');
+      const lightbox = document.querySelector('[data-villa-lightbox]');
+      if (!wrap || !lightbox) return;
+      const heroImg = wrap.querySelector('.sl-hero-image');
+      if (!heroImg) return;
+
+      const raw = JSON.parse(wrap.getAttribute('data-images') || '[]');
+      const resolve = (e) => (typeof e === 'string' ? { lqip: e, full: e, thumb: e } : (e || {}));
+      let images = raw.map(resolve).filter(ent => ent.full || ent.lqip);
+
+      if (!images.length) {
+        const heroFull = heroImg.getAttribute('data-full') || heroImg.currentSrc || heroImg.src;
+        if (heroFull) {
+          images = [{
+            lqip: heroImg.src || heroFull,
+            full: heroFull,
+            thumb: heroFull
+          }];
+        }
+      }
+
+      if (!images.length) return;
+
+      const body = document.body;
+      const imgEl = lightbox.querySelector('.sl-lightbox__img');
+      const backdrop = lightbox.querySelector('.sl-lightbox__backdrop');
+      const closeEls = lightbox.querySelectorAll('[data-lightbox-close]');
+      const navButtons = lightbox.querySelectorAll('[data-lightbox-nav]');
+      let current = 0;
+      let closeTimer = null;
+
+      const isMobile = () => {
+        const mq = window.matchMedia || function(){ return { matches: false }; };
+        const touchCapable = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+        const coarsePointer = mq('(pointer: coarse)').matches;
+        const smallScreen = mq('(max-width: 1024px)').matches;
+        const ua = (navigator.userAgent || navigator.vendor || '').toLowerCase();
+        const mobileUA = /android|iphone|ipad|ipod|mobile/.test(ua);
+        return (touchCapable || coarsePointer || mobileUA) && smallScreen;
+      };
+
+      const applyImage = (idx) => {
+        const entry = images[idx];
+        if (!entry) return;
+        current = idx;
+        const full = entry.full || entry.lqip || '';
+        if (!full) return;
+        imgEl.setAttribute('data-full', full);
+        imgEl.dataset.fullLoaded = '1';
+        imgEl.src = full;
+        imgEl.classList.add('is-loaded');
+      };
+
+      const getStartIndexFromHero = () => {
+        const heroFull = heroImg.getAttribute('data-full') || heroImg.currentSrc || heroImg.src;
+        if (!heroFull) return 0;
+        const idx = images.findIndex(entry => (entry.full || entry.lqip) === heroFull);
+        return idx >= 0 ? idx : 0;
+      };
+
+      const open = () => {
+        if (!isMobile()) return;
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = null;
+        }
+        lightbox.removeAttribute('hidden');
+        lightbox.classList.add('is-active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        body.classList.add('sl-lightbox-open');
+        applyImage(getStartIndexFromHero());
+      };
+
+      const close = () => {
+        lightbox.classList.remove('is-active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        body.classList.remove('sl-lightbox-open');
+        closeTimer = window.setTimeout(() => {
+          lightbox.setAttribute('hidden', 'hidden');
+        }, 250);
+      };
+
+      const go = (delta) => {
+        if (images.length < 2) return;
+        const next = (current + delta + images.length) % images.length;
+        applyImage(next);
+      };
+
+      heroImg.addEventListener('click', (e) => {
+        if (!isMobile()) return;
+        e.preventDefault();
+        open();
+      });
+
+      closeEls.forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          close();
+        });
+      });
+
+      if (backdrop) {
+        backdrop.addEventListener('click', () => {
+          close();
+        });
+      }
+
+      navButtons.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const dir = btn.getAttribute('data-lightbox-nav');
+          go(dir === 'next' ? 1 : -1);
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-active')) {
+          close();
+        }
+      });
+
+      // Basic swipe navigation on touch devices
+      let startX = 0;
+      let startY = 0;
+      let isSwiping = false;
+      const inner = lightbox.querySelector('.sl-lightbox__inner');
+
+      if (inner) {
+        inner.addEventListener('touchstart', (e) => {
+          if (!isMobile() || e.touches.length !== 1) return;
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          isSwiping = false;
+        }, { passive: true });
+
+        inner.addEventListener('touchmove', (e) => {
+          if (!isMobile() || e.touches.length !== 1) return;
+          const dx = e.touches[0].clientX - startX;
+          const dy = e.touches[0].clientY - startY;
+          if (!isSwiping && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+            isSwiping = true;
+          }
+          if (!isSwiping) return;
+          e.preventDefault();
+        }, { passive: false });
+
+        inner.addEventListener('touchend', (e) => {
+          if (!isMobile() || !isSwiping) return;
+          const dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 50) {
+            go(dx < 0 ? 1 : -1);
+          }
+          isSwiping = false;
+        });
+      }
+    })();
+  </script>
 
   <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
   <div id="inquire" class="sl-inquire">
