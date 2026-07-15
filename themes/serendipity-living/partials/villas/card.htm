@@ -1,5 +1,5 @@
 {% set item = villa ?: v %}
-{% set sold = sold is defined ? sold : false %}
+{% set sold = (sold is defined ? sold : false) or item.is_sold %}
 {% set delivery = delivery is defined ? delivery : (item.delivery_date ?: null) %}
 {% set lqip = item.thumbnail ? item.thumbnail.getThumb(40, 27, { mode:'crop', quality: 15, extension: 'webp' }) : (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust)) %}
 {% set full = item.thumbnail ? item.thumbnail.getThumb(800, 533, { mode:'crop', quality: 75 }) : (item.thumbnail_url ?: ('assets/images/placeholder-villa.svg'|theme|bust)) %}

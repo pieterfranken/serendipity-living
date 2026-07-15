@@ -43,6 +43,12 @@ fields:
         type: text
         span: left
         comment: Optional short label shown as a ribbon on listings when the villa is not sold.
+    is_sold:
+        label: Sold
+        type: switch
+        default: false
+        span: right
+        comment: Show a green "Sold" ribbon on this villa and hide its delivery ribbon.
     bedrooms:
         label: Bedrooms
         span: left

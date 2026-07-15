@@ -10,6 +10,7 @@
   --sl-text: #2A2A2A;
   --sl-copper: #C8A06A; /* gold */
   --sl-copper-600: #B38C58;
+  --sl-sold-green: #287A4B;
   --sl-bg-warm: #F2ECE3; /* prior page background, now used for header */
 
 }
@@ -158,7 +159,7 @@ body.sl-body {
 .sl-villa-title a { color: inherit; text-decoration: none; }
 /* Diagonal ribbon for sold cards */
 .sl-ribbon { position: absolute; top: 14px; left: -42px; width: 180px; text-align: center; transform: rotate(-45deg); background: var(--sl-copper); color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; padding: 7px 0; box-shadow: 0 6px 14px rgba(0,0,0,.18); pointer-events: none; z-index: 10; }
-.sl-ribbon--sold { background: var(--sl-copper); }
+.sl-ribbon--sold { background: var(--sl-sold-green); }
   .sl-ribbon--delivery { background: var(--sl-navy); text-indent: -3px; }
 
 
