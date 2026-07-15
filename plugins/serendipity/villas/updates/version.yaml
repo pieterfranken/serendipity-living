@@ -52,3 +52,7 @@
 1.6.0:
     - "Add delivery_date to villas"
     - add_delivery_date_to_villas.php
+
+1.7.0:
+    - "Add sold status to villas"
+    - add_is_sold_to_villas.php

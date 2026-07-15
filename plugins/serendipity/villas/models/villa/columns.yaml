@@ -12,6 +12,9 @@ columns:
     price:
         label: Price
         type: number
+    is_sold:
+        label: Sold
+        type: switch
     bedrooms:
         label: Beds
         type: number

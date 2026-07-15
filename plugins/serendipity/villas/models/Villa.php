@@ -49,12 +49,13 @@ class Villa extends Model
     }
 
     protected $fillable = [
-        'title','slug','price','currency','bedrooms','bathrooms','interior_area_m2','plot_area_m2','description','project_id','visible_in_catalog','featured_in_catalog','price_on_request','enable_renders_download','enable_layouts_download','delivery_date'
+        'title','slug','price','currency','bedrooms','bathrooms','interior_area_m2','plot_area_m2','description','project_id','visible_in_catalog','featured_in_catalog','price_on_request','enable_renders_download','enable_layouts_download','delivery_date','is_sold'
     ];
 
     protected $casts = [
         'enable_renders_download' => 'boolean',
         'enable_layouts_download' => 'boolean',
+        'is_sold' => 'boolean',
     ];
 
     public $rules = [
