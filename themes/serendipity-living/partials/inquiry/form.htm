@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="{{ 'assets/css/inquiry.css'|theme }}?v=2">
+<section id="inquire" class="sl-inquiry" data-villa-inquiry aria-labelledby="sl-inquiry-title">
+  <div class="sl-inquiry__intro">
+    <p class="sl-inquiry__eyebrow">{{ villa.title }}</p>
+    <h2 class="sl-display" id="sl-inquiry-title" data-inquiry-title>Let’s take a closer look.</h2>
+    <p data-inquiry-description>Ask us a question or arrange a visit. Our team will help you explore the possibilities.</p>
+    <div class="sl-inquiry__detail" data-layout-detail hidden>
+      <svg class="sl-inquiry__plan-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h24v24H4zM4 15h10V4M14 15v6m0 4v3M14 19h14M22 19v9"/></svg>
+      <div><strong>Villa layouts</strong><span>Download the complete collection of floor plans.</span></div>
+    </div>
+  </div>
+  <form data-request="inquiryForm::onSend" data-request-validate data-request-flash
+        data-request-success="if (data.layoutDownloadUrl) { window.location.assign(data.layoutDownloadUrl); }"
+        class="sl-form-card sl-inquiry__form">
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none;">
+    {% if showLayouts %}
+    <fieldset class="sl-inquiry__choices">
+      <legend class="sl-inquiry__sr-only">How can we help?</legend>
+      <label><input type="radio" name="request_type" value="inquiry" checked><span>Ask a question</span></label>
+      <label><input type="radio" name="request_type" value="layouts"><span>Get villa layouts</span></label>
+    </fieldset>
+    {% else %}
+    <input type="hidden" name="request_type" value="inquiry">
+    {% endif %}
+    <div class="sl-field-grid">
+      <label class="sl-inquiry__field">Email address <span aria-hidden="true">*</span>
+        <input class="sl-input" type="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="255" required>
+        <span class="sl-inquiry__error" data-validate-for="email"></span>
+      </label>
+      <label class="sl-inquiry__field">Your name <span data-name-optional hidden>(optional)</span><span data-name-required aria-hidden="true">*</span>
+        <input class="sl-input" type="text" name="name" autocomplete="name" placeholder="Your name" maxlength="255" minlength="2" required>
+        <span class="sl-inquiry__error" data-validate-for="name"></span>
+      </label>
+    </div>
+    <label class="sl-inquiry__field sl-inquiry__message">Your message <span data-message-optional hidden>(optional)</span><span data-message-required aria-hidden="true">*</span>
+      <textarea class="sl-input sl-textarea" name="message" placeholder="What would you like to know?" rows="4" minlength="10" maxlength="5000" required></textarea>
+      <span class="sl-inquiry__error" data-validate-for="message"></span>
+    </label>
+    <div class="sl-form-actions">
+      <button type="submit" class="sl-btn sl-btn--gold" data-inquiry-submit data-attach-loading>Send inquiry <span aria-hidden="true">→</span></button>
+    </div>
+    <div id="inquiryResult" class="sl-form-result" role="status" aria-live="polite"></div>
+  </form>
+</section>
+<script defer src="{{ 'assets/js/inquiry.js'|theme }}?v=3"></script>

@@ -2,7 +2,8 @@
 
 return [
     'disk' => env('VILLA_LAYOUTS_DISK', 'local'),
-    'zip_dir' => env('VILLA_LAYOUTS_ZIP_DIR', 'media/layouts/zips'),
+    // Layout archives must never be served as public static assets.
+    'zip_dir' => 'uploads/protected/villa-layout-zips',
     'signed_url_ttl_minutes' => env('VILLA_LAYOUTS_TTL', 30),
     'rate_limit' => [
         'max' => env('VILLA_LAYOUTS_RATE_MAX', 10),

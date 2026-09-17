@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Serendipity\Villas\Models\Villa;
 use Serendipity\Villas\Classes\RenderZipService;
 use Serendipity\Villas\Classes\LayoutZipService;
+use Serendipity\Villas\Classes\LayoutDownloadAccess;
 
 Route::group(['middleware' => []], function() {
     Route::get('/download/villa-renders/{villaId}/{signature}', function(Request $request, $villaId, $signature) {
@@ -57,6 +58,12 @@ Route::group(['middleware' => []], function() {
     });
 
     Route::get('/download/villa-layouts/{villaId}/{signature}', function(Request $request, $villaId, $signature) {
+        $expires = $request->query('expires');
+        if (!ctype_digit((string) $villaId) || !is_string($expires) ||
+            !LayoutDownloadAccess::current()->allows((int) $villaId, $signature, $expires)) {
+            return Response::make('Please request the layouts through the villa inquiry form. Download links expire and work only in the browser that requested them.', 403);
+        }
+
         $key = sprintf('villa-layouts:%s:%s', $villaId, $request->ip());
         $max = (int) config('serendipity.villas::layouts.rate_limit.max', 10);
         $decay = (int) config('serendipity.villas::layouts.rate_limit.decay_minutes', 1);
@@ -64,21 +71,14 @@ Route::group(['middleware' => []], function() {
         try {
             if (class_exists(RateLimiter::class) && !RateLimiter::tooManyAttempts($key, $max)) {
                 RateLimiter::hit($key, $decay * 60);
+            } elseif (class_exists(RateLimiter::class)) {
+                return Response::make('Too many requests', 429);
             }
         } catch (\Throwable $e) {}
 
         $villa = Villa::find($villaId);
         if (!$villa || !$villa->enable_layouts_download) {
             return Response::make('Not found', 404);
-        }
-
-        $expires = $request->query('expires');
-        if (!$expires || time() > (int)$expires) {
-            return Response::make('Link expired', 403);
-        }
-        $expected = hash_hmac('sha256', $villaId.'|'.$expires.'|'.$villa->id, app('encrypter')->getKey());
-        if (!hash_equals($expected, $signature)) {
-            return Response::make('Invalid signature', 403);
         }
 
         $service = new LayoutZipService();
@@ -93,6 +93,5 @@ Route::group(['middleware' => []], function() {
 
         $downloadName = $meta['filename'] ?? ('villa-'.$villa->id.'-layouts.zip');
         return response()->download($path, $downloadName, [ 'Content-Type' => 'application/zip' ]);
-    });
+    })->middleware('web');
 });
-

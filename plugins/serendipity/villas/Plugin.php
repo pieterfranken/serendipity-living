@@ -15,6 +15,11 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function register()
+    {
+        $this->registerConsoleCommand('villas.protectLayouts', \Serendipity\Villas\Console\ProtectLayouts::class);
+    }
+
     public function registerComponents()
     {
         return [
@@ -128,4 +133,3 @@ class Plugin extends PluginBase
         ];
     }
 }
-

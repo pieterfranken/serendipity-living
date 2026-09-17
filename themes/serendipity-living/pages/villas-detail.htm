@@ -98,7 +98,7 @@ title = "Villa Detail"
       <a class="sl-btn sl-btn--gold" href="{{ villaDetail.renderDownloadUrl(v) }}" aria-label="Download all renders for {{ v.title }} as a ZIP">Download Renders</a>
     {% endif %}
     {% if showLayouts %}
-      <a class="sl-btn sl-btn--gold" href="{{ villaDetail.layoutsDownloadUrl(v) }}" aria-label="Download all layouts for {{ v.title }} as a ZIP">Download Layouts</a>
+      <a class="sl-btn sl-btn--gold" href="#inquire" data-request-layouts aria-label="Request the layouts for {{ v.title }}">Download Layouts</a>
     {% endif %}
   </div>
   {% endif %}
@@ -325,22 +325,6 @@ title = "Villa Detail"
   </script>
 
   <hr style="margin:40px 0; border:none; border-top:1px solid #e9e4dc;"/>
-  <div id="inquire" class="sl-inquire">
-    <h2 class="sl-display" style="font-size:1.75rem;">For more information or a visit:</h2>
-    <form data-request="inquiryForm::onSend" data-request-validate data-request-flash class="sl-form-card">
-      <input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none;">
-      <input type="hidden" name="villa_id" value="{{ v.id }}">
-      <input type="hidden" name="villa_title" value="{{ v.title }}">
-      <div class="sl-field-grid">
-        <input class="sl-input" type="text" name="name" placeholder="Your name" required>
-        <input class="sl-input" type="email" name="email" placeholder="Email address" required>
-      </div>
-      <textarea class="sl-input sl-textarea" name="message" placeholder="Your message" rows="5"></textarea>
-      <div class="sl-form-actions">
-        <button class="sl-btn sl-btn--gold">Send Inquiry</button>
-      </div>
-      <div id="inquiryResult" class="sl-form-result"></div>
-    </form>
-  </div>
+  {% partial 'inquiry/form' villa=v showLayouts=showLayouts %}
 </section>
 

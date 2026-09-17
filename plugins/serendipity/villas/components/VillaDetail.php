@@ -50,15 +50,7 @@ class VillaDetail extends ComponentBase
 
     public function layoutsDownloadUrl($villa)
     {
-        if (!$villa || !$villa->enable_layouts_download || !$villa->layouts || !$villa->layouts->count()) {
-            return null;
-        }
-        $ttl = (int) \Config::get('serendipity.villas::layouts.signed_url_ttl_minutes', 30);
-        $expires = time() + ($ttl * 60);
-        $data = $villa->id.'|'.$expires.'|'.$villa->id;
-        $signature = hash_hmac('sha256', $data, app('encrypter')->getKey());
-        $query = http_build_query(['expires' => $expires]);
-        return url('/download/villa-layouts/'.$villa->id.'/'.$signature.'?'.$query);
+        // Download grants are issued by InquiryForm only after a valid submission.
+        return null;
     }
 }
-

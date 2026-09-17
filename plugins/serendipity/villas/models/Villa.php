@@ -24,7 +24,7 @@ class Villa extends Model
     public $attachMany = [
         'gallery' => 'System\\Models\\File',
         'renders' => 'System\\Models\\File',
-        'layouts' => 'System\\Models\\File',
+        'layouts' => ['System\\Models\\File', 'public' => false],
     ];
 
     public $belongsTo = [

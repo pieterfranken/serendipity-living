@@ -15,7 +15,10 @@ class LayoutZipService
     public function __construct()
     {
         $this->disk = Config::get('serendipity.villas::layouts.disk', 'local');
-        $this->zipDir = trim(Config::get('serendipity.villas::layouts.zip_dir', 'media/layouts/zips'), '/');
+        $this->zipDir = trim(Config::get('serendipity.villas::layouts.zip_dir', 'uploads/protected/villa-layout-zips'), '/');
+        if (!str_starts_with($this->zipDir, 'uploads/protected/') || str_contains($this->zipDir, '..')) {
+            throw new Exception('Villa layout archives require protected storage.');
+        }
         $this->maxZipSizeMb = (int) Config::get('serendipity.villas::layouts.max_zip_size_mb', 1024);
         // Optionally bump PHP memory limit just for this process
         $mem = Config::get('serendipity.villas::layouts.memory_limit');

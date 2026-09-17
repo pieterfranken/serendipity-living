@@ -38,6 +38,8 @@
     ##
     ## Blocked folders
     ##
+    # Retired public layout archives must not bypass the inquiry form.
+    RewriteRule ^storage/app/media/layouts(?:/|$) - [F,L,NC]
     RewriteRule ^bootstrap/.* index.php [L,NC]
     RewriteRule ^config/.* index.php [L,NC]
     RewriteRule ^vendor/.* index.php [L,NC]
