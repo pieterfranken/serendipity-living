@@ -37,12 +37,4 @@
   modes.forEach(function (input) {
     input.addEventListener('change', function () { if (input.checked) setMode(input.value); });
   });
-  document.querySelectorAll('[data-request-layouts]').forEach(function (link) {
-    link.addEventListener('click', function (event) {
-      event.preventDefault();
-      setMode('layouts');
-      section.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      form.elements.email.focus({ preventScroll: true });
-    });
-  });
 })();
